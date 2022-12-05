@@ -1,10 +1,17 @@
-import Link from "next/link"
+import Link from "next/link";
 
-export default function NavLink(props:{description: string, destination: string}) {
+export default function NavLink(props: {
+  description: string;
+  destination: string;
+}) {
   return (
     <>
-      <li className="m-[0.2rem] p-[0.3rem] border-black border-solid border-[0.1rem]">
-        <Link href={props.destination}>{props.description}</Link>
+      <li>
+        <Link href={props.destination}>
+          <div className="p-[0.75rem] font-Abel capitalize bg-black text-white rounded-md hover:text-black hover:bg-white font-bold text-[1.5rem] hover:animate-pulseShadow">
+            {props.description}
+          </div>
+        </Link>
       </li>
     </>
   );
