@@ -1,10 +1,18 @@
-export default function Card() {
+import Link from "next/link";
+type Props = {
+  heading: string;
+  description: string;
+  url: string;
+};
+export default function Card(props: Props) {
   return (
-    <>
-      <div className="rounded-md p-4 m-4 w-[300px] h-[200px] sm:w-[200px] sm:h-[300px] bg-black/80 flex flex-col justify-between shadow-backShadow transition-all ease duration-500 hover:bg-white hover:text-black hover:scale-110 hover:shadow-link">
-        <h3 className="text-[1.25rem] font-bold">Biga Carda</h3>
-        <p className="overflow-hidden font-bold  max-h-[150px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus, totam?</p>
+    <Link href={props.url}>
+      <div className=" rounded-md p-4 m-4 w-[18.75rem] h-[12.5rem] sm:w-[12.5rem] sm:h-[18.75rem] bg-black/80 flex flex-col justify-between shadow-backShadow transition ease duration-500 hover:scale-110 hover:text-black hover:bg-white hover:shadow-link">
+        <h3 className="text-[1.25rem] font-bold font-Abel">{props.heading}</h3>
+        <p className="overflow-hidden font-bold font-Abel max-h-[150px]">
+          {props.description}
+        </p>
       </div>
-    </>
+    </Link>
   );
 }

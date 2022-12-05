@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
 
@@ -13,6 +14,7 @@ module.exports = {
     },
     
     extend: {
+  
       fontFamily: {
         
         Abel: ['"Abel", sans-serif;'],

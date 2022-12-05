@@ -1,6 +1,7 @@
 import NavLink from "./NavLink";
 import NavMenu from "./NavMenu";
 import { AiOutlineUser } from 'react-icons/ai'
+import { FaLanguage } from 'react-icons/fa'
 import NavMenuItem from "./NavMenuItem";
 
 export default function Navigation() {
