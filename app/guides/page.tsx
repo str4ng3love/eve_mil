@@ -35,7 +35,10 @@ export default function Page() {
             { desciption: "desc", title: "Title 1", url: "#" },
             { desciption: "desc", title: "Title 2", url: "#" },
             { desciption: "desc", title: "Title 3", url: "#" },
-            { desciption: "desc", title: "Title 4", url: "#" }
+            { desciption: "desc", title: "Title 4", url: "#" },
+            { desciption: "desc", title: "Title 5", url: "#" },
+            { desciption: "desc", title: "Title 6", url: "#" },
+            { desciption: "desc", title: "Title 7", url: "#" },
           ]}
         />
       </div>
@@ -43,9 +46,11 @@ export default function Page() {
         <CoolerHeading text="Most Popular:" align="center"/>
         <Carrousel
           input={[
-            { desciption: "desc", title: "Title 1", url: "#" },
-            { desciption: "desc", title: "Title 2", url: "#" },
-            { desciption: "desc", title: "Title 3", url: "#" },
+            { desciption: "desc", title: "Title a", url: "#" },
+            { desciption: "desc", title: "Title b", url: "#" },
+            { desciption: "desc", title: "Title c", url: "#" },
+            { desciption: "desc", title: "Title d", url: "#" },
+          
           ]}
         />
       </div>
