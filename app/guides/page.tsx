@@ -42,7 +42,7 @@ export default function Page() {
           ]}
         />
       </div>
-      <div className="w-[100%] flex flex-col items-center bg-black/80 text-white py-12 ">
+      {/* <div className="w-[100%] flex flex-col items-center bg-black/80 text-white py-12 ">
         <CoolerHeading text="Most Popular:" align="center"/>
         <Carrousel
           input={[
@@ -52,8 +52,8 @@ export default function Page() {
             { desciption: "desc", title: "Title d", url: "#" },
           
           ]}
-        />
-      </div>
+        /> 
+      </div> */}
     </>
   );
 }

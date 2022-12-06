@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 type Props = {
   heading: string;
   description: string;

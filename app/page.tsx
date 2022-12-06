@@ -11,7 +11,7 @@ export default function Page() {
         <CoolerHeading text="Factional Warfare" url="/#" />
         
       </div>
-      
+
     </div>
   );
 }

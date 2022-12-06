@@ -4,15 +4,16 @@ export const arrayVoodoo = (array: Array<any>, size: number) => {
   let tempArr: any[];
 
   for (let i = 0; i < array.length; i = i + size) {
-    tempArr = array.slice(startPos, startPos + size);
+    let arrayCopy = JSON.parse(JSON.stringify(array));
+    tempArr = arrayCopy.slice(startPos, startPos + size);
 
     result.push(tempArr);
 
     startPos = startPos + size;
-       
-        return result
 
-  }
+       
+      }
+      return result
 };
 // const arrayVoodoo = (array: Array<any>, size: number) => {
 //     let result: number[][] = [];
