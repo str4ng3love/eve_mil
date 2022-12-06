@@ -7,7 +7,7 @@ import CoolHeading from "../components/headings/CoolHeading";
 export default function Page() {
   return (
     <>
-      <div className="flex flex-col items-center bg-gradient-to-tl from-orange-300 to-red-500  ">
+      <div className="flex flex-col items-center bg-gradient-to-tl from-orange-300 to-red-500 bg-fixed ">
         <div className="md:w-[75%] w-[100%] h-[calc(100vh-6rem)] text-white bg-black/80 pt-12 shadow-wrapperShadow">
           <CoolestHeading text="Guides(WIP)" align="center" />
           <CoolHeading
@@ -39,10 +39,17 @@ export default function Page() {
             { desciption: "desc", title: "Title 5", url: "#" },
             { desciption: "desc", title: "Title 6", url: "#" },
             { desciption: "desc", title: "Title 7", url: "#" },
+            { desciption: "desc", title: "Title 11", url: "#" },
+            { desciption: "desc", title: "Title 12", url: "#" },
+            { desciption: "desc", title: "Title 13", url: "#" },
+            { desciption: "desc", title: "Title 14", url: "#" },
+            { desciption: "desc", title: "Title 15", url: "#" },
+            { desciption: "desc", title: "Title 16", url: "#" },
+            { desciption: "desc", title: "Title 17", url: "#" },
           ]}
         />
       </div>
-      {/* <div className="w-[100%] flex flex-col items-center bg-black/80 text-white py-12 ">
+      <div className="w-[100%] flex flex-col items-center bg-black/80 text-white py-12 ">
         <CoolerHeading text="Most Popular:" align="center"/>
         <Carrousel
           input={[
@@ -53,7 +60,7 @@ export default function Page() {
           
           ]}
         /> 
-      </div> */}
+      </div>
     </>
   );
 }

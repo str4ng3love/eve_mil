@@ -48,15 +48,20 @@ module.exports = {
       fade: {
         "0%":{
           transform: "rotateY(0deg)",
+          
          
         },
-        "50%":{
+        "25%":{
           transform: "rotateY(90deg)",
-        
+       
+        },
+        "75%":{
+          transform: "rotateY(90deg)",
+       
         },
         "100%": {
           transform: "rotateY(0deg)",
-          
+        
         }
       }
   
@@ -64,8 +69,8 @@ module.exports = {
     animation: {
       pulseShadow: "pulse 1.25s ease-in-out infinite",
       fadeIn: "fadeIn 1s ease-in infinite",
-      fadeOut: "fadeOut 1s ease-out 1",
-      fade: "fade 1s ease",
+      fadeOut: "fadeOut 1s ease 1",
+      fade: "fade 1000ms ease 1",
     },
   },
   plugins: [],
