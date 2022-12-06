@@ -14,46 +14,57 @@ type Props = {
 export default function Carrousel(props: Props) {
   const [guides, setGuides] = useState<any[][]>([]);
   const [displayedGuides, setDisplayed] = useState<any>(0);
-  console.log(displayedGuides);
+  const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
     if (props.input.length > 3) {
       setGuides(arrayVoodoo(props.input, 3));
     }
   }, []);
-
   if (props.input.length > 3) {
     return (
-      <div className="group flex hover:scale-105 transition-all ease duration-300 delay-150 border-y-black rounded-md border-solid border-y-2  bg-red-300 items-center sm:flex-row ">
+      <div className="group flex  transition-all ease duration-300 delay-150 border-y-black rounded-md border-solid border-y-2  bg-red-300 items-center sm:flex-row ">
         <BiLeftArrow
           onClick={(e) => {
-            if (displayedGuides === 0) {
-              setDisplayed(guides.length-1);
-            } else {
-              setDisplayed(displayedGuides -1)
-            }
+            setAnimate(true);
+            setTimeout(() => {
+              if (displayedGuides === 0) {
+                setDisplayed(guides.length - 1);
+              } else {
+                setDisplayed(displayedGuides - 1);
+              }
+            }, 200);
           }}
           className="delay-300 cursor-pointer transition-all ease duration-500 opacity-0 group-hover:opacity-100 hover:scale-110 hover:white "
           size={"4em"}
         />
-        <div className="w-[43.5rem] flex  overflow-hidden">
+        <div
+          className={` w-[43.5rem] flex overflow-hidden`}
+          onAnimationEnd={(e) => setAnimate(false)}
+        >
           {guides[displayedGuides]?.map((el) => (
             <Card
               description={el.desciption}
               heading={el.title}
               url={el.url}
               key={el.title}
+              animate={animate}
+              animation={`animate-fade`}
             />
           ))}
         </div>
-        <BiRightArrow onClick={(e) => {
-            if (displayedGuides === guides.length -1) {
-              setDisplayed(0);
-            } else {
-              setDisplayed(displayedGuides +1 )
-            }
+        <BiRightArrow
+          onClick={(e) => {
+            setAnimate(true);
+            setTimeout(() => {
+              if (displayedGuides === guides.length - 1) {
+                setDisplayed(0);
+              } else {
+                setDisplayed(displayedGuides + 1);
+              }
+            }, 300);
           }}
-          className="delay-300 cursor-pointer transition-all ease duration-500 opacity-0 group-hover:opacity-100 hover:scale-110 hover:text-white "
+          className={`delay-300 cursor-pointer transition-all ease duration-500 opacity-0 group-hover:opacity-100 hover:scale-110 hover:text-white `}
           size={"4em"}
         />
       </div>
