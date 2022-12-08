@@ -1,5 +1,5 @@
 import Providers from "./components/Providers";
-import Navigation from "./components/Navigation";
+import Navigation from "./components/nav/Navigation";
 import "../styles/globals.css"
 
 export default function RootLayout({

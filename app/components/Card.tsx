@@ -8,7 +8,7 @@ type Props = {
   animation?: string;
 };
 export default function Card(props: Props) {
- console.log('rendering')
+
   return (
     //TODO somehow delay displaying of data so its in sync with the animation
     <Link href={props.url}>
