@@ -1,34 +1,56 @@
 "use client";
-import Link from "next/link";
+
+export enum BType {
+  submit,
+  button,
+  erase,
+}
 
 type Props = {
-  type: string;
+  type: BType;
   text: string;
   url?: string;
- handleClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-  
+  handleClick?: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
 };
 
 export default function Button({ type, text, url, handleClick }: Props) {
   return (
     <>
-      {type === "submit" ? (
+      {type === 0 ? (
         <button
-          className="h-fit p-4 m-4 uppercase font-bold font-Abel transition-all ease duration-300 hover:scale-110 hover:bg-white hover:text-black hover:shadow-link w-fit rounded-md bg-black/80 text-white "
           onClick={(e) => e.preventDefault()}
-          type={type}
-        >
-          {text}
-        </button>
-      ) : (<>
-        
-        <button onClick={handleClick}
+          type={`submit`}
           className="h-fit p-4 m-4 uppercase font-bold font-Abel transition-all ease duration-300 hover:scale-110 hover:bg-white hover:text-black hover:shadow-link w-fit rounded-md bg-black/80 text-white "
-          type="button"
         >
           {text}
         </button>
-     </> )}
+      ) : (
+        <></>
+      )}
+      {type === 1 ? (
+        <button
+          onClick={handleClick}
+          className="h-fit p-4 m-4 uppercase font-bold font-Abel transition-all ease duration-300 hover:scale-110 hover:bg-white hover:text-black hover:shadow-link w-fit rounded-md bg-black/80 text-white "
+          type={"button"}
+        >
+          {text}
+        </button>
+      ) : (
+        <></>
+      )}
+      {type === 2 ? (
+        <button
+          onClick={handleClick}
+          className="p-2 m-2 uppercase font-bold font-Abel transition-all ease duration-300 hover:scale-110 hover:bg-white hover:text-black hover:shadow-link w-10 h-10 rounded-md bg-red-600 text-white "
+          type={"button"}
+        >
+          {text}
+        </button>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
