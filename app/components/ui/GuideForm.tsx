@@ -7,18 +7,19 @@ import { BType } from "./Button";
 
 type CDType = {
   objects: {
-  [key: string]:{
-    id?: string;
-    value?: string;
-  }}
-}
- 
+    [key: string]: {
+      id?: string;
+      value?: string;
+    };
+  };
+};
+
 export default function GuideForm() {
-  const [ compType, setType ] = useState(0);
-  const [ formComponents, setComponents ] = useState<JSX.Element[]>([]);
-  const [ compData, setCompData ] = useState<CDType>({objects: {}})
-  const [ componentToDelete, setCompToDel ] =useState('')
- 
+  const [compType, setType] = useState(0);
+  const [formComponents, setComponents] = useState<JSX.Element[]>([]);
+  const [compData, setCompData] = useState<CDType>({ objects: {} });
+  const [componentToDelete, setCompToDel] = useState("");
+
   const addComponent = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -33,43 +34,46 @@ export default function GuideForm() {
         type={compType}
       />,
     ]);
-   
-
   };
   const eraseComponent = (
-      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-      ) => {
-        //!SORCERY: Calling state from formComponents renders pevious state
-          let el = event.currentTarget.parentElement?.id
-          //@ts-ignore
-    setCompToDel(el)
-};
-const delComponent = (id:string)=>{
-    let filteredArray = formComponents.filter(comp =>{return comp.key !== id })
-    setComponents(filteredArray)
-    
-    
-  
-}
-  
-  const handleChange =(event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
-    let id:string = (event.currentTarget.parentElement?.id as string)
-    let value:string = event.currentTarget.value
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    //!SORCERY: Calling state from formComponents renders pevious state
+    let el = event.currentTarget.parentElement?.id;
 
-    setCompData((prevState)=>{
+    //@ts-ignore
+    setCompToDel(el);
+  };
+  const delComponent = (id: string) => {
+    let filteredArray = formComponents.filter((comp) => {
+      return comp.key !== id;
+    });
+    setComponents(filteredArray);
+    if(compData.objects[`${id}`]){
+    const compDataCopy = JSON.parse(JSON.stringify(compData)) 
+    delete compDataCopy.objects[`${id}`]
 
-      const newObj = {...prevState.objects}
-      newObj[`${id}`] = {id, value}
-   console.log(newObj)
-      return {objects: newObj}
-    })
+    setCompData(compDataCopy)
+    }
 
- 
-  }
-  useEffect(()=>{
-    delComponent(componentToDelete)
-  },[componentToDelete])
+  };
 
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    let id: string = event.currentTarget.parentElement?.id as string;
+    let value: string = event.currentTarget.value;
+
+    setCompData((prevState) => {
+      const newObj = { ...prevState.objects };
+      newObj[`${id}`] = { id, value };
+      console.log(newObj);
+      return { objects: newObj };
+    });
+  };
+  useEffect(() => {
+    delComponent(componentToDelete);
+  }, [componentToDelete]);
 
   return (
     <div className="overflow-visible bg-slate-600 ">
@@ -112,7 +116,14 @@ const delComponent = (id:string)=>{
               Video
             </option>
           </select>
-            <Button key={'1'} text="Test" type={BType.button} handleClick={(event:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log(compData)}/>
+          <Button
+            key={"1"}
+            text="Test"
+            type={BType.button}
+            handleClick={(
+              event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+            ) => console.log(compData)}
+          />
           <Button
             type={BType.button}
             text="Add Component"
