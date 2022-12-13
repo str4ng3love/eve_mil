@@ -10,6 +10,7 @@ type CDType = {
     [key: string]: {
       id?: string;
       value?: string;
+      type?: string;
     };
   };
 };
@@ -17,8 +18,27 @@ type CDType = {
 export default function GuideForm() {
   const [compType, setType] = useState(0);
   const [formComponents, setComponents] = useState<JSX.Element[]>([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [compData, setCompData] = useState<CDType>({ objects: {} });
   const [componentToDelete, setCompToDel] = useState("");
+
+  const handleSubmit = async () => {
+    let data = {
+      title,
+      description,
+      content: compData
+    }
+      await fetch('/api/guides', {
+        method: 'POST',
+        headers: {
+          'Content/Type':"Application/json"
+        },
+        body: JSON.stringify(data)
+        
+      })
+
+  };
 
   const addComponent = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -49,13 +69,12 @@ export default function GuideForm() {
       return comp.key !== id;
     });
     setComponents(filteredArray);
-    if(compData.objects[`${id}`]){
-    const compDataCopy = JSON.parse(JSON.stringify(compData)) 
-    delete compDataCopy.objects[`${id}`]
+    if (compData.objects[`${id}`]) {
+      const compDataCopy = JSON.parse(JSON.stringify(compData));
+      delete compDataCopy.objects[`${id}`];
 
-    setCompData(compDataCopy)
+      setCompData(compDataCopy);
     }
-
   };
 
   const handleChange = (
@@ -63,10 +82,12 @@ export default function GuideForm() {
   ) => {
     let id: string = event.currentTarget.parentElement?.id as string;
     let value: string = event.currentTarget.value;
+    let type: string = event.currentTarget.parentElement?.firstChild
+      ?.textContent as string;
 
     setCompData((prevState) => {
       const newObj = { ...prevState.objects };
-      newObj[`${id}`] = { id, value };
+      newObj[`${id}`] = { id, value, type };
       console.log(newObj);
       return { objects: newObj };
     });
@@ -77,11 +98,14 @@ export default function GuideForm() {
 
   return (
     <div className="overflow-visible bg-slate-600 ">
-      <form className="flex flex-col items-center justify-center">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-center justify-center"
+      >
         <CoolHeading text="Create a Guide" align="center" />
         <div className="flex w-[100%] justify-center p-2 mx-2 ">
           <label className="p-2 font-bold w-[14ch]">Title</label>
-          <input className=" rounded-md w-[70%] p-2 text-black" />
+          <input onChange={(e)=>setTitle(e.currentTarget.value)} className=" rounded-md w-[70%] p-2 text-black" />
         </div>
         <div className="flex w-[100%] justify-center p-2 mx-2 ">
           <label
@@ -90,7 +114,7 @@ export default function GuideForm() {
           >
             Description
           </label>
-          <textarea className=" rounded-md w-[70%] p-2 text-black min-h-[5rem] max-h-[20rem]" />
+          <textarea onChange={(e)=>setDescription(e.currentTarget.value)} className=" rounded-md w-[70%] p-2 text-black min-h-[5rem] max-h-[20rem]" />
         </div>
         {formComponents.map((c) => c)}
         <div className="flex w-[100%] items-center justify-center p-2 mx-2 ">
