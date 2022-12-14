@@ -20,7 +20,6 @@ export default function Button({ type, text, url, handleClick }: Props) {
     <>
       {type === 0 ? (
         <button
-          onClick={(e) => e.preventDefault()}
           type={`submit`}
           className="h-fit p-4 m-4 uppercase font-bold font-Abel transition-all ease duration-300 hover:scale-110 hover:bg-white hover:text-black hover:shadow-link w-fit rounded-md bg-black/80 text-white "
         >

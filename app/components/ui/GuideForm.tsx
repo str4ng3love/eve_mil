@@ -14,30 +14,38 @@ type CDType = {
     };
   };
 };
+type Props = {
+  handleClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+};
 
-export default function GuideForm() {
+export default function GuideForm({ handleClick }: Props) {
   const [compType, setType] = useState(0);
   const [formComponents, setComponents] = useState<JSX.Element[]>([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [compData, setCompData] = useState<CDType>({ objects: {} });
   const [componentToDelete, setCompToDel] = useState("");
+  const [display, setDisplay] = useState(`flex`);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    console.log("submitting");
     let data = {
       title,
       description,
-      content: compData
-    }
-      await fetch('/api/guides', {
-        method: 'POST',
+      content: compData,
+    };
+    try {
+      await fetch("/api/guides", {
+        method: "POST",
         headers: {
-          'Content/Type':"Application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
-        
-      })
-
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const addComponent = (
@@ -97,66 +105,103 @@ export default function GuideForm() {
   }, [componentToDelete]);
 
   return (
-    <div className="overflow-visible bg-slate-600 ">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col items-center justify-center"
-      >
-        <CoolHeading text="Create a Guide" align="center" />
-        <div className="flex w-[100%] justify-center p-2 mx-2 ">
-          <label className="p-2 font-bold w-[14ch]">Title</label>
-          <input onChange={(e)=>setTitle(e.currentTarget.value)} className=" rounded-md w-[70%] p-2 text-black" />
-        </div>
-        <div className="flex w-[100%] justify-center p-2 mx-2 ">
-          <label
-            className="p-2 font-bold w-[14ch]"
-            title="Short description of the guide."
-          >
-            Description
-          </label>
-          <textarea onChange={(e)=>setDescription(e.currentTarget.value)} className=" rounded-md w-[70%] p-2 text-black min-h-[5rem] max-h-[20rem]" />
-        </div>
-        {formComponents.map((c) => c)}
-        <div className="flex w-[100%] items-center justify-center p-2 mx-2 ">
-          <label
-            className="p-2 font-bold w-[14ch]"
-            title="Short description of the guide."
-          >
-            Type
-          </label>
-          <select
-            value={compType}
-            onChange={(e: React.FormEvent<HTMLSelectElement>) => {
-              let value = parseInt(e.currentTarget.value);
-              //TODO: style select
-              setType(value);
-            }}
-            className=" rounded-md w-fit h-fit p-2 text-black resize-none "
-          >
-            <option value="0">Subtitle</option>
-            <option value="1">Paragraph</option>
-            <option value="2">Image</option>
-            <option value="3" disabled>
-              Video
-            </option>
-          </select>
-          <Button
-            key={"1"}
-            text="Test"
-            type={BType.button}
-            handleClick={(
-              event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-            ) => console.log(compData)}
-          />
-          <Button
-            type={BType.button}
-            text="Add Component"
-            handleClick={addComponent}
-          />
-        </div>
+    <div className="absolute  top-[8rem] z-50 w-full overflow-visible md:-translate-x-[12.5%] ">
+      <div className="flex justify-center">
+        <div className="flex flex-col justify-center rounded-lg border-solid border-white/50 border-2 backdrop-blur-sm w-full md:w-[75%] bg-black/40 ">
+            { display === 'flex'? 
+          <div className="p-4 w-full flex justify-between">
+            <CoolHeading text="Create a Guide" align="center" />
+            <div>
+              <Button
+                text="_"
+                type={BType.erase}
+                handleClick={(e) => setDisplay("hidden")}
+              />
+              
+              <Button text="X" type={BType.erase} handleClick={handleClick} />
+            </div> 
+            
+          </div>
+          : 
+          <div className="p-4 top-[100%] left-[85%] absolute justify-between">
+            <div>
 
-        <Button text="submit" type={BType.submit} />
-      </form>
+            </div>
+            <div>
+              <Button
+                text="▢"
+                type={BType.erase}
+                handleClick={(e) => setDisplay("flex")}
+              />
+              
+              <Button text="X" type={BType.erase} handleClick={handleClick} />
+            </div> 
+            
+          </div>
+          }
+          <div className="flex justify-center">
+            <form
+              onSubmit={(e) => handleSubmit(e)}
+              className={`${display} flex-col items-center  justify-center h-full w-full `}
+            >
+              <div className="flex w-[100%] justify-center p-2 mx-2 ">
+                <label className="p-2 font-bold w-[14ch]">Title</label>
+                <input
+                  required
+                  onChange={(e) => setTitle(e.currentTarget.value)}
+                  className="rounded-md w-[70%] p-2 text-black"
+                />
+              </div>
+              <div className="flex w-[100%] justify-center p-2 mx-2 ">
+                <label
+                  className="p-2 font-bold w-[14ch]"
+                  title="Short description of the guide."
+                >
+                  Description
+                </label>
+                <textarea
+                  required
+                  onChange={(e) => setDescription(e.currentTarget.value)}
+                  className=" rounded-md w-[70%] p-2 text-black min-h-[5rem] max-h-[20rem]"
+                />
+              </div>
+              {formComponents.map((c) => c)}
+              <div className="flex w-[100%] items-center justify-center p-2 mx-2 ">
+                <label
+                  className="p-2 font-bold w-[14ch]"
+                  title="Short description of the guide."
+                >
+                  Type
+                </label>
+                <select
+                  value={compType}
+                  onChange={(e: React.FormEvent<HTMLSelectElement>) => {
+                    let value = parseInt(e.currentTarget.value);
+                    //TODO: style select
+                    setType(value);
+                  }}
+                  className=" rounded-md w-fit h-fit p-2 text-black resize-none "
+                >
+                  <option value="0">Subtitle</option>
+                  <option value="1">Paragraph</option>
+                  <option value="2">Image</option>
+                  <option value="3" disabled>
+                    Video
+                  </option>
+                </select>
+
+                <Button
+                  type={BType.button}
+                  text="Add Component"
+                  handleClick={addComponent}
+                />
+              </div>
+
+              <Button text="submit" type={BType.submit} />
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
