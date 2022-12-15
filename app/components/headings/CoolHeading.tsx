@@ -1,8 +1,13 @@
 import Link from "next/link";
+export enum TAlign {
+  start= 'start',
+  center= 'center',
+  end = 'end'
+}
 type Props = {
   text: string;
   url?: string;
-  align?: string;
+  align?: TAlign;
 };
 
 export default function CoolHeading(props: Props) {

@@ -1,5 +1,6 @@
 import CoolerHeading from "../components/headings/CoolerHeading";
 import CoolestHeading from "../components/headings/CoolestHeading";
+import { TAlign } from "../components/headings/CoolHeading";
 import Card from "../components/Card";
 import Carrousel from "../components/Carrousel";
 import CoolHeading from "../components/headings/CoolHeading";
@@ -9,10 +10,10 @@ export default function Page() {
     <>
       <div className="flex flex-col items-center bg-gradient-to-tl from-orange-300 to-red-500 bg-fixed ">
         <div className="md:w-[75%] w-[100%] h-[calc(100vh-6rem)] text-white bg-black/80 pt-12 shadow-wrapperShadow">
-          <CoolestHeading text="Guides(WIP)" align="center" />
+          <CoolestHeading text="Guides(WIP)" align={TAlign.center} />
           <CoolHeading
             text="Browse through our compilation of guides to learn the basics of Factional Warfare and more..."
-            align="center"
+            align={TAlign.center}
           />
           <div className="w-[100%] flex flex-col sm:flex-row my-12 justify-evenly items-center">
             <Card
@@ -29,7 +30,7 @@ export default function Page() {
         </div>
       </div>
       <div className="w-[100%] flex flex-col items-center bg-black/80 text-white py-12 ">
-        <CoolerHeading text="Recent guides:" align="center"/>
+        <CoolerHeading text="Recent guides:" align={TAlign.center}/>
         <Carrousel
           input={[
             { desciption: "desc", title: "Title 1", url: "#" },
@@ -50,7 +51,7 @@ export default function Page() {
         />
       </div>
       <div className="w-[100%] flex flex-col items-center bg-black/80 text-white py-12 ">
-        <CoolerHeading text="Most Popular:" align="center"/>
+        <CoolerHeading text="Most Popular:" align={TAlign.center}/>
         <Carrousel
           input={[
             { desciption: "desc", title: "Title a", url: "#" },

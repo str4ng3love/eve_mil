@@ -10,6 +10,7 @@ module.exports = {
       linkB: "0rem 0rem 0.5rem white",
       wrapperShadow: "0rem 0rem 1rem black",
     },
+  
 
     extend: {
       fontFamily: {
@@ -45,6 +46,17 @@ module.exports = {
           opacity: "0%",
         },
       },
+      rotateRight: {
+        "0":{
+          transform: "rotateZ(0deg)"
+        },
+        "50%":{
+          transform: "rotateZ(180deg)"
+        },
+        "100%":{
+          transform: "rotateZ(360deg)"
+        }
+      },
       fade: {
         "0%":{
           transform: "rotateY(0deg)",
@@ -71,6 +83,7 @@ module.exports = {
       fadeIn: "fadeIn 1s ease-in infinite",
       fadeOut: "fadeOut 1s ease 1",
       fade: "fade 1000ms ease 1",
+      rotateRight: "rotateRight 1s linear infinite"
     },
   },
   plugins: [],

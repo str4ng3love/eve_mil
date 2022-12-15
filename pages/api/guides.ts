@@ -16,6 +16,7 @@ if(req.method === 'POST'){
             title: req.body.title,
             description: req.body.description,
             
+            
         }})
     } catch (error) {
         console.log(error)
