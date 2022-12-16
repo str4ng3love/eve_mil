@@ -9,20 +9,21 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String    @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?   @db.Text
+  access_token      String?   @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?   @db.Text
+  session_state     String?
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Guide             Guide[]
+  Comment           Comment[]
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -40,7 +41,7 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
+  name          String    @unique
   email         String?   @unique
   emailVerified DateTime?
   image         String?
@@ -54,4 +55,30 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Guide {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  content     String?
+  createdAt   DateTime  @default(now())
+  authorId    String
+  author      Account   @relation(fields: [authorId], references: [id])
+  comments    Comment[]
+
+  @@index([authorId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  authorId  String
+  guideId   String?
+  author    Account  @relation(fields: [authorId], references: [id])
+  Guide     Guide?   @relation(fields: [guideId], references: [id])
+
+  @@index([authorId])
+  @@index([guideId])
 }

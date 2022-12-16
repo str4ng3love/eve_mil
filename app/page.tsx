@@ -2,6 +2,9 @@ import CoolerHeading from "./components/headings/CoolerHeading";
 import CoolestHeading from "./components/headings/CoolestHeading"
 import CoolHeading from "./components/headings/CoolHeading"
 
+import Test from "./components/Test";
+
+
 export default function Page() {
   return (
     <div className="flex flex-col items-center bg-gradient-to-tl from-orange-300 to-red-500 ">
@@ -10,8 +13,10 @@ export default function Page() {
         <CoolHeading text="Your number one place for all things" />
         <CoolerHeading text="Factional Warfare" url="/#" />
         
-      </div>
 
+       
+        <Test />
+      </div>
     </div>
   );
 }

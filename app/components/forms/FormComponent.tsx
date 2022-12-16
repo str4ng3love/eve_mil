@@ -1,6 +1,6 @@
 
-import Button from "./Button";
-import { BType } from "./Button";
+import Button from "../ui/Button";
+import { BType } from "../ui/Button";
 export enum EType {
   subtitle,
   paragraph,

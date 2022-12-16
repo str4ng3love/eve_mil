@@ -1,4 +1,4 @@
-const { transform } = require('typescript');
+
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -10,7 +10,9 @@ module.exports = {
       linkB: "0rem 0rem 0.5rem white",
       wrapperShadow: "0rem 0rem 1rem black",
     },
-  
+    gridTemplateColumns: {
+      'auto': `repeat(auto-fit, minmax(20px, 200px));`
+    },
 
     extend: {
       fontFamily: {

@@ -5,7 +5,12 @@ import Card from "../components/Card";
 import Carrousel from "../components/Carrousel";
 import CoolHeading from "../components/headings/CoolHeading";
 
+
+
 export default function Page() {
+  const testo = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log('test')
+  }
   return (
     <>
       <div className="flex flex-col items-center bg-gradient-to-tl from-orange-300 to-red-500 bg-fixed ">
@@ -15,6 +20,8 @@ export default function Page() {
             text="Browse through our compilation of guides to learn the basics of Factional Warfare and more..."
             align={TAlign.center}
           />
+
+      
           <div className="w-[100%] flex flex-col sm:flex-row my-12 justify-evenly items-center">
             <Card
               description="Official WARZONE Guides"
@@ -26,6 +33,7 @@ export default function Page() {
               heading="Community"
               url="/guides/community"
             />
+    
           </div>
         </div>
       </div>

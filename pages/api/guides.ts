@@ -1,37 +1,41 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma }  from "../../app/lib/prismaConnect";
+import { authOptions } from '../api/auth/[...nextauth]'
+import { prisma } from "../../lib/prismaConnect";
+import {unstable_getServerSession} from 'next-auth'
 
-export default async function handler(req:NextApiRequest, res: NextApiResponse){
-if(req.method === 'POST'){
-    try {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const session = await unstable_getServerSession(req,res, authOptions);
 
-        let pack = {
-            title: req.body.title,
-            description: req.body.description,
-            content: req.body.content
-        }
-
-
-        await prisma.guide.create({data: {
-            title: req.body.title,
-            description: req.body.description,
-            
-            
-        }})
-    } catch (error) {
-        console.log(error)
+  if (req.method === "POST") {
+    if (!session?.user) {
+      return res.status(401).json({ msg: "Not Authorized." });
     }
-    res.json({msg: `ok`})
-} else if(req.method === 'GET'){
     try {
-        const data = await prisma.guide.findMany()
-        res.json(data)
+      const user = await prisma.user.findFirst({where: {
+        name: session?.user?.name as string
+      }});
+    
+if(user)
+        await prisma.guide.create({
+          data: { title: req.body.title, description: req.body.description, createdAt: Date.now().toString(), authorId: user.id, content: req.body.content }})
+      
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-} else {
-    res.status(400).send(`Error: Bad request.`)
-}
+    res.json({ msg: `ok` });
+  } else if (req.method === "GET") {
+    try {
+      const guides = await prisma.guide.findMany()
+      res.json(guides)
 
-
+      
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    res.status(400).send(`Error: Bad request.`);
+  }
 }

@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import FormComponent from "./FormComponent";
-import CoolHeading from "../headings/CoolestHeading";
-import Button from "./Button";
-import { BType } from "./Button";
+import CoolHeading, { TAlign } from "../headings/CoolestHeading";
+import Button from "../ui/Button";
+import { BType } from "../ui/Button";
 
 type CDType = {
   objects: {
@@ -110,13 +110,14 @@ export default function GuideForm({ handleClick }: Props) {
         <div className="flex flex-col justify-center rounded-lg border-solid border-white/50 border-2 backdrop-blur-sm w-full md:w-[75%] bg-black/40 ">
             { display === 'flex'? 
           <div className="p-4 w-full flex justify-between">
-            <CoolHeading text="Create a Guide" align="center" />
+            <CoolHeading text="Create a Guide" align={TAlign.center}/>
             <div>
               <Button
                 text="_"
                 type={BType.erase}
                 handleClick={(e) => setDisplay("hidden")}
               />
+              
               
               <Button text="X" type={BType.erase} handleClick={handleClick} />
             </div> 
