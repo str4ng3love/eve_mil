@@ -61,7 +61,7 @@ model Guide {
   id          String    @id @default(cuid())
   title       String
   description String
-  content     String?
+  content     Json?
   createdAt   DateTime  @default(now())
   authorId    String
   author      Account   @relation(fields: [authorId], references: [id])

@@ -7,8 +7,8 @@ import Card from "../components/Card";
 type Props = {
   input: Array<{
     title: string;
-    desciption: string;
-    url: string;
+    description: string;
+    id: string;
   }>;
 };
 
@@ -44,10 +44,10 @@ export default function Carrousel(props: Props) {
           <div className={` w-[49.5rem] flex overflow-hidden`}>
             {guides[displayedGuides]?.map((el) => (
               <Card
-                description={el.desciption}
+                description={el.description}
                 heading={el.title}
-                url={el.url}
-                key={el.title}
+                url={'#'}
+                key={el.id}
                 displayAnim={false}
                 animation={`animate-fade`}
               />
@@ -72,10 +72,10 @@ export default function Carrousel(props: Props) {
     <div className="group flex hover:scale-105 transition-all ease duration-300 delay-150 border-y-black rounded-md border-solid border-y-2 w-fit  flex-col items-center sm:flex-row sm:justify-center ">
       {props.input.map((el) => (
         <Card
-          description={el.desciption}
+          description={el.description}
           heading={el.title}
-          url={el.url}
-          key={el.title}
+          url={"#"}
+          key={el.id}
         />
       ))}
     </div>

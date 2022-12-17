@@ -1,7 +1,28 @@
+import { Suspense } from "react";
+import { prisma } from "../../../lib/prismaConnect";
 import Card from "../../components/Card";
+import SpinnerMini from "../../components/ui/SpinnerMini";
 import Toolbar from "../../components/ui/Toolbar";
+import { randomUUID } from "crypto";
 
-export default function Page() {
+async function getGuides() {
+  const res = await prisma.guide.findMany({
+    select: {
+      description: true,
+      id: true,
+      title: true,
+    },
+  });
+  if (!res) {
+    throw new Error("Failed to fetch data.");
+  }
+  return res;
+}
+
+export default async function Page() {
+  const data = await getGuides();
+  console.log(`fetching...`);
+  console.log(data);
   return (
     <>
       <div className="flex flex-col items-center bg-gradient-to-bl from-slate-700 to-emerald-700 bg-fixed w-[100%] ">
@@ -9,11 +30,16 @@ export default function Page() {
           {/* dont like the toolbar - rework needed */}
           <Toolbar />
           <div className="grid gap-4 grid-cols-auto">
-            <Card description="trala la" url="#" heading="Hello" />
-            <Card description="trala la" url="#" heading="Hello" />
-            <Card description="trala la" url="#" heading="Hello" />
-            <Card description="trala la" url="#" heading="Hello" />
-            <Card description="trala la" url="#" heading="Hello" />
+            {data.map((guide) => (
+              <Suspense fallback={<SpinnerMini key={randomUUID()} />}>
+                <Card
+                  key={guide.id}
+                  description={guide.description}
+                  heading={guide.title}
+                  url="#"
+                />
+              </Suspense>
+            ))}
           </div>
           {/* add toggle buttons */}
         </div>
