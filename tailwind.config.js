@@ -11,6 +11,8 @@ module.exports = {
       wrapperShadow: "0rem 0rem 1rem black",
     },
     gridTemplateColumns: {
+      'grid-col-1': 'repeat(1, minmax(0, 1fr));',
+      'grid-col-2': 'repeat(2, minmax(0, 1fr));',
       'auto': `repeat(auto-fit, minmax(20px, 200px));`
     },
 
@@ -21,6 +23,7 @@ module.exports = {
       screens: {
         sm: "840px",
         md: "1080px",
+        custom: "900px"
       },
     },
     keyframes: {

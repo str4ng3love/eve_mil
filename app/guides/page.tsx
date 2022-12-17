@@ -35,22 +35,24 @@ export default async function Page() {
           />
 
       
-          <div className="w-[100%] flex flex-col sm:flex-row my-12 justify-evenly items-center">
+          <div className="w-[100%] gap-8 flex flex-col sm:flex-row my-12 justify-evenly items-center">
             <Card
               description="Official WARZONE Guides"
               heading="Official"
               url="/guides/official"
+
             />
             <Card
               description="Community guides, written by our users"
               heading="Community"
               url="/guides/community"
+
             />
     
           </div>
         </div>
       </div>
-      <div className="w-[100%] flex flex-col items-center bg-black/80 text-white py-12 ">
+      <div className=" flex flex-col items-center bg-black/80 text-white py-12 ">
         <CoolerHeading text="Recent guides:" align={TAlign.center}/>
         <Carrousel input={data} />
       </div>

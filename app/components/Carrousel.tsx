@@ -10,6 +10,7 @@ type Props = {
     description: string;
     id: string;
   }>;
+  sreen_media?: string
 };
 
 export default function Carrousel(props: Props) {
@@ -41,7 +42,7 @@ export default function Carrousel(props: Props) {
             className="delay-300 cursor-pointer transition-all ease duration-500 opacity-0 group-hover:opacity-100 hover:scale-110 hover:white "
             size={"4em"}
           />
-          <div className={` w-[49.5rem] flex overflow-hidden`}>
+          <div className={`md:h-[25rem] md:w-[48.5rem] p-8 flex flex-col custom:flex-row gap-8 justify-center items-center overflow-hidden`}>
             {guides[displayedGuides]?.map((el) => (
               <Card
                 description={el.description}
@@ -50,6 +51,7 @@ export default function Carrousel(props: Props) {
                 key={el.id}
                 displayAnim={false}
                 animation={`animate-fade`}
+            
               />
             ))}
           </div>
@@ -69,13 +71,14 @@ export default function Carrousel(props: Props) {
     );
   }
   return (
-    <div className="group flex hover:scale-105 transition-all ease duration-300 delay-150 border-y-black rounded-md border-solid border-y-2 w-fit  flex-col items-center sm:flex-row sm:justify-center ">
+    <div className="group flex gap-8 hover:scale-105 transition-all ease duration-300 delay-150 border-y-black rounded-md border-solid border-y-2 w-fit  flex-col items-center sm:flex-row sm:justify-center ">
       {props.input.map((el) => (
         <Card
           description={el.description}
           heading={el.title}
           url={"#"}
           key={el.id}
+      
         />
       ))}
     </div>

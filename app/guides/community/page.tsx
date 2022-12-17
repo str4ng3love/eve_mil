@@ -26,17 +26,18 @@ export default async function Page() {
   return (
     <>
       <div className="flex flex-col items-center bg-gradient-to-bl from-slate-700 to-emerald-700 bg-fixed w-[100%] ">
-        <div className="md:w-[75%] w-[100%] bg-black/80 text-white min-h-[calc(100vh-6rem)] shadow-backShadow">
+        <div className="md:w-[75%] w-[100%] bg-black/80  text-white min-h-[calc(100vh-6rem)] shadow-backShadow">
           {/* dont like the toolbar - rework needed */}
           <Toolbar />
-          <div className="grid gap-4 grid-cols-auto">
+          <div className="grid gap-4 mt-8 sm:grid-cols-auto grid-cols-grid-col-2 justify-center ">
             {data.map((guide) => (
-              <Suspense fallback={<SpinnerMini key={randomUUID()} />}>
+              <Suspense key={randomUUID()} fallback={<SpinnerMini key={randomUUID()} />}>
                 <Card
                   key={guide.id}
                   description={guide.description}
                   heading={guide.title}
                   url="#"
+
                 />
               </Suspense>
             ))}
