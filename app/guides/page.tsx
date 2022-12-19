@@ -37,13 +37,13 @@ export default async function Page() {
       
           <div className="w-[100%] gap-8 flex flex-col sm:flex-row my-12 justify-evenly items-center">
             <Card
-              description="Official WARZONE Guides"
+              description="Official WARZONE Guides on EVE ONLINE"
               heading="Official"
               url="/guides/official"
 
             />
             <Card
-              description="Community guides, written by our users"
+              description="Community Guides, Written by our Users"
               heading="Community"
               url="/guides/community"
 

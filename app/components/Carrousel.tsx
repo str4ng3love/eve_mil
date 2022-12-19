@@ -24,13 +24,13 @@ export default function Carrousel(props: Props) {
   }, []);
   if (props.input.length > 3) {
     return (
-      <div className="flex flex-col  ">
+      <div className="flex flex-col w-full">
         <div className="flex justify-center">
           <div className="flex justify-evenly p-4 w-[80%]">
             {guides.map((el, index) => displayedGuides === index ? <div key={index} className="bg-stone-200 h-4 w-4 rounded-md cursor-pointer  hover:bg-white transition-all duration-300 ease-linear"onClick={(e)=>setDisplayed(index)}></div>:<div key={index} className="bg-stone-700 h-4 w-4 rounded-md cursor-pointer  hover:bg-white transition-all duration-300 ease-linear"onClick={(e)=>setDisplayed(index)}></div>)}
           </div>
         </div>
-        <div className="group flex  transition-all ease duration-300 delay-150 border-y-black rounded-md  items-center sm:flex-row ">
+        <div className="group flex justify-center transition-all ease duration-300 delay-150 border-y-black rounded-md  items-center sm:flex-row ">
           <BiLeftArrow
             onClick={(e) => {
               if (displayedGuides === 0) {

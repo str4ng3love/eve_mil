@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
+  // url          = env("DB_DEV_URL")
   relationMode = "prisma"
 }
 
@@ -47,14 +48,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
+  Guide         Guide[]
 }
 
 model Guide {
@@ -63,11 +57,22 @@ model Guide {
   description String
   content     Json?
   createdAt   DateTime  @default(now())
-  authorId    String
   author      Account   @relation(fields: [authorId], references: [id])
+  userNane    User      @relation(fields: [authorName], references: [name])
+  authorId    String
+  authorName  String
   comments    Comment[]
 
   @@index([authorId])
+  @@index([authorName])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Comment {

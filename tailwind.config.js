@@ -13,7 +13,7 @@ module.exports = {
     gridTemplateColumns: {
       'grid-col-1': 'repeat(1, minmax(0, 1fr));',
       'grid-col-2': 'repeat(2, minmax(0, 1fr));',
-      'auto': `repeat(auto-fit, minmax(20px, 200px));`
+      'auto': `repeat(auto-fit, minmax(200px, 1fr));`
     },
 
     extend: {

@@ -20,7 +20,7 @@ export default async function handler(
     
 if(user)
         await prisma.guide.create({
-          data: { title: req.body.title, description: req.body.description, authorId: user.id, content: req.body.content }})
+          data: {authorName:user.name, title: req.body.title, description: req.body.description, authorId: user.id,  content: req.body.content }})
       
     } catch (error) {
       console.log(error);
