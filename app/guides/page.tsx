@@ -23,7 +23,7 @@ async function getRecent(){
 
 
 export default async function Page() {
-  const data = await getRecent()  
+  // const data = await getRecent()  
   return(
     <>
       <div className="flex flex-col items-center bg-gradient-to-tl from-orange-300 to-red-500 bg-fixed ">
@@ -54,7 +54,7 @@ export default async function Page() {
       </div>
       <div className=" flex flex-col items-center bg-black/80 text-white py-12 ">
         <CoolerHeading text="Recent guides:" align={TAlign.center}/>
-        <Carrousel input={data} />
+        {/* <Carrousel input={data} /> */}
       </div>
   
     </>

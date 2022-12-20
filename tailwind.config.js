@@ -1,6 +1,8 @@
+const plugin= require('tailwindcss/plugin');
 
 
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: ["./app/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -17,6 +19,9 @@ module.exports = {
     },
 
     extend: {
+      transitionProperty:{
+        'height': 'height'
+      } ,
       fontFamily: {
         Abel: ['"Abel", sans-serif;'],
       },
@@ -35,22 +40,6 @@ module.exports = {
           boxShadow: "0rem 0rem 0.5rem white",
         },
       },
-      fadeIn: {
-        "0%": {
-          opacity: "0%",
-        },
-        "100%": {
-          opacity: "100%",
-        },
-      },
-      fadeOut: {
-        "0%": {
-          opacity: "100%",
-        },
-        "100%": {
-          opacity: "0%",
-        },
-      },
       rotateRight: {
         "0":{
           transform: "rotateZ(0deg)"
@@ -62,34 +51,27 @@ module.exports = {
           transform: "rotateZ(360deg)"
         }
       },
-      fade: {
-        "0%":{
-          transform: "rotateY(0deg)",
-          
-         
-        },
-        "25%":{
-          transform: "rotateY(90deg)",
-       
-        },
-        "75%":{
-          transform: "rotateY(90deg)",
-       
-        },
-        "100%": {
-          transform: "rotateY(0deg)",
-        
-        }
-      }
   
     },
     animation: {
       pulseShadow: "pulse 1.25s ease-in-out infinite",
-      fadeIn: "fadeIn 1s ease-in infinite",
-      fadeOut: "fadeOut 1s ease 1",
-      fade: "fade 1000ms ease 1",
       rotateRight: "rotateRight 1s linear infinite"
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function({addUtilities, matchUtilities, addComponents, theme}) {
+      addUtilities({
+        '.transform-3d':{
+          'transform-style':'preserve-3d'
+        }
+      }),
+      matchUtilities({
+        'translate-z': (value)=>({
+          '--tw-translate-z':value,
+          transform:  ` translate3d(var(--tw-translate-x), var(--tw-translate-y), var(--tw-translate-z)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))`,
+        
+        })
+      }, { values: theme('translate'), supportsNegativeValues: true })
+    })
+  ],
 };
