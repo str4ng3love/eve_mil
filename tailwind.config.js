@@ -20,7 +20,8 @@ module.exports = {
 
     extend: {
       transitionProperty:{
-        'height': 'height'
+        'height': 'height',
+        'width': 'width'
       } ,
       fontFamily: {
         Abel: ['"Abel", sans-serif;'],

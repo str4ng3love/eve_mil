@@ -14,7 +14,7 @@ interface Props {
     text: string;
     fn?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   }[];
-  componentsLength: number;
+  vertical?: boolean;
   cursor?: ECur;
   text: string;
   dir: EDir;
@@ -22,10 +22,10 @@ interface Props {
 }
 
 export default function ToolbarMenu(props: Props) {
-  let cLength = props.componentsLength * 5 
-  let height = cLength.toString()
-  let heightVar = height.concat(`rem`)
-  
+  let cLength = props.components.length * 5;
+  let height = cLength.toString();
+  let heightVar = height.concat(`rem`);
+
   return (
     <>
       <div
@@ -39,13 +39,34 @@ export default function ToolbarMenu(props: Props) {
           >
             {props.text}
           </div>
-          <div
-            className={`absolute transition-height delay-300  h-0 group-hover:h-[${heightVar}] duration-100 ease-out overflow-hidden  bg-black/80 text-white font-Abel uppercase font-bold ${props.dir}-[5rem]`}
-          >
-            {props.components?.map((comp, index) => (
-              <ToolbarMenuItem text={comp.text} key={index} fn={comp.fn} />
-            ))}
-          </div>
+          {props.dir === EDir.yPositive ? (
+            <div
+              className={`absolute transition-height delay-300  h-0 group-hover:h-[${heightVar}] duration-100 ease-out overflow-hidden  bg-black/80 text-white font-Abel uppercase font-bold ${props.dir}-[5rem]`}
+            >
+              {props.components?.map((comp, index) => (
+                <ToolbarMenuItem text={comp.text} key={index} fn={comp.fn} />
+              ))}
+            </div>
+          ) : <></>}
+            {props.dir === EDir.yNegative ? (
+            <div
+              className={`absolute transition-height delay-300  h-0 group-hover:h-[${heightVar}] duration-100 ease-out overflow-hidden  bg-black/80 text-white font-Abel uppercase font-bold ${props.dir}-[5rem]`}
+            >
+              {props.components?.map((comp, index) => (
+                <ToolbarMenuItem text={comp.text} key={index} fn={comp.fn} />
+              ))}
+            </div>
+          ) : <></>}
+            {props.dir === EDir.xPositive ? (
+            <div
+              className={`absolute transition-width delay-300 flex flex-row w-0 group-hover:w-[${heightVar}] duration-100 ease-out overflow-hidden  bg-black/80 text-white font-Abel uppercase font-bold ${props.dir}-[5rem]`}
+            >
+              {props.components?.map((comp, index) => (
+                <ToolbarMenuItem text={comp.text} key={index} fn={comp.fn} />
+              ))}
+            </div>
+          ) : <></>}
+      
         </div>
       </div>
     </>

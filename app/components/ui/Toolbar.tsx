@@ -39,7 +39,7 @@ export default function Toolbar() {
         {session.data ? (
           
           <ToolbarMenu
-          componentsLength={0}
+       
             text="add"
             cursor={ECur.pointer}
             dir={EDir.yNegative}
@@ -48,7 +48,7 @@ export default function Toolbar() {
           />
         ) : (
           <ToolbarMenu
-          componentsLength={0}
+       
             text="add"
             cursor={ECur.pointer}
             dir={EDir.yNegative}
@@ -56,8 +56,8 @@ export default function Toolbar() {
             components={[]}
           />
         )}
-        <ToolbarMenu dir={EDir.yPositive} text="filter" components={filterComps} componentsLength={filterComps.length}/>
-        {/* <ToolbarMenu dir={EDir.xPositive} text="sort" componentsLength={0} components={[]} /> */}
+        <ToolbarMenu dir={EDir.yPositive} text="filter"  components={filterComps} />
+        <ToolbarMenu dir={EDir.xPositive} text="sort"  components={filterComps} />
         
       </div>
       <div onClick={() => signIn()}></div>
