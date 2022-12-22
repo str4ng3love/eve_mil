@@ -3,6 +3,7 @@ import { authOptions } from '../api/auth/[...nextauth]'
 import { prisma } from "../../lib/prismaConnect";
 import {unstable_getServerSession} from 'next-auth'
 
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -19,8 +20,10 @@ export default async function handler(
       }});
     
 if(user)
+
+
         await prisma.guide.create({
-          data: {authorName:user.name, title: req.body.title, description: req.body.description, authorId: user.id,  content: req.body.content }})
+          data: {authorName:user.name, category: req.body.category, title: req.body.title, description: req.body.description, authorId: user.id,  content: req.body.content }})
       
     } catch (error) {
       console.log(error);

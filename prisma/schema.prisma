@@ -59,6 +59,7 @@ model Guide {
   createdAt   DateTime  @default(now())
   author      Account   @relation(fields: [authorId], references: [id])
   userNane    User      @relation(fields: [authorName], references: [name])
+  category Category 
   authorId    String
   authorName  String
   comments    Comment[]
@@ -86,4 +87,10 @@ model Comment {
 
   @@index([authorId])
   @@index([guideId])
+}
+enum Category {
+  FW
+  BUSINESS
+  FLIGHT
+  BASICS
 }

@@ -4,6 +4,12 @@ import FormComponent from "./FormComponent";
 import CoolHeading, { TAlign } from "../headings/CoolestHeading";
 import Button from "../ui/Button";
 import { BType } from "../ui/Button";
+enum Category {
+  FW= `FW`,
+  BUSINESS= `BUSINESS`,
+  FLIGHT= `FLIGHT`,
+  BASICS= `BASICS`,
+}
 
 type CDType = {
   objects: {
@@ -21,6 +27,7 @@ type Props = {
 export default function GuideForm({ handleClick }: Props) {
   const [compType, setType] = useState(0);
   const [formComponents, setComponents] = useState<JSX.Element[]>([]);
+  const [category, setCategory] = useState(`BASICS`)
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [compData, setCompData] = useState<CDType>({ objects: {} });
@@ -29,10 +36,11 @@ export default function GuideForm({ handleClick }: Props) {
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    console.log("submitting");
+
     let data = {
       title,
       description,
+      category,
       content: compData,
     };
     try {
@@ -96,7 +104,7 @@ export default function GuideForm({ handleClick }: Props) {
     setCompData((prevState) => {
       const newObj = { ...prevState.objects };
       newObj[`${id}`] = { id, value, type };
-      console.log(newObj);
+     
       return { objects: newObj };
     });
   };
@@ -166,8 +174,39 @@ export default function GuideForm({ handleClick }: Props) {
                   className=" rounded-md w-[70%] p-2 text-black min-h-[5rem] max-h-[20rem]"
                 />
               </div>
+              <div className="flex w-[100%] items-center justify-center p-2 mx-2 ">
+                
+                <label
+                  className="p-2 font-bold w-[14ch]"
+                  title="Short description of the guide."
+                >
+                  Category
+                </label>
+                <select
+                  value={category}
+                  onChange={(e: React.FormEvent<HTMLSelectElement>) => {
+                    let value = e.currentTarget.value
+                    //TODO: style select
+                  
+                    setCategory(value)
+
+                  
+                  }}
+                  className=" rounded-md w-fit h-fit p-2 text-black resize-none "
+                >
+                  <option value={Category.BASICS}>Basics</option>
+                  <option value={Category.FW}>FW</option>
+                  <option value={Category.FLIGHT}>Flight School</option>
+                  <option value={Category.BUSINESS}>Business</option>
+                 
+                 
+                </select>
+
+          
+              </div>
               {formComponents.map((c) => c)}
               <div className="flex w-[100%] items-center justify-center p-2 mx-2 ">
+                
                 <label
                   className="p-2 font-bold w-[14ch]"
                   title="Short description of the guide."
