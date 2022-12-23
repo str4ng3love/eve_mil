@@ -48,16 +48,24 @@ export default function Toolbar(props: Props) {
   ]
   const sortComps = [
     {
-      text: 'Date'
+      text: 'Title',
+      fn: props.sortFn
     },
     {
-      text: 'Title'
+      text: 'Category',
+      fn: props.sortFn
     }, 
     {
-      text: 'Author'
+      text: 'Date',
+      fn: props.sortFn
     },
     {
-      text: 'likes'
+      text: 'Author',
+      fn: props.sortFn
+    },
+    {
+      text: 'likes',
+      fn: props.sortFn
     }
   ]
   

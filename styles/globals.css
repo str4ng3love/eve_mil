@@ -17,7 +17,7 @@
     text-overflow: ellipsis;
 }
 body {
-    min-width: 500px;
+    min-width: 560px;
 }
 [data-nextjs-scroll-focus-boundary] {
     display: contents;

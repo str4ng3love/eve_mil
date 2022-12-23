@@ -12,6 +12,7 @@ async function getGuides() {
       authorId: true,
       authorName: true,
       category: true,
+      createdAt: true,
 
     },
   });
@@ -24,6 +25,7 @@ async function getGuides() {
 export default async function Page() {
   const data = await getGuides();
 
+
   return (
     <>
       <div className="flex flex-col items-center bg-gradient-to-bl from-slate-700 to-emerald-700 bg-fixed w-[100%] ">
@@ -33,7 +35,7 @@ export default async function Page() {
 
           {/* add toggle buttons */}
 
-          <Board guides={data}/>
+          {/* <Board guides={data}/> */}
         </div>
       </div>
     </>
