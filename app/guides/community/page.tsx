@@ -13,7 +13,6 @@ async function getGuides() {
       authorName: true,
       category: true,
       createdAt: true,
-
     },
   });
   if (!res) {
@@ -24,7 +23,7 @@ async function getGuides() {
 
 export default async function Page() {
   const data = await getGuides();
-
+//prolly need to change schema date type to number
 
   return (
     <>
@@ -35,7 +34,7 @@ export default async function Page() {
 
           {/* add toggle buttons */}
 
-          {/* <Board guides={data}/> */}
+          <Board guides={data}/>
         </div>
       </div>
     </>

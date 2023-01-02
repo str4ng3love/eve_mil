@@ -9,7 +9,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await unstable_getServerSession(req,res, authOptions);
-
+  let timeStamp = Date.now()
+  let date = new Date(timeStamp)
   if (req.method === "POST") {
     if (!session?.user) {
       return res.status(401).json({ msg: "Not Authorized." });
@@ -17,13 +18,16 @@ export default async function handler(
     try {
       const user = await prisma.user.findFirst({where: {
         name: session?.user?.name as string
+     
       }});
     
-if(user)
-
-
+if(!user){
+  return res.status(401).json({ msg: "Not Authorized." });
+}
+      console.log(user.name)
+     
         await prisma.guide.create({
-          data: {authorName:user.name, category: req.body.category, title: req.body.title, description: req.body.description, authorId: user.id,  content: req.body.content }})
+          data: {authorName:user.name, category: req.body.category, title: req.body.title, description: req.body.description, authorId: user.id,  content: req.body.content, createdAt: date.toString() }})
       
     } catch (error) {
       console.log(error);

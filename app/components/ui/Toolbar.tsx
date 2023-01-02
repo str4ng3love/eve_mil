@@ -7,7 +7,7 @@ import ToolbarMenu from "./ToolbarMenu";
 import { ECur  ,EDir } from "./ToolbarMenu";
 
 interface Props {
-  sortFn?:any;
+  sortFn?: (e: React.PointerEvent<HTMLDivElement>)=>void;
   filterFn?: (e: React.PointerEvent<HTMLDivElement>)=>void;
 }
 export default function Toolbar(props: Props) {
@@ -73,7 +73,7 @@ export default function Toolbar(props: Props) {
 
   return (
     <>
-      {/* <GuideForm handleClick={(e)=>setForm(!showForm)}/>  */}
+     
       {showForm ? <GuideForm handleClick={(e) => setForm(!showForm)} /> : <></>}
       <div className="z-10 group transform-3d absolute md:-translate-x-[160%] translate-y-[200%] ease-out transition-all delay-100 translate-z-3 duration-500 flex w-[5rem] h-[5rem] rounded-md bg-black items-center justify-center hover:rounded-none hover:bg-white hover:shadow-linkB">
         <span className="transition-all  duration-300 ease group-hover:rotate-180  group-hover:text-black">
@@ -103,7 +103,6 @@ export default function Toolbar(props: Props) {
         <ToolbarMenu dir={EDir.xPositive} text="sort"  components={sortComps} />
         
       </div>
-      <div onClick={() => signIn()}></div>
     </>
   );
 }

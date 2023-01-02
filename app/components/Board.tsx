@@ -11,50 +11,98 @@ type Props = {
     description: string;
     title: string;
     category: string;
+    createdAt: string;
+    authorName: string;
+    
   }[];
 };
 
 export default function Board(props: Props) {
   const [filter, setFilter] = useState<string>("ALL");
-  const [sorter, setSorter] = useState<string>("DATE");
+  const [sorter, setSorter] = useState<string>("date");
   const [compareFn, setCompareFn] = useState<any>();
-  const [order, setOrder] = useState<boolean>(true)
+  const [order, setOrder] = useState<boolean>(true);
 
   const getFilter = (e: React.PointerEvent<HTMLDivElement>) => {
     const selectedFilted = e.currentTarget.innerText;
     setFilter(selectedFilted);
   };
   const getSorter = (e: React.PointerEvent<HTMLDivElement>) => {
-    const selectedSorter = e.currentTarget.innerText;
+    const selectedSorter = e.currentTarget.innerText.toLowerCase();
     if (selectedSorter === sorter) {
-      return setOrder(!order)
+      return setOrder(!order);
     }
     setSorter(selectedSorter);
+    setOrder(true)
   };
-  const compareFunc = (a: string, b: string) => {
-    if (sorter === "DATE") {
-      if (a > b) {
-        return +1;
-      }
-      if (a < b) {
-        return -1;
-      }
+  const compareFunc = (a: any, b: any) => {
+    let sorterA
+    let sorterB
+    if(sorter === "date"){
+      sorterA = a.createdAt
+      sorterB = b.createdAt
+      if(order){
 
-      return 0;
+        if (sorterA > sorterB) {
+          return -1;
+        }
+        if (sorterA < sorterB) {
+          return +1;
+        }
+        
+        return 0;
+      } else {
+        if (sorterA > sorterB) {
+          return +1;
+        }
+        if (sorterA < sorterB) {
+          return -1;
+        }
+        
+        return 0;
+      }
+    } else if(sorter === "author"){
+      sorterA = a.authorName
+      sorterB = b.authorName
+    } else {
+      sorterA = a[sorter]
+      sorterB = b[sorter]
     }
-    setCompareFn(compareFunc);
+  if(order){
+
+    if (sorterA > sorterB) {
+      return +1;
+    }
+    if (sorterA < sorterB) {
+      return -1;
+    }
+    
+    return 0;
+  } else {
+    if (sorterA > sorterB) {
+      return -1;
+    }
+    if (sorterA < sorterB) {
+      return +1;
+    }
+    
+    return 0;
+  }
   };
-// useEffect(()=>{
-//   console.log(order)
-// })
+  // useEffect(()=>{
+  //   console.log(order)
+  // })
+
   return (
     <>
       <Toolbar filterFn={getFilter} sortFn={getSorter} />
       <div className=" grid grid-cols-auto gap-4  mx-5 p-4">
         {filter === "ALL" ? (
-          props.guides?.sort().map((guide) => (
+          props.guides?.sort(compareFunc).map((guide) => (
             <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
               <GridCard
+                authorName={guide.authorName}
+                createdAt={guide.createdAt.slice(0, 24)}
                 category={guide.category}
                 description={guide.description}
                 heading={guide.title}
@@ -72,6 +120,7 @@ export default function Board(props: Props) {
             .map((guide) => (
               <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
                 <GridCard
+                  createdAt={guide.createdAt}
                   category={guide.category}
                   description={guide.description}
                   heading={guide.title}

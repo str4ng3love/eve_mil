@@ -56,7 +56,7 @@ model Guide {
   title       String
   description String
   content     Json?
-  createdAt   DateTime  @default(now())
+  createdAt   String
   author      Account   @relation(fields: [authorId], references: [id])
   userNane    User      @relation(fields: [authorName], references: [name])
   category Category 
@@ -79,7 +79,7 @@ model VerificationToken {
 model Comment {
   id        String   @id @default(cuid())
   content   String
-  createdAt DateTime @default(now())
+  createdAt String
   authorId  String
   guideId   String?
   author    Account  @relation(fields: [authorId], references: [id])
