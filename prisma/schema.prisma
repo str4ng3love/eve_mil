@@ -41,14 +41,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String    @unique
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  Guide         Guide[]
+  id             String    @id @default(cuid())
+  name           String    @unique
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  likedGuides    Guide[]   @relation(name: "UserLikedGuides")
+  dislikedGuides Guide[]   @relation(name: "UserDislikedGuides")
+  accounts       Account[]
+  sessions       Session[]
+  Guide          Guide[]
 }
 
 model Guide {
@@ -59,10 +61,12 @@ model Guide {
   createdAt   String
   author      Account   @relation(fields: [authorId], references: [id])
   userNane    User      @relation(fields: [authorName], references: [name])
-  category Category 
+  category    Category
   authorId    String
   authorName  String
   comments    Comment[]
+  likers      User[]    @relation(name: "UserLikedGuides")
+  dislikers   User[]    @relation(name: "UserDislikedGuides")
 
   @@index([authorId])
   @@index([authorName])
@@ -77,17 +81,18 @@ model VerificationToken {
 }
 
 model Comment {
-  id        String   @id @default(cuid())
+  id        String  @id @default(cuid())
   content   String
   createdAt String
   authorId  String
   guideId   String?
-  author    Account  @relation(fields: [authorId], references: [id])
-  Guide     Guide?   @relation(fields: [guideId], references: [id])
+  author    Account @relation(fields: [authorId], references: [id])
+  Guide     Guide?  @relation(fields: [guideId], references: [id])
 
   @@index([authorId])
   @@index([guideId])
 }
+
 enum Category {
   FW
   BUSINESS

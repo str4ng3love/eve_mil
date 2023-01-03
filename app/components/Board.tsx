@@ -107,7 +107,7 @@ export default function Board(props: Props) {
                 description={guide.description}
                 heading={guide.title}
                 key={guide.id}
-                url="#"
+                url={`/guides/community/${guide.title}`}
               />
             </Suspense>
           ))

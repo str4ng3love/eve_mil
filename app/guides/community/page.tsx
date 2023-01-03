@@ -23,7 +23,7 @@ async function getGuides() {
 
 export default async function Page() {
   const data = await getGuides();
-//prolly need to change schema date type to number
+
 
   return (
     <>

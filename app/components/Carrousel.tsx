@@ -47,7 +47,7 @@ export default function Carrousel(props: Props) {
               <Card
                 description={el.description}
                 heading={el.title}
-                url={'#'}
+                url={`/guides/${el.title}`}
                 key={el.id}
                 displayAnim={false}
                 animation={`animate-fade`}
