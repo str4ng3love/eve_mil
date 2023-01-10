@@ -11,7 +11,7 @@ export default function Page() {
       <div className="flex flex-col min-h-[calc(100vh-6rem)] items-center md:w-[75%] w-[100%] bg-black/80 text-white p-[4rem] shadow-wrapperShadow">
         <CoolestHeading text="WARZONE"/>
         <CoolHeading text="Your number one place for all things" />
-        <CoolerHeading text="Factional Warfare" url="/#" />
+        <CoolerHeading text="Factional Warfare" url="#" />
         
 
        

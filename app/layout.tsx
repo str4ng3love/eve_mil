@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <html>
       <head />
-      <body>
+      <body className="bg-gradient-to-tl from-orange-300 to-red-500 ">
         <Providers>
           <Navigation/>
           {children}

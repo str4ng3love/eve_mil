@@ -4,6 +4,7 @@ import FormComponent from "./FormComponent";
 import CoolHeading, { TAlign } from "../headings/CoolestHeading";
 import Button from "../ui/Button";
 import { BType } from "../ui/Button";
+import { useSession } from "next-auth/react";
 enum Category {
   FW= `FW`,
   BUSINESS= `BUSINESS`,
@@ -34,13 +35,15 @@ export default function GuideForm({ handleClick }: Props) {
   const [componentToDelete, setCompToDel] = useState("");
   const [display, setDisplay] = useState(`flex`);
 
+  let session = useSession()
+  let portraitUrl = session.data?.user?.image
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-
     let data = {
       title,
       description,
       category,
+      portraitUrl,
       content: compData,
     };
     try {
@@ -113,8 +116,8 @@ export default function GuideForm({ handleClick }: Props) {
   }, [componentToDelete]);
 
   return (
-    <div className="absolute  top-[8rem] z-50 w-full overflow-visible md:-translate-x-[12.5%] ">
-      <div className="flex justify-center">
+    <div className="absolute top-[8rem] z-50 w-full overflow-visible md:-translate-x-[12.5%] ">
+      <div className="flex justify-center overflow-scroll">
         <div className="flex flex-col justify-center rounded-lg border-solid border-white/50 border-2 backdrop-blur-sm w-full md:w-[75%] bg-black/40 ">
             { display === 'flex'? 
           <div className="p-4 w-full flex justify-between">

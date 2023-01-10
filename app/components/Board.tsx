@@ -102,7 +102,7 @@ export default function Board(props: Props) {
             <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
               <GridCard
                 authorName={guide.authorName}
-                createdAt={guide.createdAt.slice(0, 24)}
+                createdAt={guide.createdAt.slice(4, 24)}
                 category={guide.category}
                 description={guide.description}
                 heading={guide.title}

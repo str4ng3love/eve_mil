@@ -14,6 +14,7 @@ export async function getGuide(params:string) {
         category: true,
         createdAt: true,
         content: true,
+        authorPortrait: true,
        
         
       },

@@ -27,7 +27,7 @@ if(!user){
       console.log(user.name)
      
         await prisma.guide.create({
-          data: {authorName:user.name, category: req.body.category, title: req.body.title, description: req.body.description, authorId: user.id,  content: req.body.content, createdAt: date.toString() }})
+          data: {authorPortrait: req.body.portraitUrl , authorName:user.name, category: req.body.category, title: req.body.title, description: req.body.description, authorId: user.id,  content: req.body.content, createdAt: date.toString() }})
       
     } catch (error) {
       console.log(error);

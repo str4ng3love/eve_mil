@@ -64,6 +64,7 @@ model Guide {
   category    Category
   authorId    String
   authorName  String
+  authorPortrait String?
   comments    Comment[]
   likers      User[]    @relation(name: "UserLikedGuides")
   dislikers   User[]    @relation(name: "UserDislikedGuides")

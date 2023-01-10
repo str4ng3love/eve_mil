@@ -11,22 +11,30 @@ type Props = {
   authorName?: string;
 };
 export default function GridCard(props: Props) {
-
   return (
-    //TODO somehow delay displaying of data so its in sync with the animation
-   
     <Link href={props.url}>
-      <div title={props.description} style={{animationFillMode: 'none'}} className={`${props.displayAnim && props.animation} rounded-md p-4 h-32 bg-black/80 flex flex-col justify-between shadow-backShadow transition ease duration-500 hover:scale-105 hover:text-black hover:bg-white hover:shadow-link`}>
-        <h3 className="text-[1.25rem] font-bold font-Abel">{props.heading}</h3>
+      <div
+        style={{ animationFillMode: "none" }}
+        className={`${
+          props.displayAnim && props.animation
+        } group font-Abel  rounded-md p-4 h-32 bg-black/80 flex flex-col justify-between shadow-backShadow transition ease duration-500 hover:scale-105 hover:text-black hover:bg-white hover:shadow-link`}
+      >
+        <h3 className="first-letter:capitalize text-[1.25rem] leading-6 overflow-hidden font-bold font-Abel">
+          {props.heading}
+        </h3>
         <div className="flex justify-between">
-        <p>{props.category}</p>
-        <p className="overflow-hidden font-bold font-Abel max-h-[150px]">
-         by {props.authorName}
-        </p>
+          <p className=" mx-1 ">{props.category}</p>
+          <p className="overflow-hidden font-bold font-Abel max-h-[150px]">
+            by {props.authorName}
+          </p>
         </div>
-        <p>{props.createdAt}</p>
+        <p className="font-Abel ">{props.createdAt}</p>
+
+        <div className=" invisible absolute z-50 left-[50%] translate-x-[-50%] translate-y-[75%] shadow-wrapperShadow group-hover:visible flex flex-col items-center justify-center p-2 rounded-md bg-white w-max md:max-w-md max-w-[16rem]">
+          <span className="font-bold font-Abel first-letter:capitalize ">{props.heading}</span>
+          <span className="first-letter:capitalize ">{props.description}</span>
+        </div>
       </div>
     </Link>
-    
   );
 }
