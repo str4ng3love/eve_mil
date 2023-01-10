@@ -1,23 +1,39 @@
 import { ReactNode } from "react";
-
+import Link from "next/link";
 type MenuProps = {
   description: string;
   destination?: string;
   ico?: React.ReactElement;
-  handleClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>)=> void;
+  handleClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   children?: ReactNode;
 };
 
 export default function NavMenu(props: MenuProps) {
-  return (
-    <>
-      <div onClick={props.handleClick} className="group cursor-pointer whitespace-pre-wrap items-center flex font-Abel p-[0.75rem] uppercase bg-black text-white rounded-md hover:text-black hover:bg-white font-bold text-[1.5rem] hover:animate-pulseShadow">
-        {props.description}{props.ico}
-
-        <div className="hidden absolute translate-y-[9.5rem] -translate-x-[3rem] bg-white rounded-md p-[0.01rem] group-hover:flex flex-col">
-          {props.children}
-        </div>
+  if (props.destination) {
+    return (
+      <div className="group relative flex flex-col ">
+        <Link href={props.destination}>
+          <div className="cursor-pointer whitespace-pre-wrap items-center flex font-Abel p-[0.75rem] uppercase bg-black text-white rounded-md hover:text-black hover:bg-white  hover:animate-pulseShadow group-hover:text-black group-hover:bg-white  group-hover:animate-pulseShadow  font-bold text-[1.5rem]">
+            {props.description}
+          </div>
+        </Link>
+        <div className="absolute invisible translate-y-[3.75rem] left-[50%] translate-x-[-50%]  bg-white rounded-md p-[0.01rem] group-hover:visible flex flex-col">
+        {props.children}
       </div>
-    </>
+      </div>
+    );
+  }
+  return (
+    <div className="group relative flex flex-col">
+      <div
+        onClick={props.handleClick}
+        className="cursor-pointer whitespace-pre-wrap items-center flex font-Abel p-[0.75rem] uppercase bg-black text-white rounded-md hover:text-black hover:bg-white  hover:animate-pulseShadow group-hover:text-black group-hover:bg-white  group-hover:animate-pulseShadow  font-bold text-[1.5rem]"
+      >
+        {props.description}
+      </div>
+      <div className="absolute invisible translate-y-[3.75rem] left-[50%] translate-x-[-50%]  bg-white rounded-md p-[0.01rem] group-hover:visible flex flex-col">
+        {props.children}
+      </div>
+    </div>
   );
 }
