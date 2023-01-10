@@ -27,7 +27,7 @@ export default async function Page() {
 
   return (
     <>
-      <div className="flex flex-col items-center bg-gradient-to-bl from-slate-700 to-emerald-700 bg-fixed w-[100%] ">
+      <div className="flex flex-col items-center bg-fixed w-[100%] ">
         <div className="md:w-[75%] w-[100%] bg-black/80  text-white min-h-[calc(100vh-6rem)] shadow-backShadow">
           
 
