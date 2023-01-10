@@ -1,3 +1,4 @@
+
 import CoolerHeading from "./components/headings/CoolerHeading";
 import CoolestHeading from "./components/headings/CoolestHeading"
 import CoolHeading from "./components/headings/CoolHeading"
@@ -12,9 +13,13 @@ export default function Page() {
         <CoolestHeading text="WARZONE"/>
         <CoolHeading text="Your number one place for all things" />
         <CoolerHeading text="Factional Warfare" url="#" />
-        
+        <div className="text-white">
 
-       
+        <div className="w-[10rem] border-2 border-white border-dashed h-[10rem] bg-cover ">xxx
+    
+          </div>
+        </div>
+
         <Test />
       </div>
     </div>

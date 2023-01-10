@@ -19,6 +19,10 @@ module.exports = {
     },
 
     extend: {
+      
+      backgroundImage: {
+        "official": "url('../public/images/official.svg')",
+      },
       transitionProperty:{
         'height': 'height',
         'width': 'width'
