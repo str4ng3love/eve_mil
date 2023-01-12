@@ -13,6 +13,7 @@ async function getGuides() {
       authorName: true,
       category: true,
       createdAt: true,
+      language: true,
     },
   });
   if (!res) {

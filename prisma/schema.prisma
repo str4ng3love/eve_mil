@@ -54,20 +54,21 @@ model User {
 }
 
 model Guide {
-  id          String    @id @default(cuid())
-  title       String
-  description String
-  content     Json?
-  createdAt   String
-  author      Account   @relation(fields: [authorId], references: [id])
-  userNane    User      @relation(fields: [authorName], references: [name])
-  category    Category
-  authorId    String
-  authorName  String
+  id             String    @id @default(cuid())
+  title          String
+  description    String
+  content        Json?
+  createdAt      String
+  author         Account   @relation(fields: [authorId], references: [id])
+  userNane       User      @relation(fields: [authorName], references: [name])
+  category       Category
+  language       Language
+  authorId       String
+  authorName     String
   authorPortrait String?
-  comments    Comment[]
-  likers      User[]    @relation(name: "UserLikedGuides")
-  dislikers   User[]    @relation(name: "UserDislikedGuides")
+  comments       Comment[]
+  likers         User[]    @relation(name: "UserLikedGuides")
+  dislikers      User[]    @relation(name: "UserDislikedGuides")
 
   @@index([authorId])
   @@index([authorName])
@@ -99,4 +100,9 @@ enum Category {
   BUSINESS
   FLIGHT
   BASICS
+}
+
+enum Language {
+  PL
+  EN
 }

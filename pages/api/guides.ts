@@ -24,10 +24,10 @@ export default async function handler(
 if(!user){
   return res.status(401).json({ msg: "Not Authorized." });
 }
-      console.log(user.name)
+
      
         await prisma.guide.create({
-          data: {authorPortrait: req.body.portraitUrl , authorName:user.name, category: req.body.category, title: req.body.title, description: req.body.description, authorId: user.id,  content: req.body.content, createdAt: date.toString() }})
+          data: {authorPortrait: req.body.portraitUrl , authorName:user.name, category: req.body.category, language: req.body.language,  title: req.body.title, description: req.body.description, authorId: user.id,  content: req.body.content, createdAt: date.toString() }})
       
     } catch (error) {
       console.log(error);
