@@ -1,20 +1,19 @@
 
-import Board from "../../components/Board";
+import Board from "../../components/ui/Board";
 
 import { prisma } from "./../../../lib/prismaConnect";
 
 async function getGuides() {
   const res = await prisma.guide.findMany({
-    select: {
-      description: true,
+    select:{
       id: true,
+      description: true,
       title: true,
-      authorId: true,
+      category:true,
+      createdAt:true,
       authorName: true,
-      category: true,
-      createdAt: true,
       language: true,
-    },
+    }
   });
   if (!res) {
     throw new Error("Failed to fetch data.");

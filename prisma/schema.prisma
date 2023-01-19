@@ -10,21 +10,19 @@ datasource db {
 }
 
 model Account {
-  id                String    @id @default(cuid())
+  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?   @db.Text
-  access_token      String?   @db.Text
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?   @db.Text
+  id_token          String? @db.Text
   session_state     String?
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Guide             Guide[]
-  Comment           Comment[]
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -41,37 +39,61 @@ model Session {
 }
 
 model User {
-  id             String    @id @default(cuid())
-  name           String    @unique
-  email          String?   @unique
-  emailVerified  DateTime?
-  image          String?
-  likedGuides    Guide[]   @relation(name: "UserLikedGuides")
-  dislikedGuides Guide[]   @relation(name: "UserDislikedGuides")
-  accounts       Account[]
-  sessions       Session[]
-  Guide          Guide[]
+  id            String         @id @default(cuid())
+  name          String         @unique
+  email         String?        @unique
+  emailVerified DateTime?
+  image         String         @unique
+  accounts      Account[]
+  sessions      Session[]
+  guides        Guide[]
+  comments      Comment[]
+  userPortrait  Guide[]        @relation(name: "UserPortrait")
+  userName      Guide[]        @relation(name: "UserName")
+  likedComments PropsComment[]
+  likedGuides   PropsGuide[]
+}
+
+model Comment {
+  id        String         @id @default(uuid())
+  message   String
+  createdAt String
+  updatedAt String
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  guide     Guide          @relation(fields: [guideId], references: [id], onDelete: Cascade)
+  guideId   String
+  parent    Comment?       @relation(name: "ParentChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children  Comment[]      @relation(name: "ParentChild")
+  parentId  String?
+  likes     PropsComment[]
+
+  @@index(userId)
+  @@index(guideId)
+  @@index(parentId)
 }
 
 model Guide {
-  id             String    @id @default(cuid())
+  id             String       @id @default(cuid())
   title          String
   description    String
   content        Json?
   createdAt      String
-  author         Account   @relation(fields: [authorId], references: [id])
-  userNane       User      @relation(fields: [authorName], references: [name])
+  updatedAt      String?
   category       Category
   language       Language
-  authorId       String
+  user           User         @relation(fields: [userId], references: [id])
+  userId         String
+  userPortrait   User         @relation(name: "UserPortrait", fields: [authorPortrait], references: [image])
+  authorPortrait String
+  userName       User         @relation(name: "UserName", fields: [authorName], references: [name])
   authorName     String
-  authorPortrait String?
   comments       Comment[]
-  likers         User[]    @relation(name: "UserLikedGuides")
-  dislikers      User[]    @relation(name: "UserDislikedGuides")
+  likes          PropsGuide[]
 
-  @@index([authorId])
   @@index([authorName])
+  @@index([authorPortrait])
+  @@index([userId])
 }
 
 model VerificationToken {
@@ -82,17 +104,30 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Comment {
-  id        String  @id @default(cuid())
-  content   String
-  createdAt String
-  authorId  String
-  guideId   String?
-  author    Account @relation(fields: [authorId], references: [id])
-  Guide     Guide?  @relation(fields: [guideId], references: [id])
+model PropsGuide {
+  id      String @unique @default(uuid())
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String 
+  guide   Guide  @relation(fields: [guideId], references: [id])
+  guideId String 
+  like    LikeState  
 
-  @@index([authorId])
+  @@id([userId, guideId])
+  @@index([userId])
   @@index([guideId])
+}
+
+model PropsComment {
+  id        String  @unique @default(uuid())
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String  
+  comment   Comment @relation(fields: [commentId], references: [id])
+  commentId String  
+  like      LikeState   
+
+  @@id([userId, commentId])
+  @@index([userId])
+  @@index([commentId])
 }
 
 enum Category {
@@ -105,4 +140,9 @@ enum Category {
 enum Language {
   PL
   EN
+}
+
+enum LikeState {
+  LIKE
+  DISLIKE
 }

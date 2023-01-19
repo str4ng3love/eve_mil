@@ -9,10 +9,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await unstable_getServerSession(req,res, authOptions);
+  console.log(session?.user?.name)
   let timeStamp = Date.now()
   let date = new Date(timeStamp)
   if (req.method === "POST") {
     if (!session?.user) {
+      if(session?.user?.name !== req.body.authorName){
+        return res.status(401).json({ msg: "Not Authorized." });
+      }
       return res.status(401).json({ msg: "Not Authorized." });
     }
     try {
@@ -27,12 +31,23 @@ if(!user){
 
      
         await prisma.guide.create({
-          data: {authorPortrait: req.body.portraitUrl , authorName:user.name, category: req.body.category, language: req.body.language,  title: req.body.title, description: req.body.description, authorId: user.id,  content: req.body.content, createdAt: date.toString() }})
+          data: {
+            userId: user.id,
+            authorPortrait: user.image,
+            authorName: req.body.authorName || user.name,
+            category: req.body.category,
+            createdAt: date.toString(),
+            description: req.body.description,
+            language: req.body.language,
+            title: req.body.title,
+            content: req.body.content,
+
+          }})
       
     } catch (error) {
       console.log(error);
     }
-    res.json({ msg: `ok` });
+    res.json({ msg: `Success` });
   } else if (req.method === "GET") {
     try {
       const guides = await prisma.guide.findMany()

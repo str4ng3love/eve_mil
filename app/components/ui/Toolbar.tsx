@@ -107,20 +107,23 @@ export default function Toolbar(props: Props) {
         )}
         <ToolbarMenu
           dir={EDir.yPositive}
+          cursor={ECur.auto}
           text="category"
           xOffSet={"0rem"}
           components={filterComps}
         />
         <ToolbarMenu
           dir={EDir.yPositive}
+          cursor={ECur.auto}
           text="Language"
           xOffSet={"5rem"}
           components={langComps}
         />
         <ToolbarMenu
           dir={EDir.xPositive}
+          cursor={ECur.auto}
           text="sort by"
-          xOffSet={"0rem"}
+          xOffSet={"5rem"}
           components={sortComps}
         />
       </div>

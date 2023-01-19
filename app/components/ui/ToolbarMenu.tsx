@@ -7,7 +7,7 @@ export enum EDir {
 }
 export enum ECur {
   pointer = "cursor-pointer",
-  none = "cursor-none",
+  auto = "cursor-auto",
 }
 interface Props {
   components: {
@@ -33,6 +33,7 @@ export default function ToolbarMenu(props: Props) {
         className={`group-hover:${props.dir}-[5rem] group-hover:translate-x-[${props.xOffSet}]  absolute -translate-z-1 flex justify-center rounded-md group-hover:rounded-none h-[5rem] w-[5rem]
            bg-black/80 delay-150 ease-out transition-all duration-500`}
       >
+        
         <div className={`group flex  flex-col w-[5rem] h-[5rem]`}>
           {props.cursor === ECur.pointer ? (
             <div
@@ -57,6 +58,7 @@ export default function ToolbarMenu(props: Props) {
                 className={`absolute transition-height delay-300  h-0 group-hover:h-[${heightVar}] duration-100 ease-out overflow-hidden  bg-black/80 text-white font-Abel uppercase font-bold ${props.dir}-[5rem] `}
               >
                 {props.components?.map((comp, index) => (
+               
                   <ToolbarMenuItem text={comp.text} key={index} fn={comp.fn} />
                 ))}
               </div>

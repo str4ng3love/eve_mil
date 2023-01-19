@@ -3,8 +3,8 @@ import { v4 } from "uuid";
 
 import { Suspense, useState, useEffect } from "react";
 import GridCard from "./GridCard";
-import SpinnerMini from "./ui/SpinnerMini";
-import Toolbar from "./ui/Toolbar";
+import SpinnerMini from "./SpinnerMini";
+import Toolbar from "./Toolbar";
 type Props = {
   guides?: {
     id: string;
@@ -19,7 +19,7 @@ type Props = {
 
 export default function Board(props: Props) {
   const [filter, setFilter] = useState<string>("ALL");
-  const [langFilter, setLangFilter] = useState<string>("ALL");
+  const [langFilter, setLangFilter] = useState<string>("NO SELECTION");
   const [sorter, setSorter] = useState<string>("date");
   const [compareFn, setCompareFn] = useState<any>();
   const [order, setOrder] = useState<boolean>(true);
@@ -92,10 +92,6 @@ export default function Board(props: Props) {
       return 0;
     }
   };
-  // useEffect(()=>{
-  //   console.log(langFilter)
-  //   props.guides?.filter((guide)=> guide.language ===)
-  // }, [langFilter])
 
   return (
     <>

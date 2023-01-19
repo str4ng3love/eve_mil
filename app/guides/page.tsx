@@ -1,8 +1,8 @@
 import CoolerHeading from "../components/headings/CoolerHeading";
 import CoolestHeading from "../components/headings/CoolestHeading";
 import { TAlign } from "../components/headings/CoolHeading";
-import Card from "../components/Card";
-import Carrousel from "../components/Carrousel";
+import Card from "../components/ui/Card";
+import Carrousel from "../components/ui/Carrousel";
 import CoolHeading from "../components/headings/CoolHeading";
 import { prisma } from "../../lib/prismaConnect";
 

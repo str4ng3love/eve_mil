@@ -39,12 +39,15 @@ export default function GuideForm({ handleClick }: Props) {
   const [compData, setCompData] = useState<CDType>({ objects: {} });
   const [componentToDelete, setCompToDel] = useState("");
   const [display, setDisplay] = useState(`flex`);
+  const [response, setResponse] = useState("")
 
   let session = useSession();
+  console.log(session.data?.user?.name)
   let portraitUrl = session.data?.user?.image;
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     let data = {
+      authorName: session.data?.user?.name,
       title,
       description,
       category,
@@ -53,13 +56,15 @@ export default function GuideForm({ handleClick }: Props) {
       content: compData,
     };
     try {
-      await fetch("/api/guides", {
+      const res = await fetch("/api/guides", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
+      const msg = await res.json()
+      setResponse(msg.msg)
     } catch (error) {
       console.log(error);
     }
@@ -257,7 +262,10 @@ export default function GuideForm({ handleClick }: Props) {
                   handleClick={addComponent}
                 />
               </div>
-
+              { response ? 
+              <div className="py-4">
+                <span className="p-4 font-Abel bg-emerald-300 uppercase rounded-md text-lg font-bold border-emerald-700 border-solid border-2">{response}</span>
+              </div>: <></>}
               <Button text="submit" type={BType.submit} />
             </form>
           </div>
