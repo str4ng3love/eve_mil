@@ -22,7 +22,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     content = extractContent(data.content.objects);
   }
 const likeData = await getLike(data.id)
-console.log(likeData)
+
 
   return (
     <>
@@ -71,6 +71,7 @@ console.log(likeData)
       <div className="w-full text-white py-4 bg-black shadow-wrapperShadow ">
         <div className="flex w-full items-center justify-evenly">
           <span className="font-Abel font-bold">Views: 12345</span>
+          {/* read up on suspense and how it works */}
           <Suspense fallback={<SpinnerMini />}>
             <Like id={likeData?.id} guideId={data.id} state={likeData?.like} />
           </Suspense>

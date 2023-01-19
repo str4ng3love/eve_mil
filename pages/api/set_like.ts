@@ -9,7 +9,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await unstable_getServerSession(req, res, authOptions);
-  console.log(req.body)
+
   if (session?.user?.name) {
     const user = await prisma.user.findFirst({
       where: { name: session.user.name },
@@ -33,12 +33,38 @@ export default async function handler(
           userId: user.id
         }
       });
+     
       if(!resp){
         throw new Error('Something went wrong.')
       } 
-      console.log('resolved')
+    
       return res.status(200).json({msg: `Added a like`})
-    } else if (!user?.id) {
+    }else  if (user?.id && req.body.commentId) {
+
+    
+      const resp = await prisma.propsComment.upsert({
+        where: {
+          userId_commentId:{
+            commentId: req.body.commentId,
+            userId: user.id
+          }
+        }, 
+        update:{
+          like: 'LIKE'
+        }, 
+        create: {
+          like: 'LIKE',
+          commentId: req.body.commentId,
+          userId: user.id
+        }
+      });
+      
+      if(!resp){
+        throw new Error('Something went wrong.')
+      } 
+    
+      return res.status(200).json({msg: `Added a like`})
+    } else  if (!user?.id) {
       console.log(`Unauthorized: no user detected`);
       return res.status(401);
     }

@@ -11,7 +11,7 @@ export default async function getLike(guideId?: string, commentId?: string) {
           user: { name: session.user.name },
         },
       });
-      console.log(`logging out data: ${resp}`)
+
       return resp;
     } else {
       const resp = await prisma.propsComment.findFirst({
@@ -26,6 +26,6 @@ export default async function getLike(guideId?: string, commentId?: string) {
       return resp;
     }
   } else {
-    throw new Error("Something went wrong!");
+    return 
   }
 }

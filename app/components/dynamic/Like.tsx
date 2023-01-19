@@ -55,7 +55,13 @@ export default function Like({id, state, guideId, commentId}: Props) {
           <div
             title="Dislike"
             onClick={() => {
-             
+              if(like === LikeState.DISLIKE){
+                setLike(undefined)
+                reqRemoveLike(guideId, commentId)
+               } else {
+                setLike(LikeState.DISLIKE)
+                reqSetDislike(guideId, commentId)
+               }
             }}
             className="hover:scale-110 text-white hover:bg-white hover:text-black hover:shadow-link transition-all ease duration-300 rounded-md p-1  cursor-pointer"
           >

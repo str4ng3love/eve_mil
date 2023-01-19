@@ -25,7 +25,18 @@ export default async function handler(
         
      
         res.json(`Like with ID ${req.body.id} deleted.`);
-      } else if (!user?.id) {
+      } else  if (user?.id && req.body.commentId) {
+
+        const resp = await prisma.propsComment.delete({where:{
+            userId_commentId: {
+              commentId: req.body.commentId, userId: user.id
+            }
+        }});
+        
+     
+        res.json(`Like with ID ${req.body.id} deleted.`);
+      }
+       else if (!user?.id) {
         console.log(`Unauthorized: no user detected`);
         return res.status(401);
       }
