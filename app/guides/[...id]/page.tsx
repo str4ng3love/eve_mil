@@ -1,5 +1,5 @@
 
-import { getGuide } from "../../../services/fetching";
+import { getComments, getGuide, getLike } from "../../../services/fetching";
 import Image from "next/image";
 import CoolestHeading from "../../components/headings/CoolestHeading";
 import CoolHeading, { TAlign } from "../../components/headings/CoolHeading";
@@ -10,7 +10,7 @@ import { extractContent } from "../../../lib/ContentExtract";
 import CommentSection from "../../components/dynamic/CommentSection";
 import AddComment from "../../components/dynamic/AddComment";
 import Like from "../../components/dynamic/Like";
-import getLike from "../../../services/getLike";
+
 
 export default async function Page({ params }: { params: { id: string } }) {
   let id = params.id.at(-1) as string;
@@ -22,7 +22,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     content = extractContent(data.content.objects);
   }
 const likeData = await getLike(data.id)
-
+const commentsData = await getComments(data.id)
 
   return (
     <>
@@ -77,9 +77,9 @@ const likeData = await getLike(data.id)
           </Suspense>
         </div>
 
-        <AddComment />
+        <AddComment guideId={data.id}/>
 
-        <CommentSection />
+        <CommentSection comments={commentsData}/>
       </div>
     </>
   );

@@ -47,27 +47,31 @@ model User {
   accounts      Account[]
   sessions      Session[]
   guides        Guide[]
-  comments      Comment[]
+  comments      Comment[]      @relation(name: "UserID")
   userPortrait  Guide[]        @relation(name: "UserPortrait")
   userName      Guide[]        @relation(name: "UserName")
   likedComments PropsComment[]
   likedGuides   PropsGuide[]
+  Comment       Comment[] @relation(name: "Authors")
 }
 
 model Comment {
   id        String         @id @default(uuid())
-  message   String
+  message   String         @db.LongText
   createdAt String
-  updatedAt String
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updatedAt String?
+  user      User           @relation(name: "UserID", fields: [userId], references: [id], onDelete: Cascade)
   userId    String
-  guide     Guide          @relation(fields: [guideId], references: [id], onDelete: Cascade)
-  guideId   String
+  userName  User           @relation(name: "Authors", fields: [author], references: [name])
+  author    String
+  guide     Guide?         @relation(fields: [guideId], references: [id], onDelete: Cascade)
+  guideId   String?
   parent    Comment?       @relation(name: "ParentChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   children  Comment[]      @relation(name: "ParentChild")
   parentId  String?
   likes     PropsComment[]
 
+@@index(author)
   @@index(userId)
   @@index(guideId)
   @@index(parentId)
@@ -105,12 +109,12 @@ model VerificationToken {
 }
 
 model PropsGuide {
-  id      String @unique @default(uuid())
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String 
-  guide   Guide  @relation(fields: [guideId], references: [id])
-  guideId String 
-  like    LikeState  
+  id      String    @unique @default(uuid())
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+  guide   Guide     @relation(fields: [guideId], references: [id])
+  guideId String
+  like    LikeState
 
   @@id([userId, guideId])
   @@index([userId])
@@ -118,12 +122,12 @@ model PropsGuide {
 }
 
 model PropsComment {
-  id        String  @unique @default(uuid())
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String  
-  comment   Comment @relation(fields: [commentId], references: [id])
-  commentId String  
-  like      LikeState   
+  id        String    @unique @default(uuid())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  comment   Comment   @relation(fields: [commentId], references: [id])
+  commentId String
+  like      LikeState
 
   @@id([userId, commentId])
   @@index([userId])

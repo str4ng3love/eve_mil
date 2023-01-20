@@ -55,7 +55,7 @@ export default async function handler(
       if(!resp){
         throw new Error('Something went wrong.')
       } 
-      console.log('resolved')
+   
       return res.status(200).json({msg: `Added a dislike`})
     } else if (!user?.id) {
       console.log(`Unauthorized: no user detected`);

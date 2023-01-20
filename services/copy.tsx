@@ -1,92 +1,113 @@
 // "use client";
-// import {
-//   AiFillLike,
-//   AiFillDislike,
-//   AiOutlineLike,
-//   AiOutlineDislike,
-// } from "react-icons/ai";
-// import { useState } from "react";
+
 // import { signIn, useSession } from "next-auth/react";
-// import {
-//   reqSetLike,
-//   reqSetDislike,
-//   reqRemoveLike,
-// } from "../../../services/setLikes";
-// import { LikeState } from "@prisma/client";
+// import { useState } from "react";
+// import Button, { BType } from "../ui/Button";
 
-// interface Props {
-// id: string;
-// userId: string;
-// state: string | null;
-// guideId?: string;
-// commentId?: string;
- 
-// }
-
-// export default function Like({id, userId, state, guideId, commentId}: Props) {
-//   const [like, setLike] = useState(state);
-//   const [dislike, setDislike] = useState(false);
+// export default function AddComment() {
+//   const [showForm, setShowForm] = useState(false);
+//   const [commentContent, setCommentContent] = useState("");
+//   const [respMsg, setRespMsg] = useState("");
 //   const session = useSession();
-// console.log(like)
+
+//   const handleAddComment = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+//     const parEl = e.currentTarget.parentElement
+//     const divGroup = parEl?.parentElement?.children
+//     const divInQuest = divGroup?.item(0)
+//     if(divInQuest){
+//       divInQuest.textContent = ''
+//     }
+//     const comment = {
+//       content: commentContent,
+//     };
+//     try {
+//       const resp = await fetch("/api/add_comment", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(comment),
+//       });
+//       const data = await resp.json();
+//       setRespMsg(data.msg);
+//       console.log(data.msg);
+//     } catch (error) {
+//       console.log(error);
+//     }
+    
+ 
+//   };
+//   const resetComment = () => {
+//     setRespMsg("");
+//     setCommentContent("");
+//   };
 //   return (
-//     <>
-//       {session.data?.user ? (
-//         <div className="flex w-fit gap-4 p-4 h-fit">
-//           <div
-//             title="Like"
-//             onClick={() => {
-              
-//             }}
-//             className="hover:scale-110 text-white hover:bg-white hover:text-black hover:shadow-link transition-all ease duration-300 rounded-md p-1  cursor-pointer"
-//           >
-//             {like ? (
-//               <AiFillLike size={"1.3em"} />
-//             ) : (
-//               <AiOutlineLike size={"1.3em"} />
-//             )}
-//           </div>
-//           <div
-//             title="Dislike"
-//             onClick={() => {
-//               if (dislike) {
-//                 setDislike(false);
-//                 // reqRemoveLike(likeId);
+//     <div className="w-full flex justify-center p-8">
+//       <div className="w-[80%] text-white">
+//         {!showForm ? (
+//           <Button
+//             handleClick={() => {
+//               if (session.data?.user) {
+//                 setShowForm(true);
 //               } else {
-//                 setDislike(true);
-//                 // reqSetDislike(likeId);
+//                 signIn();
 //               }
 //             }}
-//             className="hover:scale-110 text-white hover:bg-white hover:text-black hover:shadow-link transition-all ease duration-300 rounded-md p-1  cursor-pointer"
-//           >
-//             {dislike ? (
-//               <AiFillDislike size={"1.3em"} />
-//             ) : (
-//               <AiOutlineDislike size={"1.3em"} />
-//             )}
-//           </div>
-//         </div>
-//       ) : (
-//         <div className="flex justify-between w-fit items-center gap-4 p-4">
-//           <div
-//             title="Like"
-//             onClick={() => {
-//               signIn();
-//             }}
-//             className="hover:bg-white hover:text-black rounded-md p-1  cursor-pointer"
-//           >
-//             {like ? <AiFillLike /> : <AiOutlineLike />}
-//           </div>
-//           <div
-//             title="Dislike"
-//             onClick={() => {
-//               signIn();
-//             }}
-//             className="hover:bg-white hover:text-black rounded-md p-1  cursor-pointer"
-//           >
-//             {dislike ? <AiFillDislike /> : <AiOutlineDislike />}
-//           </div>
-//         </div>
-//       )}
-//     </>
+//             text={"Add a comment"}
+//             type={BType.button}
+//           />
+//         ) : (
+//           <>
+//             <div className="flex justify-between items-center">
+//               {!respMsg ? (
+//                 <div
+//                   onInput={(e) => setCommentContent(e.currentTarget.innerHTML)}
+//                   //TODO edit text before saving ↑
+
+//                   contentEditable="true"
+//                   placeholder="Add a comment..."
+//                   className="w-full  p-1 h-40 bg-stone-400  text-white resize-none border-b-2 border-white overflow-y-scroll"
+//                 />
+//               ) : (
+//                 <div className="flex w-full  p-1 h-40 text-white resize-none justify-center items-center">
+//                   <span className="p-4 font-Abel bg-emerald-300 uppercase rounded-md text-lg font-bold border-emerald-700 border-solid border-2">
+//                     {respMsg}
+//                   </span>
+//                 </div>
+//               )}
+//             </div>
+//             <div className="flex p-2 border-white justify-evenly items-center font-bold font-Abel ">
+//               {respMsg.length > 1 ? (
+//                 <Button
+//                   handleClick={() => {
+//                     resetComment();
+//                   }}
+//                   text={"Add a new comment"}
+//                   type={BType.button}
+//                 />
+//               ) : (
+//                 <Button
+//                   handleClick={(e) => {
+//                     if (commentContent.length >= 1) {
+//                       handleAddComment(e);
+//                       setCommentContent('')
+//                     }
+//                   }}
+//                   text={"Comment"}
+//                   type={BType.button}
+//                 />
+//               )}
+//               <Button
+//                 text="X"
+//                 type={BType.erase}
+//                 handleClick={() => {
+//                   setShowForm(false);
+//                 }}
+//               />
+//             </div>
+//           </>
+//         )}
+//       </div>
+//     </div>
 //   );
 // }

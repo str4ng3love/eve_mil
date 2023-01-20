@@ -1,16 +1,21 @@
-import Comment from "./Comment"
-export default function CommentSection(){
+import { Comment } from "@prisma/client"
+import CommentComp from "./CommentComp"
+interface Props {
+    comments?: Comment[] | null
+}
+export default function CommentSection({comments}:Props){
+    console.log(comments)
+    
     return(
         <section className="flex items-center flex-col">
-            {/* comments */}
-          <Comment  message="wroom"/>
-          <Comment  message="2323"/>
-          <Comment  message="ccvdvdv dvvd"/>
-          <Comment  message="nhgre4 rgf"/>
-          <Comment  message="e 554gdf 
-          sd"/>
-                {/* repply */}
-            {/* add comment */}
+          {
+            comments ? comments.map((comment)=>(
+                <CommentComp author={comment.author} key={comment.id} commentId={comment.id} message={comment.message} />
+            )): <div>
+                No Comments Yet
+            </div>
+          }
+          
         </section>
     )
 }

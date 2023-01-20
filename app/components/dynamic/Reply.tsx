@@ -3,14 +3,16 @@ import Like from "./Like";
 import Button, { BType } from "../ui/Button";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
-
-export default function Reply() {
+interface Props {
+  commentId: string;
+}
+export default function Reply({commentId}: Props) {
   const [reply, setReply] = useState(false);
   const session = useSession();
   return (
     <div className="w-full ">
       <div className="w-full p-1 flex justify-start items-center">
-      <Like />
+      <Like commentId={commentId}/>
         {session.data?.user ? (
           <span
             onClick={() => setReply(true)}

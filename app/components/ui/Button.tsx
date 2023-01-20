@@ -11,7 +11,7 @@ type Props = {
   text: string;
   url?: string;
   handleClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.PointerEvent<HTMLButtonElement>
   ) => void;
 };
 
@@ -43,7 +43,7 @@ export default function Button({ type, text, url, handleClick }: Props) {
       {type === 2 ? (
         <button
           onClick={handleClick}
-          className="p-2 m-2 uppercase font-bold font-Abel transition-all ease duration-300 hover:scale-110 hover:bg-white hover:text-black hover:shadow-link w-10 h-10 rounded-md bg-red-600 text-white "
+          className="p-2 m-2 uppercase font-bold font-Abel transition-all ease duration-300 hover:scale-110 hover:bg-white hover:text-black hover:shadow-link min-w-[2.5rem] h-10 rounded-md bg-red-600 text-white "
           type={"button"}
         >
           {text}
