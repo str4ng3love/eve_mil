@@ -1,12 +1,12 @@
 import { prisma } from "../lib/prismaConnect";
 import { unstable_getServerSession } from "next-auth";
-import { NextApiRequest } from "next";
+
 
 export async function getGuide(params: string) {
   const res = await prisma.guide.findFirst({
     where: {
       title: params,
-    },
+    }, 
   });
   if (!res) {
     throw new Error("Failed to fetch data.");
@@ -20,22 +20,28 @@ export async function getLike(guideId?: string, commentId?: string) {
 
   if (session?.user && session.user.name) {
     if (guideId) {
-      const resp = await prisma.propsGuide.findFirst({
-        where: {
+      console.log(`querying`)
+      const resp = await prisma.like.findFirst({
+        where:{
           guideId: guideId,
-          user: { name: session.user.name },
-        },
-      });
-
+          user: {
+            name: session.user.name
+          }
+        }
+      })
+      
+console.log(resp)
       return resp;
-    } else {
-      const resp = await prisma.propsComment.findFirst({
+    }
+    if(commentId){
+      console.log(`running`)
+      const resp = await prisma.like.findFirst({
         where: {
           id: commentId,
+          user: { name: session.user.name },
         },
         select: {
-          id: true,
-          like: true,
+         id:true
         },
       });
       return resp;
@@ -51,8 +57,9 @@ export const getComments = async (guideId: string) => {
     if (guideId) {
       const resp = await prisma.comment.findMany({
         where: {
-          guideId: guideId,
-        },
+          guideId: guideId, 
+        }, 
+        
       });
       return resp;
     } else {

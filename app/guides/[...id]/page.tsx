@@ -15,6 +15,8 @@ import Like from "../../components/dynamic/Like";
 export default async function Page({ params }: { params: { id: string } }) {
   let id = params.id.at(-1) as string;
   let decodedId = decodeURI(id);
+
+  // chceck whether it is possible to fetch session user's like state
   const data = await getGuide(decodedId);
   let content;
   if (data.content) {
@@ -22,7 +24,8 @@ export default async function Page({ params }: { params: { id: string } }) {
     content = extractContent(data.content.objects);
   }
 const likeData = await getLike(data.id)
-const commentsData = await getComments(data.id)
+
+// const commentsData = await getComments(data.id)
 
   return (
     <>
@@ -73,13 +76,13 @@ const commentsData = await getComments(data.id)
           <span className="font-Abel font-bold">Views: 12345</span>
           {/* read up on suspense and how it works */}
           <Suspense fallback={<SpinnerMini />}>
-            <Like id={likeData?.id} guideId={data.id} state={likeData?.like} />
+            <Like id={likeData?.id} guideId={data.id} />
           </Suspense>
         </div>
 
         <AddComment guideId={data.id}/>
 
-        <CommentSection comments={commentsData}/>
+        {/* <CommentSection comments={commentsData}/> */}
       </div>
     </>
   );

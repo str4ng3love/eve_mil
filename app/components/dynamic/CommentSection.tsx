@@ -4,7 +4,7 @@ interface Props {
     comments?: Comment[] | null
 }
 export default function CommentSection({comments}:Props){
-    console.log(comments)
+
     
     return(
         <section className="flex items-center flex-col">

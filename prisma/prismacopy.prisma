@@ -47,11 +47,12 @@
 //   accounts      Account[]
 //   sessions      Session[]
 //   guides        Guide[]
-//   comments      Comment[]
+//   comments      Comment[]      @relation(name: "UserID")
 //   userPortrait  Guide[]        @relation(name: "UserPortrait")
 //   userName      Guide[]        @relation(name: "UserName")
 //   likedComments PropsComment[]
 //   likedGuides   PropsGuide[]
+//   Comment       Comment[]      @relation(name: "Authors")
 // }
 
 // model Comment {
@@ -59,10 +60,10 @@
 //   message   String         @db.LongText
 //   createdAt String
 //   updatedAt String?
-//   user      User           @relation(fields: [userId], references: [id], onDelete: Cascade) 
+//   user      User           @relation(name: "UserID", fields: [userId], references: [id], onDelete: Cascade)
 //   userId    String
-
-//   author  String 
+//   userName  User           @relation(name: "Authors", fields: [author], references: [name])
+//   author    String
 //   guide     Guide?         @relation(fields: [guideId], references: [id], onDelete: Cascade)
 //   guideId   String?
 //   parent    Comment?       @relation(name: "ParentChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -70,6 +71,7 @@
 //   parentId  String?
 //   likes     PropsComment[]
 
+//   @@index(author)
 //   @@index(userId)
 //   @@index(guideId)
 //   @@index(parentId)
@@ -91,7 +93,8 @@
 //   userName       User         @relation(name: "UserName", fields: [authorName], references: [name])
 //   authorName     String
 //   comments       Comment[]
-//   likes          PropsGuide[]
+//   likes          PropsGuide[] 
+//   dislikes       PropsGuide[] 
 
 //   @@index([authorName])
 //   @@index([authorPortrait])
@@ -107,12 +110,13 @@
 // }
 
 // model PropsGuide {
-//   id      String    @unique @default(uuid())
-//   user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   id      String  @unique @default(uuid())
+//   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 //   userId  String
-//   guide   Guide     @relation(fields: [guideId], references: [id])
+//   guide   Guide   @relation(fields: [guideId], references: [id])
 //   guideId String
-//   like    LikeState
+//   like    Boolean @default(false) 
+//   dislike Boolean @default(false) 
 
 //   @@id([userId, guideId])
 //   @@index([userId])
@@ -120,14 +124,14 @@
 // }
 
 // model PropsComment {
-//   id        String    @unique @default(uuid())
-//   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   id        String  @unique @default(uuid())
+//   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 //   userId    String
-//   comment   Comment   @relation(fields: [commentId], references: [id])
+//   comment   Comment @relation(fields: [commentId], references: [id])
 //   commentId String
-//   like      LikeState
+//   like      Boolean @default(false)
+//   dislike   Boolean @default(false)
 
-//   @@id([userId, commentId])
 //   @@index([userId])
 //   @@index([commentId])
 // }
@@ -142,9 +146,4 @@
 // enum Language {
 //   PL
 //   EN
-// }
-
-// enum LikeState {
-//   LIKE
-//   DISLIKE
 // }

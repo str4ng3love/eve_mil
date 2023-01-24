@@ -16,47 +16,50 @@ export default async function handler(
       select: { id: true },
     });
     if (user?.id && req.body.guideId) {
-     
-      const resp = await prisma.propsGuide.upsert({
+      const resp = await prisma.guide.update({
         where: {
-          userId_guideId:{
-            guideId: req.body.guideId,
-            userId: user.id
-          }
-        }, 
-        update:{
-          like: 'DISLIKE'
-        }, 
-        create: {
-          like: 'DISLIKE',
-          guideId: req.body.guideId,
-          userId: user.id
-        }
+          id: req.body.guideId,
+        },
+        data: {
+          likes: {
+            deleteMany: {
+              userId: user.id,
+            },
+          },
+          dislikes: {
+            create: {
+              userId: user.id,
+            },
+          },
+        },
       });
-      if (user?.id && req.body.commentId) {
-     
-        const resp = await prisma.propsComment.upsert({
-          where: {
-            userId_commentId:{
-              commentId: req.body.commentId,
-              userId: user.id
-            }
-          }, 
-          update:{
-            like: 'DISLIKE'
-          }, 
-          create: {
-            like: 'DISLIKE',
-            commentId: req.body.commentId,
-            userId: user.id
-          }
-        });
+      if (!resp) {
+        throw new Error("Something went wrong.");
       }
-      if(!resp){
-        throw new Error('Something went wrong.')
-      } 
-   
-      return res.status(200).json({msg: `Added a dislike`})
+      return res.status(200).json({ msg: `Added a dislike` });
+    } else if (user?.id && req.body.commentId) {
+      const resp = await prisma.comment.update({
+        where: {
+          id: req.body.commentId,
+        },
+        data: {
+          likes: {
+            deleteMany: {
+              userId: user.id,
+            },
+          },
+          dislike: {
+            create: {
+              userId: user.id,
+            },
+          },
+        },
+      });
+      if (!resp) {
+        throw new Error("Something went wrong.");
+      }
+
+      return res.status(200).json({ msg: `Added a dislike` });
     } else if (!user?.id) {
       console.log(`Unauthorized: no user detected`);
       return res.status(401);

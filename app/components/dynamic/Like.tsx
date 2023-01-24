@@ -7,7 +7,6 @@ import {
 } from "react-icons/ai";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { LikeState } from "@prisma/client";
 import {
   reqSetLike,
   reqSetDislike,
@@ -16,14 +15,17 @@ import {
 
 interface Props {
 id?: string | undefined;
-state?: LikeState;
+like?: boolean | null;
+dislike?: boolean | null;
 guideId?: string;
 commentId?: string;
+likesAmount?: number;
  
 }
 
-export default function Like({id, state, guideId, commentId}: Props) {
-  const [like, setLike] = useState(state);
+export default function Like({id, like , dislike, guideId, commentId, likesAmount}: Props) {
+  const [likeState, setLikeState ] = useState(like)
+  const [dislikeState, setDislikeState ] = useState(dislike)
 
   const session = useSession();
 
@@ -35,18 +37,18 @@ export default function Like({id, state, guideId, commentId}: Props) {
           <div
             title="Like"
             onClick={() => {
-            if(like === LikeState.LIKE){
-              setLike(undefined)
+            if(likeState === true){
+              setLikeState(false)
               reqRemoveLike(guideId, commentId)
              } else {
-              setLike(LikeState.LIKE)
+              setLikeState(true)
               reqSetLike(guideId, commentId)
              }
             }}
             className="hover:scale-110 text-white hover:bg-white hover:text-black hover:shadow-link transition-all ease duration-300 rounded-md p-1  cursor-pointer"
           >
            
-            {like ===LikeState.LIKE ? (
+            {likeState  ? (
               <AiFillLike size={"1.3em"} />
             ) : (
               <AiOutlineLike size={"1.3em"} />
@@ -55,17 +57,17 @@ export default function Like({id, state, guideId, commentId}: Props) {
           <div
             title="Dislike"
             onClick={() => {
-              if(like === LikeState.DISLIKE){
-                setLike(undefined)
+              if(dislikeState === true ){
+                setDislikeState(false)
                 reqRemoveLike(guideId, commentId)
                } else {
-                setLike(LikeState.DISLIKE)
+                setDislikeState(true)
                 reqSetDislike(guideId, commentId)
                }
             }}
             className="hover:scale-110 text-white hover:bg-white hover:text-black hover:shadow-link transition-all ease duration-300 rounded-md p-1  cursor-pointer"
           >
-            {like === LikeState.DISLIKE ? (
+            {like === dislikeState ? (
               <AiFillDislike size={"1.3em"} />
             ) : (
               <AiOutlineDislike size={"1.3em"} />
