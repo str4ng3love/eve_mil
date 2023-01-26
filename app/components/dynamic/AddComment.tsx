@@ -7,14 +7,14 @@ import Button, { BType } from "../ui/Button";
 interface Props {
   guideId?:string;
   commentId?:string;
+  butText?: string;
+  submitText?:string;
 }
-export default function AddComment({guideId, commentId}: Props) {
+export default function AddComment({guideId, commentId, butText, submitText}: Props) {
   const [showForm, setShowForm] = useState(false);
   const [commentContent, setCommentContent] = useState("");
   const session = useSession();
-useEffect(()=>{
-console.log(commentContent)
-},[commentContent])
+
   const handleAddComment = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 
     const comment = {
@@ -22,8 +22,8 @@ console.log(commentContent)
       guideId: guideId,
       commentId: commentId
     };
-    
-    try {
+      
+      try {
       const resp = await fetch("/api/add_comment", {
         method: "POST",
         headers: {
@@ -52,7 +52,7 @@ console.log(commentContent)
                 signIn();
               }
             }}
-            text={"Add a comment"}
+            text={butText as string}
             type={BType.button}
           />
         ) : (
@@ -79,7 +79,7 @@ console.log(commentContent)
                       setShowForm(false)
                     }
                   }}
-                  text={"Comment"}
+                  text={submitText as string}
                   type={BType.button}
                 />
           

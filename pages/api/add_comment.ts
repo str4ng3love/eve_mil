@@ -39,10 +39,11 @@ export default async function handler(
       const resp = await prisma.comment.create({
         data: {
           createdAt: date.toString(),
-          message: req.body.contnet,
+          message: req.body.content,
           parentId: req.body.commentId,
           userId: user.id,
           author: user.name,
+
         },
       });
       if (!resp) {

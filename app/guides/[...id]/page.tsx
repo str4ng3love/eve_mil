@@ -69,7 +69,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           </section>
         </div>
       </div>
-      <div className="w-full text-white py-4 bg-black shadow-wrapperShadow ">
+      <div className="w-full text-white py-4 bg-black shadow-wrapperShadow flex flex-col items-center">
         <div className="flex w-full items-center justify-evenly">
           <span className="font-Abel font-bold">Views: 12345</span>
           {/* read up on suspense and how it works */}
@@ -83,8 +83,8 @@ export default async function Page({ params }: { params: { id: string } }) {
             />
           </Suspense>
         </div>
-
-        <AddComment guideId={data.id} />
+        
+        <AddComment guideId={data.id} butText={"Add comment"} submitText={"coMmeNt"}/>
         {/* @ts-expect-error Server Component */}
         <CommentSection guideId={data.id} />
       </div>

@@ -1,4 +1,5 @@
 import DeleteComment from "./DeleteComment";
+import Replies from "./Replies";
 import Reply from "./Reply";
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
   dislikesNum: number | null;
   like: number | boolean | null;
   dislike: number | boolean | null;
+  width: string;
 };
 
 export default function CommentComp({
@@ -23,15 +25,16 @@ export default function CommentComp({
   dislikesNum,
   like,
   likesNum,
+  width
 }: Props) {
   let formatedMessage = message
     .replaceAll("</div>", `\n`)
     .replaceAll("<div>", "")
     .replaceAll("<br>", " ")
     .replaceAll("&nbsp;", " ");
-
+console.log(width)
   return (
-    <div className="flex flex-col w-[80%]  p-4 mb-4 font-Abel">
+    <div className={`flex flex-col w-full pl-4 mb-4 font-Abel`}>
       <div className="whitespace-pre-wrap w-full flex flex-col justify-start">
         <div className="flex justify-between">
           <span className="p-1 font-bold">{author}</span>
@@ -50,6 +53,8 @@ export default function CommentComp({
 
         <DeleteComment commentId={commentId} />
       </div>
+      {/* @ts-expect-error Server Component */}
+      <Replies commentId={commentId}/>
     </div>
   );
 }
