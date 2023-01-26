@@ -41,12 +41,13 @@ export default async function handler(
           id: req.body.commentId,
         },
         data: {
-          dislike: {
-            deleteMany: {
-              userId: user.id,
-            },
-          },
-          likes: {
+          dislikes: {
+            create:{
+              userId: user.id
+            }
+          }
+         ,
+          like: {
             deleteMany: {
               userId: user.id,
             },

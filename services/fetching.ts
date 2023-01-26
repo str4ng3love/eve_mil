@@ -1,12 +1,17 @@
 import { prisma } from "../lib/prismaConnect";
 import { unstable_getServerSession } from "next-auth";
 
-
-export async function getGuide(params: string) {
-  const res = await prisma.guide.findFirst({
-    where: {
-      title: params,
-    }, 
+export async function getGuides() {
+  const res = await prisma.guide.findMany({
+    select: {
+      id: true,
+      description: true,
+      title: true,
+      category: true,
+      createdAt: true,
+      authorName: true,
+      language: true,
+    },
   });
   if (!res) {
     throw new Error("Failed to fetch data.");
@@ -15,55 +20,92 @@ export async function getGuide(params: string) {
   return res;
 }
 
-export async function getLike(guideId?: string, commentId?: string) {
+export async function getGuide(params: string) {
   const session = await unstable_getServerSession();
-
-  if (session?.user && session.user.name) {
-    if (guideId) {
-      console.log(`querying`)
-      const resp = await prisma.like.findFirst({
-        where:{
-          guideId: guideId,
-          user: {
-            name: session.user.name
-          }
-        }
-      })
-      
-console.log(resp)
-      return resp;
-    }
-    if(commentId){
-      console.log(`running`)
-      const resp = await prisma.like.findFirst({
+  const res = await prisma.guide.findFirst({
+    where: {
+      title: params,
+    },
+    select: {
+      id: true,
+      authorName: true,
+      authorPortrait: true,
+      category: true,
+      content: true,
+      createdAt: true,
+      description: true,
+      title: true,
+      likes: {
         where: {
-          id: commentId,
-          user: { name: session.user.name },
+          user: {
+            name: session?.user?.name || "",
+          },
         },
+      },
+      dislikes: {
+        where: {
+          user: {
+            name: session?.user?.name || "",
+          },
+        },
+      },
+      _count: {
         select: {
-         id:true
+          likes: true,
+          dislikes: true,
         },
-      });
-      return resp;
-    }
-  } else {
-    return;
+      },
+    },
+  });
+  if (!res) {
+    throw new Error("Failed to fetch data.");
   }
+
+  return res;
 }
 
-export const getComments = async (guideId: string) => {
+export async function  getComments(guideId: string) {
   const session = await unstable_getServerSession();
-  if (session?.user && session.user.name) {
+  
     if (guideId) {
       const resp = await prisma.comment.findMany({
         where: {
-          guideId: guideId, 
-        }, 
-        
+          guideId: guideId,
+        },
+        take: 15,
+        select: {
+          id: true,
+          author: true,
+          createdAt: true,
+          updatedAt: true,
+          message: true,
+          like: {
+            where: {
+              user: {
+                name: session?.user?.name || ""
+              }
+            }, 
+          },
+          dislikes:{
+            where: {
+              user: {
+                name: session?.user?.name || ""
+
+              }
+            }
+          },
+          _count:{
+            select:{
+              like: true,
+              dislikes: true,
+            }
+          }
+        },
       });
+
       return resp;
-    } else {
-      return;
+  {
+      
     }
   } else {
     return;

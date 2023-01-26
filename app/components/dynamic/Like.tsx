@@ -14,65 +14,94 @@ import {
 } from "../../../services/setLikes";
 
 interface Props {
-id?: string | undefined;
-like?: boolean | null;
-dislike?: boolean | null;
-guideId?: string;
-commentId?: string;
-likesAmount?: number;
- 
+
+  like?: number | boolean | null;
+  dislike?: number | boolean | null;
+  guideId?: string;
+  commentId?: string;
+  likesAmount?: number;
+  dislikesAmount?: number;
 }
 
-export default function Like({id, like , dislike, guideId, commentId, likesAmount}: Props) {
-  const [likeState, setLikeState ] = useState(like)
-  const [dislikeState, setDislikeState ] = useState(dislike)
+export default function Like({
+ 
+  like,
+  dislike,
+  guideId,
+  commentId,
+  likesAmount,
+  dislikesAmount,
+}: Props) {
+  const [likeState, setLikeState] = useState(like);
+  const [dislikeState, setDislikeState] = useState(dislike);
+  const [likesNum, setLikesNum] = useState(likesAmount || 0);
+  const [dislikesNum, setDislikesNum] = useState(dislikesAmount || 0);
 
   const session = useSession();
 
   return (
     <>
       {session.data?.user ? (
-      
         <div className="flex w-fit gap-4 p-4 h-fit">
           <div
             title="Like"
             onClick={() => {
-            if(likeState === true){
-              setLikeState(false)
-              reqRemoveLike(guideId, commentId)
-             } else {
-              setLikeState(true)
-              reqSetLike(guideId, commentId)
-             }
+              if (likeState) {
+                setLikeState(false);
+                setLikesNum((prevState)=>(prevState - 1))
+                return reqRemoveLike(guideId, commentId);
+              }
+              if (dislikeState) {
+                setDislikeState(false);
+                setDislikesNum((prevState)=> prevState - 1)
+              }
+              setLikeState(true);
+              setLikesNum((prevState)=>(prevState + 1))
+              reqSetLike(guideId, commentId);
             }}
             className="hover:scale-110 text-white hover:bg-white hover:text-black hover:shadow-link transition-all ease duration-300 rounded-md p-1  cursor-pointer"
           >
-           
-            {likeState  ? (
-              <AiFillLike size={"1.3em"} />
+            {likeState == true ? (
+              <div className="flex">
+                <span className="mx-4 rounded-md">{likesNum}</span>
+                <AiFillLike size={"1.3em"} />
+              </div>
             ) : (
-              <AiOutlineLike size={"1.3em"} />
+              <div className="flex">
+                <span className="px-4">{likesNum}</span>
+                <AiOutlineLike size={"1.3em"} />
+              </div>
             )}
           </div>
           <div
             title="Dislike"
             onClick={() => {
-              if(dislikeState === true ){
-                setDislikeState(false)
-                reqRemoveLike(guideId, commentId)
-               } else {
-                setDislikeState(true)
-                reqSetDislike(guideId, commentId)
-               }
+              if (dislikeState) {
+                setDislikeState(false);
+                setDislikesNum((prevState)=> prevState -1)
+                return reqRemoveLike(guideId, commentId);
+              }
+              if (likeState) {
+                setLikeState(false);
+                setLikesNum((prevState)=> prevState - 1)
+              }
+              setDislikesNum((prevState)=> prevState +1)
+              setDislikeState(true);
+              reqSetDislike(guideId, commentId);
             }}
             className="hover:scale-110 text-white hover:bg-white hover:text-black hover:shadow-link transition-all ease duration-300 rounded-md p-1  cursor-pointer"
           >
-            {like === dislikeState ? (
+            {dislikeState == true ? (
+              <div className="flex">
               <AiFillDislike size={"1.3em"} />
+                <span className="mx-4 rounded-md">{dislikesNum}</span>
+              </div>
             ) : (
+              <div className="flex">
               <AiOutlineDislike size={"1.3em"} />
+                <span className="px-4">{dislikesNum}</span>
+              </div>
             )}
-  
           </div>
         </div>
       ) : (
@@ -84,7 +113,7 @@ export default function Like({id, like , dislike, guideId, commentId, likesAmoun
             }}
             className="hover:bg-white hover:text-black rounded-md p-1  cursor-pointer"
           >
-           <AiOutlineLike />
+            <AiOutlineLike />
           </div>
           <div
             title="Dislike"
@@ -93,7 +122,7 @@ export default function Like({id, like , dislike, guideId, commentId, likesAmoun
             }}
             className="hover:bg-white hover:text-black rounded-md p-1  cursor-pointer"
           >
-          <AiOutlineDislike />
+            <AiOutlineDislike />
           </div>
         </div>
       )}

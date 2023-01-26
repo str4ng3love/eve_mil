@@ -41,41 +41,42 @@ model Session {
 model User {
   id            String    @id @default(cuid())
   name          String    @unique
+  charId        Int?
   email         String?   @unique
   emailVerified DateTime?
   image         String    @unique
   accounts      Account[]
   sessions      Session[]
+  comments      Comment[] @relation("UserID")
+  Comment       Comment[] @relation("Authors")
   guides        Guide[]
-  comments      Comment[] @relation(name: "UserID")
-  userPortrait  Guide[]   @relation(name: "UserPortrait")
-  userName      Guide[]   @relation(name: "UserName")
+  userPortrait  Guide[]   @relation("UserPortrait")
+  userName      Guide[]   @relation("UserName")
+  dislike       Dislike[]
   likes         Like[]
-  dislikes      Dislike[]
-  Comment       Comment[] @relation(name: "Authors")
 }
 
 model Comment {
   id        String    @id @default(uuid())
-  message   String    @db.LongText
   createdAt String
-  updatedAt String?
-  user      User      @relation(name: "UserID", fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  userName  User      @relation(name: "Authors", fields: [author], references: [name])
-  author    String
-  guide     Guide?    @relation(fields: [guideId], references: [id], onDelete: Cascade)
-  guideId   String?
-  parent    Comment?  @relation(name: "ParentChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  children  Comment[] @relation(name: "ParentChild")
+  message   String    @db.LongText
   parentId  String?
-  likes     Like[]
-  dislike   Dislike[]
+  updatedAt String?
+  userId    String
+  author    String
+  guideId   String?
+  user      User      @relation("UserID", fields: [userId], references: [id], onDelete: Cascade)
+  userName  User      @relation("Authors", fields: [author], references: [name])
+  guide     Guide?    @relation(fields: [guideId], references: [id], onDelete: Cascade)
+  parent    Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children  Comment[] @relation("ParentChild")
+  dislikes  Dislike[]
+  like      Like[]
 
-  @@index(author)
-  @@index(userId)
-  @@index(guideId)
-  @@index(parentId)
+  @@index([author])
+  @@index([userId])
+  @@index([guideId])
+  @@index([parentId])
 }
 
 model Guide {
@@ -84,18 +85,18 @@ model Guide {
   description    String
   content        Json?
   createdAt      String
-  updatedAt      String?
   category       Category
-  language       Language
-  user           User      @relation(fields: [userId], references: [id])
-  userId         String
-  userPortrait   User      @relation(name: "UserPortrait", fields: [authorPortrait], references: [image])
-  authorPortrait String
-  userName       User      @relation(name: "UserName", fields: [authorName], references: [name])
   authorName     String
+  authorPortrait String
+  language       Language
+  updatedAt      String?
+  userId         String
   comments       Comment[]
-  likes          Like[]
+  user           User      @relation(fields: [userId], references: [id])
+  userPortrait   User      @relation("UserPortrait", fields: [authorPortrait], references: [image])
+  userName       User      @relation("UserName", fields: [authorName], references: [name])
   dislikes       Dislike[]
+  likes          Like[]
 
   @@index([authorName])
   @@index([authorPortrait])
@@ -112,12 +113,12 @@ model VerificationToken {
 
 model Dislike {
   id        String   @unique @default(uuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
-  guide     Guide?   @relation(fields: [guideId], references: [id])
   guideId   String?
-  comment   Comment? @relation(fields: [commentId], references: [id])
   commentId String?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  guide     Guide?   @relation(fields: [guideId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id])
 
   @@index([userId])
   @@index([commentId])
@@ -126,16 +127,77 @@ model Dislike {
 
 model Like {
   id        String   @unique @default(uuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
-  guide     Guide?   @relation(fields: [guideId], references: [id])
   guideId   String?
-  comment   Comment? @relation(fields: [commentId], references: [id])
   commentId String?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  guide     Guide?   @relation(fields: [guideId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id])
 
   @@index([userId])
   @@index([commentId])
   @@index([guideId])
+}
+
+model fe198ec_abe3_5acd_af92_bc016cff5a0c_20230116105910_vrepl {
+  id        String  @id
+  createdAt String
+  guideId   String
+  message   String
+  parentId  String?
+  updatedAt String
+  userId    String
+
+  @@index([guideId], map: "Comment_guideId_idx")
+  @@index([parentId], map: "Comment_parentId_idx")
+  @@index([userId], map: "Comment_userId_idx")
+  @@map("_1fe198ec_abe3_5acd_af92_bc016cff5a0c_20230116105910_vrepl")
+}
+
+model c3e00b_d9aa_5931_b948_fa8e235e2116_20230102095954_vrepl {
+  id        String  @id
+  content   String
+  createdAt Int
+  authorId  String
+  guideId   String?
+
+  @@index([authorId], map: "Comment_authorId_idx")
+  @@index([guideId], map: "Comment_guideId_idx")
+  @@map("_66c3e00b_d9aa_5931_b948_fa8e235e2116_20230102095954_vrepl")
+}
+
+model f9eda7_1e38_55a5_9a57_0d65d9a2cfcc_20230102100642_vrepl {
+  id        String  @id
+  content   String
+  createdAt Int
+  authorId  String
+  guideId   String?
+
+  @@index([authorId], map: "Comment_authorId_idx")
+  @@index([guideId], map: "Comment_guideId_idx")
+  @@map("_82f9eda7_1e38_55a5_9a57_0d65d9a2cfcc_20230102100642_vrepl")
+}
+
+model f5d91be_1c0a_5e0c_a4cb_9221bd711cff_20230102095835_vrepl {
+  id        String  @id
+  content   String
+  createdAt Int
+  authorId  String
+  guideId   String?
+
+  @@index([authorId], map: "Comment_authorId_idx")
+  @@index([guideId], map: "Comment_guideId_idx")
+  @@map("_8f5d91be_1c0a_5e0c_a4cb_9221bd711cff_20230102095835_vrepl")
+}
+
+model a82_5d78_5540_a8ea_84693d26d91c_20230116105918_vrepl {
+  id            String    @id
+  name          String    @unique(map: "User_name_key")
+  email         String?   @unique(map: "User_email_key")
+  emailVerified DateTime?
+  image         String    @unique(map: "User_image_key")
+
+  @@map("_99774a82_5d78_5540_a8ea_84693d26d91c_20230116105918_vrepl")
 }
 
 enum Category {

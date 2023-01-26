@@ -34,6 +34,7 @@ export const reqSetDislike = async (guideId?: string, commentId?: string) => {
   }
 };
 export const reqRemoveLike = async (guideId?:string, commentId?:string) => {
+  console.log('changing')
   const data = {
     guideId, commentId
   };

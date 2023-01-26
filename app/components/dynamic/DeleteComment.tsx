@@ -1,7 +1,6 @@
 "use client";
 
 import { signIn, useSession } from "next-auth/react";
-import { stringify } from "querystring";
 import Button, { BType } from "../ui/Button";
 
 interface Props {
@@ -28,7 +27,7 @@ export default function DeleteComment({ commentId }: Props) {
   };
   return (
     <>
-      {/* {!session.data?.user ? (
+      {!session.data?.user ? (
         <Button
           text="="
           type={BType.button}
@@ -44,7 +43,7 @@ export default function DeleteComment({ commentId }: Props) {
             EraseComment(commentId);
           }}
         />
-      )} */}
+      )}
     </>
   );
 }

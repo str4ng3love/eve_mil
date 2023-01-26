@@ -40,22 +40,23 @@ export default async function handler(
 
       return res.status(200).json({ msg: `Added a like` });
     } else if (user?.id && req.body.commentId) {
+      console.log(req.body.commentId)
       const resp = await prisma.comment.update({
         where: {
           id: req.body.commentId,
         },
         data: {
-          likes: {
-            create: {
-              userId: user.id,
-            },
-          },
-          dislike: {
-            deleteMany: {
-              userId: user.id,
-            },
-          },
-        },
+      like: {
+        create:{
+           userId: user.id
+        }
+      },
+       dislikes: {
+        deleteMany:{
+          userId: user.id
+        }
+       }
+        }
       });
 
       if (!resp) {

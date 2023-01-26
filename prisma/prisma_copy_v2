@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  // url          = env("DB_DEV_URL")
+  relationMode = "prisma"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String    @unique
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String    @unique
+  accounts      Account[]
+  sessions      Session[]
+  guides        Guide[]
+  comments      Comment[] @relation(name: "UserID")
+  userPortrait  Guide[]   @relation(name: "UserPortrait")
+  userName      Guide[]   @relation(name: "UserName")
+  likes         Like[]
+  dislike      Dislike[]
+  Comment       Comment[] @relation(name: "Authors")
+}
+
+model Comment {
+  id        String    @id @default(uuid())
+  message   String    @db.LongText
+  createdAt String
+  updatedAt String?
+  user      User      @relation(name: "UserID", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  userName  User      @relation(name: "Authors", fields: [author], references: [name])
+  author    String
+  guide     Guide?    @relation(fields: [guideId], references: [id], onDelete: Cascade)
+  guideId   String?
+  parent    Comment?  @relation(name: "ParentChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children  Comment[] @relation(name: "ParentChild")
+  parentId  String?
+  like    Like[]
+  dislikes   Dislike[]
+
+  @@index(author)
+  @@index(userId)
+  @@index(guideId)
+  @@index(parentId)
+}
+
+model Guide {
+  id             String    @id @default(cuid())
+  title          String
+  description    String
+  content        Json?
+  createdAt      String
+  updatedAt      String?
+  category       Category
+  language       Language
+  user           User      @relation(fields: [userId], references: [id])
+  userId         String
+  userPortrait   User      @relation(name: "UserPortrait", fields: [authorPortrait], references: [image])
+  authorPortrait String
+  userName       User      @relation(name: "UserName", fields: [authorName], references: [name])
+  authorName     String
+  comments       Comment[]
+  likes          Like[]
+  dislikes       Dislike[]
+
+  @@index([authorName])
+  @@index([authorPortrait])
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Dislike {
+  id        String   @unique @default(uuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  guide     Guide?   @relation(fields: [guideId], references: [id])
+  guideId   String?
+  comment   Comment? @relation(fields: [commentId], references: [id])
+  commentId String?
+
+  @@index([userId])
+  @@index([commentId])
+  @@index([guideId])
+}
+
+model Like {
+  id        String   @unique @default(uuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  guide     Guide?   @relation(fields: [guideId], references: [id])
+  guideId   String?
+  comment   Comment? @relation(fields: [commentId], references: [id])
+  commentId String?
+
+  @@index([userId])
+  @@index([commentId])
+  @@index([guideId])
+}
+
+enum Category {
+  FW
+  BUSINESS
+  FLIGHT
+  BASICS
+}
+
+enum Language {
+  PL
+  EN
+}

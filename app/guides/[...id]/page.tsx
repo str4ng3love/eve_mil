@@ -1,5 +1,4 @@
-
-import { getComments, getGuide, getLike } from "../../../services/fetching";
+import { getGuide } from "../../../services/fetching";
 import Image from "next/image";
 import CoolestHeading from "../../components/headings/CoolestHeading";
 import CoolHeading, { TAlign } from "../../components/headings/CoolHeading";
@@ -10,7 +9,6 @@ import { extractContent } from "../../../lib/ContentExtract";
 import CommentSection from "../../components/dynamic/CommentSection";
 import AddComment from "../../components/dynamic/AddComment";
 import Like from "../../components/dynamic/Like";
-
 
 export default async function Page({ params }: { params: { id: string } }) {
   let id = params.id.at(-1) as string;
@@ -23,9 +21,9 @@ export default async function Page({ params }: { params: { id: string } }) {
     //@ts-ignore
     content = extractContent(data.content.objects);
   }
-const likeData = await getLike(data.id)
+  // const likeData = await getLike(data.id)
 
-// const commentsData = await getComments(data.id)
+  // const commentsData = await getComments(data.id)
 
   return (
     <>
@@ -76,13 +74,19 @@ const likeData = await getLike(data.id)
           <span className="font-Abel font-bold">Views: 12345</span>
           {/* read up on suspense and how it works */}
           <Suspense fallback={<SpinnerMini />}>
-            <Like id={likeData?.id} guideId={data.id} />
+            <Like
+              guideId={data.id}
+              like={data.likes.length}
+              dislike={data.dislikes.length}
+              likesAmount={data._count.likes}
+              dislikesAmount={data._count.dislikes}
+            />
           </Suspense>
         </div>
 
-        <AddComment guideId={data.id}/>
-
-        {/* <CommentSection comments={commentsData}/> */}
+        <AddComment guideId={data.id} />
+        {/* @ts-expect-error Server Component */}
+        <CommentSection guideId={data.id} />
       </div>
     </>
   );
