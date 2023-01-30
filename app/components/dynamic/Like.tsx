@@ -12,6 +12,7 @@ import {
   reqSetDislike,
   reqRemoveLike,
 } from "../../../services/setLikes";
+import SpinnerMini from "../ui/SpinnerMini";
 
 interface Props {
 
@@ -22,7 +23,7 @@ interface Props {
   likesAmount?: number;
   dislikesAmount?: number;
 }
-
+// implement spinner
 export default function Like({
  
   like,
@@ -41,6 +42,7 @@ export default function Like({
 
   return (
     <>
+    
       {session.data?.user ? (
         <div className="flex w-fit gap-4 p-4 h-fit">
           <div
@@ -126,6 +128,7 @@ export default function Like({
           </div>
         </div>
       )}
+
     </>
   );
 }

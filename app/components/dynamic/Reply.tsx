@@ -40,7 +40,7 @@ export default function Reply({
       });
       //debug
       const data = await resp.json()
-      console.log(data)
+      
     } catch (error) {
       console.log(error);
     }

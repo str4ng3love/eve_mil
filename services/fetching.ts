@@ -97,6 +97,7 @@ export async function getComments(guideId: string) {
           select: {
             like: true,
             dislikes: true,
+            children: true,
           },
         },
       },

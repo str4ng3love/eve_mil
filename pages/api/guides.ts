@@ -9,7 +9,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await unstable_getServerSession(req,res, authOptions);
-  console.log(session?.user?.name)
+ 
   let timeStamp = Date.now()
   let date = new Date(timeStamp)
   if (req.method === "POST") {

@@ -12,7 +12,7 @@ export default async function CommentSection({guideId}:Props){
         <section className="flex items-center w-[90%] flex-col">
           {
             comments ? comments.map((comment)=>(
-                <CommentComp width="full" author={comment.author} key={comment.id} commentId={comment.id} message={comment.message} createdAt={comment.createdAt} updatedAt={comment.updatedAt} like={comment.like.length} dislike={comment.dislikes.length} likesNum={comment._count.like} dislikesNum={comment._count.dislikes} />
+                <CommentComp repliesAmount={comment._count.children} author={comment.author} key={comment.id} commentId={comment.id} message={comment.message} createdAt={comment.createdAt} updatedAt={comment.updatedAt} like={comment.like.length} dislike={comment.dislikes.length} likesNum={comment._count.like} dislikesNum={comment._count.dislikes} />
             )): <div>
                 No Comments Yet
             </div>
