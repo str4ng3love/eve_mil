@@ -10,6 +10,7 @@ import CommentSection from "../../components/dynamic/CommentSection";
 import AddComment from "../../components/dynamic/AddComment";
 import Like from "../../components/dynamic/Like";
 
+
 export default async function Page({ params }: { params: { id: string } }) {
   let id = params.id.at(-1) as string;
   let decodedId = decodeURI(id);
@@ -71,9 +72,8 @@ export default async function Page({ params }: { params: { id: string } }) {
       </div>
       <div className="w-full text-white py-4 bg-black shadow-wrapperShadow flex flex-col items-center">
         <div className="flex w-full items-center justify-evenly">
-          <span className="font-Abel font-bold">Views: 12345</span>
           {/* read up on suspense and how it works */}
-          <Suspense fallback={<SpinnerMini />}>
+         
             <Like
               guideId={data.id}
               like={data.likes.length}
@@ -81,10 +81,14 @@ export default async function Page({ params }: { params: { id: string } }) {
               likesAmount={data._count.likes}
               dislikesAmount={data._count.dislikes}
             />
-          </Suspense>
+  
         </div>
-        
-        <AddComment guideId={data.id} butText={"Add comment"} submitText={"coMmeNt"}/>
+
+        <AddComment
+          guideId={data.id}
+          butText={"Add A comment"}
+          submitText={"coMmeNt"}
+        />
         {/* @ts-expect-error Server Component */}
         <CommentSection guideId={data.id} />
       </div>

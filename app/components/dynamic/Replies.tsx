@@ -28,7 +28,7 @@ export default function Replies({ commentId }: Props) {
         
           <div
             key={reply.id}
-            className={`flex flex-col w-full pl-4 mb-4 font-Abel bg-slate-900`}
+            className={`border-dashed border-l-2 border-slate-500 flex flex-col w-full pl-4 mb-1 font-Abel bg-slate-900`}
           >
             <div className="whitespace-pre-wrap w-full flex flex-col justify-start">
               <div className="flex justify-between">
@@ -56,7 +56,7 @@ export default function Replies({ commentId }: Props) {
      
       ))}
 
-      {/* <Reply commentId={commentId}/> */}
+   
     </>
   );
 }

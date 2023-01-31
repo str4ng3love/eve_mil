@@ -43,7 +43,7 @@ export default function Like({
   return (
     <>
     
-      {session.data?.user ? (
+      {session.status === 'authenticated' ? (
         <div className="flex w-fit gap-4 p-4 h-fit">
           <div
             title="Like"
@@ -106,29 +106,31 @@ export default function Like({
             )}
           </div>
         </div>
-      ) : (
-        <div className="flex justify-between w-fit items-center gap-4 p-4">
-          <div
-            title="Like"
-            onClick={() => {
-              signIn();
-            }}
-            className="hover:bg-white hover:text-black rounded-md p-1  cursor-pointer"
-          >
-            <AiOutlineLike />
-          </div>
-          <div
-            title="Dislike"
-            onClick={() => {
-              signIn();
-            }}
-            className="hover:bg-white hover:text-black rounded-md p-1  cursor-pointer"
-          >
-            <AiOutlineDislike />
-          </div>
-        </div>
+      ) : (<></>
       )}
-
+    {session.status === 'unauthenticated' ? 
+    
+    <div className="flex justify-between w-fit items-center gap-4 p-4">
+    <div
+      title="Like"
+      onClick={() => {
+        signIn();
+      }}
+      className="hover:bg-white hover:text-black rounded-md p-1  cursor-pointer"
+    >
+      <AiOutlineLike />
+    </div>
+    <div
+      title="Dislike"
+      onClick={() => {
+        signIn();
+      }}
+      className="hover:bg-white hover:text-black rounded-md p-1  cursor-pointer"
+    >
+      <AiOutlineDislike />
+    </div>
+  </div>: <></>}
+  {session.status === 'loading' ? <><SpinnerMini /></>: <></>}
     </>
   );
 }

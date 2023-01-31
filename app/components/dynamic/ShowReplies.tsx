@@ -53,7 +53,7 @@ export default function ShowReplies({ commentId, repliesAmount }: Props) {
                   }}
                   className="w-fit rounded-md py-1 px-2 flex font-bold text-blue-500 whitespace-pre-wrap items-center cursor-pointer hover:bg-slate-800 active:bg-slate-600 "
                 >
-                  <span>{repliesAmount} reply DL</span>
+                  <span>{repliesAmount} reply </span>
                   <span className="transition-transform rotate-0">
                     <MdArrowDropDownCircle />
                   </span>
@@ -71,7 +71,7 @@ export default function ShowReplies({ commentId, repliesAmount }: Props) {
                 }}
                 className="w-fit rounded-md py-1 px-2 flex font-bold text-blue-500 whitespace-pre-wrap items-center cursor-pointer hover:bg-slate-800 active:bg-slate-600 "
               >
-                <span>{repliesAmount} reply </span>
+                <span>{repliesAmount} replies </span>
                 <span className="transition-transform rotate-90">
                   <MdArrowDropDownCircle />
                 </span>
@@ -82,7 +82,7 @@ export default function ShowReplies({ commentId, repliesAmount }: Props) {
                }}
                className="w-fit rounded-md py-1 px-2 flex font-bold text-blue-500 whitespace-pre-wrap items-center cursor-pointer hover:bg-slate-800 active:bg-slate-600 "
              >
-               <span>{repliesAmount} reply </span>
+               <span>{repliesAmount} replies </span>
                <span className="transition-transform rotate-90">
                  <MdArrowDropDownCircle />
                </span>
@@ -96,7 +96,7 @@ export default function ShowReplies({ commentId, repliesAmount }: Props) {
                   }}
                   className="w-fit rounded-md py-1 px-2 flex font-bold text-blue-500 whitespace-pre-wrap items-center cursor-pointer hover:bg-slate-800 active:bg-slate-600 "
                 >
-                  <span>{repliesAmount} replies DL</span>
+                  <span>{repliesAmount} replies </span>
                   <span className="transition-transform rotate-0">
                     <MdArrowDropDownCircle />
                   </span>
