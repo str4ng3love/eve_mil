@@ -5,6 +5,7 @@ import SpinnerMini from "../ui/SpinnerMini";
 import { useReplies } from "../../../services/useReplies";
 import Reply from "./Reply";
 import ShowReplies from "./ShowReplies";
+import TimeDifference from "../../../lib/TimeDifference";
 
 interface Props {
   commentId: string;
@@ -35,10 +36,10 @@ export default function Replies({ commentId }: Props) {
                 <span className="p-1 font-bold">{reply.author}</span>
                 {!reply.updatedAt ? (
                   // change date from string to Date
-                  <span className="p-1">{reply.createdAt.slice(0, 25)}</span>
+                  <span className="p-1">{TimeDifference(Date.now(), parseInt(reply.createdAt))}</span>
                 ) : (
                   <span className="p-1">
-                    (edited) {reply.createdAt.slice(0, 25)}
+                    (edited) {TimeDifference(Date.now(), parseInt(reply.createdAt))}
                   </span>
                 )}
               </div>

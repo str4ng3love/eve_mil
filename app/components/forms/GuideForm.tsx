@@ -5,6 +5,7 @@ import CoolHeading, { TAlign } from "../headings/CoolestHeading";
 import Button from "../ui/Button";
 import { BType } from "../ui/Button";
 import { useSession } from "next-auth/react";
+import { randomUUID } from "crypto";
 enum Category {
   FW = `FW`,
   BUSINESS = `BUSINESS`,
@@ -42,7 +43,7 @@ export default function GuideForm({ handleClick }: Props) {
   const [response, setResponse] = useState("")
 
   let session = useSession();
-  console.log(session.data?.user?.name)
+  
   let portraitUrl = session.data?.user?.image;
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -74,7 +75,7 @@ export default function GuideForm({ handleClick }: Props) {
   const addComponent = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    let randomId = Date.now().toString();
+    let randomId = randomUUID()
     setComponents((prevState) => [
       ...prevState,
       <FormComponent

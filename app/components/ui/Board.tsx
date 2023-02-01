@@ -24,6 +24,8 @@ export default function Board(props: Props) {
   const [compareFn, setCompareFn] = useState<any>();
   const [order, setOrder] = useState<boolean>(true);
 
+
+
   const getFilter = (e: React.PointerEvent<HTMLDivElement>) => {
     const selectedFilter = e.currentTarget.innerText;
     setFilter(selectedFilter);
@@ -107,7 +109,7 @@ export default function Board(props: Props) {
             <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
               <GridCard
                 authorName={guide.authorName}
-                createdAt={guide.createdAt.slice(4, 24)}
+                createdAt={guide.createdAt.toString()}
                 category={guide.category}
                 description={guide.description}
                 heading={guide.title}
@@ -126,7 +128,7 @@ export default function Board(props: Props) {
               <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
                 <GridCard
                   authorName={guide.authorName}
-                  createdAt={guide.createdAt.slice(4, 24)}
+                  createdAt={guide.createdAt.toString()}
                   category={guide.category}
                   description={guide.description}
                   heading={guide.title}
@@ -148,7 +150,7 @@ export default function Board(props: Props) {
               <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
                 <GridCard
                   authorName={guide.authorName}
-                  createdAt={guide.createdAt.slice(4, 24)}
+                  createdAt={guide.createdAt.toString()}
                   category={guide.category}
                   description={guide.description}
                   heading={guide.title}
@@ -170,7 +172,7 @@ export default function Board(props: Props) {
               <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
                 <GridCard
                   authorName={guide.authorName}
-                  createdAt={guide.createdAt.slice(4, 24)}
+                  createdAt={guide.createdAt.toString()}
                   category={guide.category}
                   description={guide.description}
                   heading={guide.title}

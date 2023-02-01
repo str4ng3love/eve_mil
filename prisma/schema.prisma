@@ -58,10 +58,10 @@ model User {
 
 model Comment {
   id        String    @id @default(uuid())
-  createdAt String
+  createdAt String 
   message   String    @db.LongText
   parentId  String?
-  updatedAt String?
+  updatedAt String? 
   userId    String
   author    String
   guideId   String?
@@ -139,66 +139,7 @@ model Like {
   @@index([guideId])
 }
 
-model fe198ec_abe3_5acd_af92_bc016cff5a0c_20230116105910_vrepl {
-  id        String  @id
-  createdAt String
-  guideId   String
-  message   String
-  parentId  String?
-  updatedAt String
-  userId    String
 
-  @@index([guideId], map: "Comment_guideId_idx")
-  @@index([parentId], map: "Comment_parentId_idx")
-  @@index([userId], map: "Comment_userId_idx")
-  @@map("_1fe198ec_abe3_5acd_af92_bc016cff5a0c_20230116105910_vrepl")
-}
-
-model c3e00b_d9aa_5931_b948_fa8e235e2116_20230102095954_vrepl {
-  id        String  @id
-  content   String
-  createdAt Int
-  authorId  String
-  guideId   String?
-
-  @@index([authorId], map: "Comment_authorId_idx")
-  @@index([guideId], map: "Comment_guideId_idx")
-  @@map("_66c3e00b_d9aa_5931_b948_fa8e235e2116_20230102095954_vrepl")
-}
-
-model f9eda7_1e38_55a5_9a57_0d65d9a2cfcc_20230102100642_vrepl {
-  id        String  @id
-  content   String
-  createdAt Int
-  authorId  String
-  guideId   String?
-
-  @@index([authorId], map: "Comment_authorId_idx")
-  @@index([guideId], map: "Comment_guideId_idx")
-  @@map("_82f9eda7_1e38_55a5_9a57_0d65d9a2cfcc_20230102100642_vrepl")
-}
-
-model f5d91be_1c0a_5e0c_a4cb_9221bd711cff_20230102095835_vrepl {
-  id        String  @id
-  content   String
-  createdAt Int
-  authorId  String
-  guideId   String?
-
-  @@index([authorId], map: "Comment_authorId_idx")
-  @@index([guideId], map: "Comment_guideId_idx")
-  @@map("_8f5d91be_1c0a_5e0c_a4cb_9221bd711cff_20230102095835_vrepl")
-}
-
-model a82_5d78_5540_a8ea_84693d26d91c_20230116105918_vrepl {
-  id            String    @id
-  name          String    @unique(map: "User_name_key")
-  email         String?   @unique(map: "User_email_key")
-  emailVerified DateTime?
-  image         String    @unique(map: "User_image_key")
-
-  @@map("_99774a82_5d78_5540_a8ea_84693d26d91c_20230116105918_vrepl")
-}
 
 enum Category {
   FW

@@ -44,7 +44,7 @@ export default function Like({
     <>
     
       {session.status === 'authenticated' ? (
-        <div className="flex w-fit gap-4 p-4 h-fit">
+        <div className="flex justify-between w-fit items-center gap-4 p-4">
           <div
             title="Like"
             onClick={() => {
@@ -70,7 +70,7 @@ export default function Like({
               </div>
             ) : (
               <div className="flex">
-                <span className="px-4">{likesNum}</span>
+                <span className="mx-4">{likesNum}</span>
                 <AiOutlineLike size={"1.3em"} />
               </div>
             )}
@@ -101,7 +101,7 @@ export default function Like({
             ) : (
               <div className="flex">
               <AiOutlineDislike size={"1.3em"} />
-                <span className="px-4">{dislikesNum}</span>
+                <span className="mx-4">{dislikesNum}</span>
               </div>
             )}
           </div>
@@ -111,23 +111,43 @@ export default function Like({
     {session.status === 'unauthenticated' ? 
     
     <div className="flex justify-between w-fit items-center gap-4 p-4">
-    <div
+    <div 
       title="Like"
       onClick={() => {
         signIn();
       }}
-      className="hover:bg-white hover:text-black rounded-md p-1  cursor-pointer"
+      className="hover:scale-110 text-white hover:bg-white hover:text-black hover:shadow-link transition-all ease duration-300 rounded-md p-1  cursor-pointer"
     >
-      <AiOutlineLike />
+          {likeState == true ? (
+              <div className="flex">
+                <span className="mx-4 rounded-md">{likesNum}</span>
+                <AiFillLike size={"1.3em"} />
+              </div>
+            ) : (
+              <div className="flex">
+                <span className="mx-4">{likesNum}</span>
+                <AiOutlineLike size={"1.3em"} />
+              </div>
+            )}
     </div>
     <div
       title="Dislike"
       onClick={() => {
         signIn();
       }}
-      className="hover:bg-white hover:text-black rounded-md p-1  cursor-pointer"
+      className="hover:scale-110 text-white hover:bg-white hover:text-black hover:shadow-link transition-all ease duration-300 rounded-md p-1  cursor-pointer"
     >
-      <AiOutlineDislike />
+        {dislikeState == true ? (
+              <div className="flex">
+              <AiFillDislike size={"1.3em"} />
+                <span className="mx-4 rounded-md">{dislikesNum}</span>
+              </div>
+            ) : (
+              <div className="flex">
+              <AiOutlineDislike size={"1.3em"} />
+                <span className="mx-4">{dislikesNum}</span>
+              </div>
+            )}
     </div>
   </div>: <></>}
   {session.status === 'loading' ? <><SpinnerMini /></>: <></>}

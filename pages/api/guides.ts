@@ -10,8 +10,7 @@ export default async function handler(
 ) {
   const session = await unstable_getServerSession(req,res, authOptions);
  
-  let timeStamp = Date.now()
-  let date = new Date(timeStamp)
+
   if (req.method === "POST") {
     if (!session?.user) {
       if(session?.user?.name !== req.body.authorName){
@@ -29,14 +28,17 @@ if(!user){
   return res.status(401).json({ msg: "Not Authorized." });
 }
 
+
+let t =  Date.now()
+
      
         await prisma.guide.create({
           data: {
             userId: user.id,
             authorPortrait: user.image,
             authorName: req.body.authorName || user.name,
+            createdAt: t.toString(),
             category: req.body.category,
-            createdAt: date.toString(),
             description: req.body.description,
             language: req.body.language,
             title: req.body.title,

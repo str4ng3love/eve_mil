@@ -1,16 +1,20 @@
 import Link from "next/link";
+import FormatDate from "../../../lib/FormatDate";
 export enum TAlign {
   start= 'start',
   center= 'center',
   end = 'end'
 }
 type Props = {
-  text: string;
+  text?: string;
   url?: string;
   align?: TAlign;
+  date?: string;
 };
 
 export default function CoolHeading(props: Props) {
+
+ 
   if (props.url) {
     return (
       <>
@@ -25,6 +29,17 @@ export default function CoolHeading(props: Props) {
         </Link>
       </>
     );
+  }
+  if(props.date){
+    return(
+    <h2
+    className={`text-[1.25rem] ${
+      props.align ? `text-${props.align}` : ""
+    }  capitalize font-extrabold tracking-wider font-Abel my-4`}
+  >
+    {FormatDate(props.date as string)}
+
+  </h2>)
   }
   return (
     <h2

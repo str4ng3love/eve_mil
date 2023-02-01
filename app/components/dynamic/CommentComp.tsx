@@ -1,6 +1,7 @@
 
 import ShowReplies from "./ShowReplies"
 import Reply from "./Reply";
+import TimeDifference from "../../../lib/TimeDifference";
 
 type Props = {
   message: string;
@@ -35,6 +36,7 @@ export default function CommentComp({
     .replaceAll("<br>", " ")
     .replaceAll("&nbsp;", " ");
 
+
   return (
     <div className={`flex flex-col w-full pl-4 mb-4 font-Abel`}>
       <div className="whitespace-pre-wrap w-full flex flex-col justify-start">
@@ -42,9 +44,9 @@ export default function CommentComp({
           <span className="p-1 font-bold">{author}</span>
           {!updatedAt ? (
             // change date from string to Date
-            <span className="p-1">{createdAt.slice(0, 25)}</span>
+            <span className="p-1">{TimeDifference(Date.now(), parseInt(createdAt))}</span>
           ) : (
-            <span className="p-1">(edited) {createdAt.slice(0, 25)}</span>
+            <span className="p-1">(edited) {createdAt}</span>
           )}
         </div>
         <span className="p-1">{formatedMessage}</span>

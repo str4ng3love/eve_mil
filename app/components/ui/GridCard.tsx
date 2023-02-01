@@ -1,4 +1,5 @@
 import Link from "next/link";
+import FormatDate from "../../../lib/FormatDate";
 
 type Props = {
   heading: string;
@@ -11,6 +12,8 @@ type Props = {
   authorName?: string;
 };
 export default function GridCard(props: Props) {
+
+
   return (
     <Link href={props.url}>
       <div
@@ -28,7 +31,7 @@ export default function GridCard(props: Props) {
             by {props.authorName}
           </p>
         </div>
-        <p className="font-Abel ">{props.createdAt}</p>
+        <p className="font-Abel ">{FormatDate(props.createdAt as string)}</p>
 
         <div className=" invisible absolute z-50 left-[50%] translate-x-[-50%] translate-y-[75%] shadow-wrapperShadow group-hover:visible flex flex-col items-center justify-center p-2 rounded-md bg-white w-max md:max-w-md max-w-[16rem]">
           <span className="font-bold font-Abel first-letter:capitalize ">{props.heading}</span>

@@ -22,9 +22,6 @@ export default async function Page({ params }: { params: { id: string } }) {
     //@ts-ignore
     content = extractContent(data.content.objects);
   }
-  // const likeData = await getLike(data.id)
-
-  // const commentsData = await getComments(data.id)
 
   return (
     <>
@@ -33,7 +30,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           <CoolestHeading text={data.title} align={TAlign.center} />
           <div className="flex justify-between items-center px-6">
             <div className="flex flex-col justify-center font-Abel items-center p-4">
-              <Suspense fallback={<SpinnerMini />}>
+             
                 <CoolHeading text={data.authorName} />
                 <Image
                   alt="Author's portrait"
@@ -41,9 +38,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                   width={64}
                   height={64}
                 />
-              </Suspense>
+             
             </div>
-            <CoolHeading text={data.createdAt.slice(4, 24)} />
+            <CoolHeading date={data.createdAt}/>
           </div>
           <section className="font-Abel p-8">
             {content?.map((el) => (

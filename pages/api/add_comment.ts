@@ -17,11 +17,11 @@ export default async function handler(
       select: { id: true, name: true },
     });
     if (user?.id && req.body.guideId) {
-      let date = new Date(Date.now());
+      let t =  Date.now()
 
       const resp = await prisma.comment.create({
         data: {
-          createdAt: date.toString(),
+          createdAt: t.toString(),
           message: req.body.content,
           guideId: req.body.guideId,
           userId: user.id,
@@ -34,11 +34,11 @@ export default async function handler(
 
       return res.status(200).json({ msg: "Comment added." });
     } else if (user?.id && req.body.commentId) {
-      let date = new Date(Date.now());
+      let t =  Date.now()
 
       const resp = await prisma.comment.create({
         data: {
-          createdAt: date.toString(),
+          createdAt: t.toString(),
           message: req.body.content,
           parentId: req.body.commentId,
           userId: user.id,
