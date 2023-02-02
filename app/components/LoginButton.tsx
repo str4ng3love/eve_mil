@@ -1,12 +1,16 @@
-'use client'
-import { useSession, signIn, signOut } from "next-auth/react";
+"use client";
+import { signIn } from "next-auth/react";
+import Button, { BType } from "./ui/Button";
 
 export default function LoginButton() {
-  const { data: session } = useSession();
+  return (
+   
+        <Button
+          text="Log In"
+          type={BType.button}
+          handleClick={(e) => signIn()}
+        />
+      
 
-  if (session) {
-    return <>Signed in as {session.user?.name} <button onClick={()=>signOut()}>Sign Out</button></>;
-  }
-
-  return <>Not signed in <br /> <button onClick={()=>signIn()} >Sign In</button></>;
+  );
 }

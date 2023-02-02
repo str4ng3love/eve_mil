@@ -21,7 +21,7 @@ export default function Navigation() {
           </NavMenu>
           {session.status === "authenticated" ? (
             <NavMenu description="menu">
-              <NavMenuItem description="Numero Uno" destination="#" />
+              <NavMenuItem description="Profile" destination="/profile" />
               <NavMenuItem description="Numero Due" destination="#" />
               <NavMenuItem description="Numero Tercio" destination="#" />
           

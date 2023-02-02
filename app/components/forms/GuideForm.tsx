@@ -40,10 +40,10 @@ export default function GuideForm({ handleClick }: Props) {
   const [compData, setCompData] = useState<CDType>({ objects: {} });
   const [componentToDelete, setCompToDel] = useState("");
   const [display, setDisplay] = useState(`flex`);
-  const [response, setResponse] = useState("")
+  const [response, setResponse] = useState("");
 
   let session = useSession();
-  
+
   let portraitUrl = session.data?.user?.image;
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -64,18 +64,17 @@ export default function GuideForm({ handleClick }: Props) {
         },
         body: JSON.stringify(data),
       });
-      const msg = await res.json()
-      setResponse(msg.msg)
+      const msg = await res.json();
+      setResponse(msg.msg);
     } catch (error) {
       console.log(error);
     }
   };
 
-
   const addComponent = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    let randomId = randomUUID()
+    let randomId = randomUUID();
     setComponents((prevState) => [
       ...prevState,
       <FormComponent
@@ -205,13 +204,20 @@ export default function GuideForm({ handleClick }: Props) {
                     }}
                     className=" rounded-md w-fit h-fit p-2 text-black resize-none "
                   >
-                    <option value={Language.EN}>EN</option>
-                    <option value={Language.PL}>PL</option>
+                    {(
+                      Object.keys(Language) as Array<keyof typeof Language>
+                    ).map((key, index) => (
+                      <option value={key} key={index}>
+                        {key}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
               <div className="flex w-[100%] justify-center p-2 mx-2 ">
-                <label title="Title." className="p-2 font-bold w-[14ch]">Title</label>
+                <label title="Title." className="p-2 font-bold w-[14ch]">
+                  Title
+                </label>
                 <input
                   required
                   onChange={(e) => setTitle(e.currentTarget.value)}
@@ -249,9 +255,21 @@ export default function GuideForm({ handleClick }: Props) {
                   }}
                   className=" rounded-md w-fit h-fit p-2 text-black resize-none "
                 >
-                  <option title="Simple subtitle. Use to divide your ideas." value="0">Subtitle</option>
-                  <option title="Where chunks of your text should be." value="1">Paragraph</option>
-                  <option title="URL to a hosted image." value="2">Image</option>
+                  <option
+                    title="Simple subtitle. Use to divide your ideas."
+                    value="0"
+                  >
+                    Subtitle
+                  </option>
+                  <option
+                    title="Where chunks of your text should be."
+                    value="1"
+                  >
+                    Paragraph
+                  </option>
+                  <option title="URL to a hosted image." value="2">
+                    Image
+                  </option>
                   <option title="Disabled." value="3" disabled>
                     Video
                   </option>
@@ -263,10 +281,15 @@ export default function GuideForm({ handleClick }: Props) {
                   handleClick={addComponent}
                 />
               </div>
-              { response ? 
-              <div className="py-4">
-                <span className="p-4 font-Abel bg-emerald-300 uppercase rounded-md text-lg font-bold border-emerald-700 border-solid border-2">{response}</span>
-              </div>: <></>}
+              {response ? (
+                <div className="py-4">
+                  <span className="p-4 font-Abel bg-emerald-300 uppercase rounded-md text-lg font-bold border-emerald-700 border-solid border-2">
+                    {response}
+                  </span>
+                </div>
+              ) : (
+                <></>
+              )}
               <Button text="submit" type={BType.submit} />
             </form>
           </div>

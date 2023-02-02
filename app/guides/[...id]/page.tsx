@@ -2,13 +2,11 @@ import { getGuide } from "../../../services/fetching";
 import Image from "next/image";
 import CoolestHeading from "../../components/headings/CoolestHeading";
 import CoolHeading, { TAlign } from "../../components/headings/CoolHeading";
-import SpinnerMini from "../../components/ui/SpinnerMini";
-import { Suspense } from "react";
 import CoolerHeading from "../../components/headings/CoolerHeading";
 import { extractContent } from "../../../lib/ContentExtract";
-import CommentSection from "../../components/dynamic/CommentSection";
-import AddComment from "../../components/dynamic/AddComment";
-import Like from "../../components/dynamic/Like";
+import CommentSection from "../../components/social/CommentSection"
+import AddComment from "../../components/social/AddComment";
+import Like from "../../components/social/Like";
 
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -80,7 +78,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             />
   
         </div>
-
+                
         <AddComment
           guideId={data.id}
           butText={"Add A comment"}

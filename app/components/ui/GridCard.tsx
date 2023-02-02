@@ -10,10 +10,9 @@ type Props = {
   category: string;
   createdAt?: string;
   authorName?: string;
+  likes: number;
 };
 export default function GridCard(props: Props) {
-
-
   return (
     <Link href={props.url}>
       <div
@@ -27,14 +26,29 @@ export default function GridCard(props: Props) {
         </h3>
         <div className="flex justify-between">
           <p className=" mx-1 ">{props.category}</p>
-          <p className="overflow-hidden font-bold font-Abel max-h-[150px]">
-            by {props.authorName}
-          </p>
+          <div className="flex flex-col">
+            <p className="overflow-hidden font-bold font-Abel max-h-[150px]">
+              by {props.authorName}
+            </p>
+
+            {props.likes === 1 ? (
+              <p className="overflow-hidden font-bold font-Abel max-h-[150px]">
+                {props.likes} like
+              </p>
+            ) : (
+              <p className="overflow-hidden font-bold font-Abel max-h-[150px]">
+                
+                {props.likes} likes
+              </p>
+            )}
+          </div>
         </div>
         <p className="font-Abel ">{FormatDate(props.createdAt as string)}</p>
 
         <div className=" invisible absolute z-50 left-[50%] translate-x-[-50%] translate-y-[75%] shadow-wrapperShadow group-hover:visible flex flex-col items-center justify-center p-2 rounded-md bg-white w-max md:max-w-md max-w-[16rem]">
-          <span className="font-bold font-Abel first-letter:capitalize ">{props.heading}</span>
+          <span className="font-bold font-Abel first-letter:capitalize ">
+            {props.heading}
+          </span>
           <span className="first-letter:capitalize ">{props.description}</span>
         </div>
       </div>

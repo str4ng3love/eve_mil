@@ -1,11 +1,12 @@
 "use client";
 import { v4 } from "uuid";
 
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState } from "react";
 import GridCard from "./GridCard";
 import SpinnerMini from "./SpinnerMini";
 import Toolbar from "./Toolbar";
 type Props = {
+  official: boolean;
   guides?: {
     id: string;
     description: string;
@@ -14,6 +15,9 @@ type Props = {
     createdAt: string;
     authorName: string;
     language: string;
+    _count: {
+      likes: number;
+    };
   }[];
 };
 
@@ -21,10 +25,7 @@ export default function Board(props: Props) {
   const [filter, setFilter] = useState<string>("ALL");
   const [langFilter, setLangFilter] = useState<string>("NO SELECTION");
   const [sorter, setSorter] = useState<string>("date");
-  const [compareFn, setCompareFn] = useState<any>();
   const [order, setOrder] = useState<boolean>(true);
-
-
 
   const getFilter = (e: React.PointerEvent<HTMLDivElement>) => {
     const selectedFilter = e.currentTarget.innerText;
@@ -39,6 +40,7 @@ export default function Board(props: Props) {
     if (selectedSorter === sorter) {
       return setOrder(!order);
     }
+
     setSorter(selectedSorter);
     setOrder(true);
   };
@@ -46,8 +48,10 @@ export default function Board(props: Props) {
     let sorterA;
     let sorterB;
     if (sorter === "date") {
+      
       sorterA = a.createdAt;
       sorterB = b.createdAt;
+      
       if (order) {
         if (sorterA > sorterB) {
           return -1;
@@ -67,10 +71,35 @@ export default function Board(props: Props) {
 
         return 0;
       }
+    } else if (sorter === "likes") {
+      sorterA = a._count.likes;
+      sorterB = b._count.likes;
+      if (order) {
+        if (sorterA > sorterB) {
+          return -1;
+        }
+        if (sorterA < sorterB) {
+          return +1;
+        }
+
+        return 0;
+      } else {
+        if (sorterA > sorterB) {
+          return +1;
+        }
+        if (sorterA < sorterB) {
+          return -1;
+        }
+
+        return 0;
+      }
+    }if (sorter === "likes") {
+      sorterA = a._count.likes;
+      sorterB = b._count.likes;
     } else if (sorter === "author") {
       sorterA = a.authorName;
       sorterB = b.authorName;
-    } else {
+    }  else {
       sorterA = a[sorter];
       sorterB = b[sorter];
     }
@@ -97,17 +126,19 @@ export default function Board(props: Props) {
 
   return (
     <>
-      <Toolbar
+      <Toolbar 
+        official={props.official}
         langFilterFn={getLangFilter}
         filterFn={getFilter}
         sortFn={getSorter}
       />
-{/* Complicated matter, probably there's an easier way of achieving it */}
+      {/* Complicated matter, probably there's an easier way of achieving it */}
       <div className=" grid grid-cols-auto gap-4  mx-5 p-4">
         {filter === "ALL" && langFilter === "NO SELECTION" ? (
           props.guides?.sort(compareFunc).map((guide) => (
             <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
               <GridCard
+                likes={guide._count.likes}
                 authorName={guide.authorName}
                 createdAt={guide.createdAt.toString()}
                 category={guide.category}
@@ -127,6 +158,7 @@ export default function Board(props: Props) {
             .map((guide) => (
               <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
                 <GridCard
+                  likes={guide._count.likes}
                   authorName={guide.authorName}
                   createdAt={guide.createdAt.toString()}
                   category={guide.category}
@@ -149,6 +181,7 @@ export default function Board(props: Props) {
             .map((guide) => (
               <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
                 <GridCard
+                  likes={guide._count.likes}
                   authorName={guide.authorName}
                   createdAt={guide.createdAt.toString()}
                   category={guide.category}
@@ -162,15 +195,13 @@ export default function Board(props: Props) {
         ) : (
           <></>
         )}
-         {filter !== "ALL" && langFilter === "NO SELECTION" ? (
+        {filter !== "ALL" && langFilter === "NO SELECTION" ? (
           props.guides
-            ?.filter(
-              (guide) =>
-                guide.category === filter
-            )
+            ?.filter((guide) => guide.category === filter)
             .map((guide) => (
               <Suspense key={v4()} fallback={<SpinnerMini key={v4()} />}>
                 <GridCard
+                  likes={guide._count.likes}
                   authorName={guide.authorName}
                   createdAt={guide.createdAt.toString()}
                   category={guide.category}

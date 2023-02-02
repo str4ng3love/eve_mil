@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from '../api/auth/[...nextauth]'
 import { prisma } from "../../lib/prismaConnect";
 import {unstable_getServerSession} from 'next-auth'
+import { transformDocument } from "@prisma/client/runtime";
 
 
 export default async function handler(
@@ -34,6 +35,7 @@ let t =  Date.now()
      
         await prisma.guide.create({
           data: {
+            title: req.body.title,
             userId: user.id,
             authorPortrait: user.image,
             authorName: req.body.authorName || user.name,
@@ -41,8 +43,8 @@ let t =  Date.now()
             category: req.body.category,
             description: req.body.description,
             language: req.body.language,
-            title: req.body.title,
             content: req.body.content,
+            scope: 'COMMUNITY'
 
           }})
       
@@ -52,7 +54,24 @@ let t =  Date.now()
     res.json({ msg: `Success` });
   } else if (req.method === "GET") {
     try {
-      const guides = await prisma.guide.findMany()
+      const guides = await prisma.guide.findMany({
+        where:{scope: 'COMMUNITY'},
+        select:{
+          authorName:true,
+          category:true,
+          language: true,
+          createdAt: true,
+          title: true,
+          description:true,
+          id:true,
+          _count: {
+            select:{
+              likes: true
+            }
+          }
+
+        }
+      })
       res.json(guides)
 
       

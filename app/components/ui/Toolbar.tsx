@@ -10,6 +10,7 @@ interface Props {
   sortFn?: (e: React.PointerEvent<HTMLDivElement>) => void;
   filterFn?: (e: React.PointerEvent<HTMLDivElement>) => void;
   langFilterFn?: (e: React.PointerEvent<HTMLDivElement>) => void;
+  official: boolean;
 }
 export default function Toolbar(props: Props) {
   const [showForm, setForm] = useState(false);
@@ -86,6 +87,7 @@ export default function Toolbar(props: Props) {
         <span className="transition-all  duration-300 ease group-hover:rotate-180  group-hover:text-black">
           <FaCog size="2em" />
         </span>
+        {!props.official ? <>
         {session.data ? (
           <ToolbarMenu
             text="add"
@@ -104,7 +106,7 @@ export default function Toolbar(props: Props) {
             components={[]}
             xOffSet={"0rem"}
           />
-        )}
+        )}</> :<></>}
         <ToolbarMenu
           dir={EDir.yPositive}
           cursor={ECur.auto}

@@ -11,7 +11,7 @@ export default async function Page() {
         <div className="md:w-[75%] w-[100%] bg-black/80  text-white min-h-[calc(100vh-6rem)] shadow-backShadow">
           {/* add toggle buttons */}
 
-          <Board guides={data} />
+          <Board official={false} guides={data} />
         </div>
       </div>
     </>

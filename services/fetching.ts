@@ -11,6 +11,37 @@ export async function getGuides() {
       createdAt: true,
       authorName: true,
       language: true,
+      _count:{
+        select:{
+          likes:true
+        }
+      }
+    },
+  });
+  if (!res) {
+    throw new Error("Failed to fetch data.");
+  }
+
+  return res;
+}
+export async function getOfficialGuides() {
+  const res = await prisma.guide.findMany({
+    where:{
+      scope: 'OFFICIAL'
+    },
+    select: {
+      id: true,
+      description: true,
+      title: true,
+      category: true,
+      createdAt: true,
+      authorName: true,
+      language: true,
+      _count:{
+        select:{
+          likes:true
+        }
+      }
     },
   });
   if (!res) {

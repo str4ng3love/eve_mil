@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import SpinnerMini from "../ui/SpinnerMini";
 import { useReplies } from "../../../services/useReplies";
 import Reply from "./Reply";
@@ -11,11 +10,22 @@ interface Props {
   commentId: string;
   
 }
-
+//TODO: learn about mutation, implement swr revalidation
 export default function Replies({ commentId }: Props) {
   const { replies, isLoading, isError } = useReplies(commentId);
 
+  const compareFN = (a:any,b:any)=>{
+    let sorterA = a.createdAt;
+    let sorterB = b.createdAt;
+    if (sorterA > sorterB) {
+     return -1;
+   }
+   if (sorterA < sorterB) {
+     return +1;
+   }
 
+   return 0;
+}
 
   if (isLoading) {
     return <SpinnerMini />;
@@ -25,7 +35,7 @@ export default function Replies({ commentId }: Props) {
   }
   return (
     <>
-      {replies?.children.map((reply) => (
+      {replies?.children.sort(compareFN).map((reply) => (
         
           <div
             key={reply.id}

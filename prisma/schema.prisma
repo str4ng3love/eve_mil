@@ -45,6 +45,8 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String    @unique
+  isAdmin       Boolean @default(false)
+  isMod         Boolean @default(false)
   accounts      Account[]
   sessions      Session[]
   comments      Comment[] @relation("UserID")
@@ -90,6 +92,7 @@ model Guide {
   authorPortrait String
   language       Language
   updatedAt      String?
+  scope          Scope 
   userId         String
   comments       Comment[]
   user           User      @relation(fields: [userId], references: [id])
@@ -151,4 +154,8 @@ enum Category {
 enum Language {
   PL
   EN
+}
+enum Scope {
+  COMMUNITY
+  OFFICIAL
 }
