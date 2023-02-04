@@ -1,7 +1,7 @@
 
 import ShowReplies from "./ShowReplies"
 import Reply from "./Reply";
-import TimeDifference from "../../../lib/TimeDifference";
+import TimeDifference from "../../../hooks/TimeDifference";
 
 type Props = {
   message: string;

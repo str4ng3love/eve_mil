@@ -1,5 +1,5 @@
 import Link from "next/link";
-import FormatDate from "../../../lib/FormatDate";
+import FormatDate from "../../../hooks/FormatDate";
 
 type Props = {
   heading: string;

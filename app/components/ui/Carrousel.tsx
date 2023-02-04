@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BiRightArrow, BiLeftArrow } from "react-icons/bi";
-import { arrayVoodoo } from "../../../lib/ArrayVoodoo";
+import { arrayVoodoo } from "../../../hooks/ArrayVoodoo";
 import Card from "./Card";
 type Props = {
   input: Array<{

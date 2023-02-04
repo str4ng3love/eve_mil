@@ -3,7 +3,7 @@ import Image from "next/image";
 import CoolestHeading from "../../components/headings/CoolestHeading";
 import CoolHeading, { TAlign } from "../../components/headings/CoolHeading";
 import CoolerHeading from "../../components/headings/CoolerHeading";
-import { extractContent } from "../../../lib/ContentExtract";
+import { extractContent } from "../../../hooks/ContentExtract";
 import CommentSection from "../../components/social/CommentSection"
 import AddComment from "../../components/social/AddComment";
 import Like from "../../components/social/Like";

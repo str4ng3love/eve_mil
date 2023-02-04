@@ -10,7 +10,7 @@ export default async function Page() {
     <>
       {!session?.user?.name ? (
         <div className="flex justify-center">
-          <div className="md:w-[80%] bg-black/80 min-h-[calc(100dvh-6rem)] w-full flex justify-center items-center">
+          <div className="md:w-[75%] shadow-wrapperShadow bg-black/80 min-h-[calc(100dvh-6rem)] w-full flex justify-center items-center">
             <div className="flex flex-col bg-white py-4 px-8 rounded-md shadow-backShadow items-center justify-center">
               <CoolerHeading
                 align={TAlign.center}
@@ -22,7 +22,7 @@ export default async function Page() {
         </div>
       ) : (
         <div className="flex justify-center">
-          <div className="md:w-[80%] bg-black/80 min-h-[calc(100dvh-6rem)] w-full flex justify-center">
+          <div className="md:w-[75%] shadow-wrapperShadow bg-black/80 min-h-[calc(100dvh-6rem)] w-full flex justify-center">
             <MyGuides />
           </div>
         </div>

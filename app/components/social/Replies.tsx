@@ -4,7 +4,7 @@ import SpinnerMini from "../ui/SpinnerMini";
 import { useReplies } from "../../../services/useReplies";
 import Reply from "./Reply";
 import ShowReplies from "./ShowReplies";
-import TimeDifference from "../../../lib/TimeDifference";
+import TimeDifference from "../../../hooks/TimeDifference";
 
 interface Props {
   commentId: string;
