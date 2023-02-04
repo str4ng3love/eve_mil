@@ -8,7 +8,7 @@ export default async function Page() {
   return (
     <>
       <div className="flex flex-col items-center bg-fixed w-[100%] ">
-        <div className="md:w-[75%] w-[100%] bg-black/80  text-white min-h-[calc(100vh-6rem)] shadow-backShadow">
+        <div className="md:w-[80%] w-[100%] bg-black/80  text-white min-h-[calc(100vh-6rem)] shadow-backShadow">
           {/* add toggle buttons */}
 
           <Board official={false} guides={data} />

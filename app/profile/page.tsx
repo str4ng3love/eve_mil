@@ -22,8 +22,9 @@ export default async function Page() {
         </div>
       ) : (
         <div className="flex justify-center">
-          <div className="md:w-[75%] shadow-wrapperShadow bg-black/80 min-h-[calc(100dvh-6rem)] w-full flex justify-center">
+          <div className="md:w-[80%] shadow-wrapperShadow bg-black/80 min-h-[calc(100dvh-6rem)] w-full flex flex-col">
             <MyGuides />
+            
           </div>
         </div>
       )}

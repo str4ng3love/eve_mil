@@ -6,7 +6,8 @@ import Button, { BType } from "../ui/Button";
 import GuidePanel from "./GuidePanel";
 
 export default function MyGuides() {
-  const [showGuides, setShowGuides] = useState(false);
+  const [displayGuides, setDisplayGuides] = useState(false);
+  const [showGuides, setShowGuides] = useState(true);
 
   return (
     <div className="p-4 w-full h-fit">
@@ -15,7 +16,7 @@ export default function MyGuides() {
           <CoolerHeading text={"My guides"} align={TAlign.start} />
         </div>
 
-        {!showGuides ? (
+        {!displayGuides ? (
           <div
             className="flex justify-between items-center
 
@@ -26,24 +27,55 @@ export default function MyGuides() {
               type={BType.button}
               text={"show all"}
               handleClick={(e) => {
-                setShowGuides(true);
+                setDisplayGuides(true);
               }}
             />
           </div>
         ) : (
-          <div>
-            <div className="flex justify-between items-center">
-              <span className="capitalize">number guides</span>
-              <Button
-                type={BType.button}
-                text={"hide all"}
-                handleClick={(e) => {
-                  setShowGuides(false);
-                }}
-              />
-            </div>
-            <GuidePanel />
-          </div>
+          <></>
+        )}
+        {displayGuides ? (
+          <>
+            {showGuides ? (<>
+              <div
+                className="flex justify-between items-center
+
+        "
+              >
+                <span className="capitalize">number guides</span>
+                <Button
+                  type={BType.button}
+                  text={"hide all"}
+                  handleClick={(e) => {
+                    setShowGuides(false);
+                  }}
+                />
+              </div>
+              <div className="visible h-fit">
+                <GuidePanel />
+              </div>
+            </>) : (<>
+              <div
+                className="flex justify-between items-center
+
+        "
+              >
+                <span className="capitalize">number guides</span>
+                <Button
+                  type={BType.button}
+                  text={"show all"}
+                  handleClick={(e) => {
+                    setShowGuides(true);
+                  }}
+                />
+              </div>
+              <div className="invisible h-0">
+                <GuidePanel />
+              </div>
+            </>)}
+          </>
+        ) : (
+          <></>
         )}
       </div>
     </div>

@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { authOptions } from '../api/auth/[...nextauth]'
-import { prisma } from "../../lib/prismaConnect";
+import { authOptions } from '../auth/[...nextauth]'
+import { prisma } from "../../../lib/prismaConnect";
 import {unstable_getServerSession} from 'next-auth'
-import { transformDocument } from "@prisma/client/runtime";
+
 
 
 export default async function handler(
