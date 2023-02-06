@@ -19,7 +19,7 @@ export default function GridCard(props: Props) {
         style={{ animationFillMode: "none" }}
         className={`${
           props.displayAnim && props.animation
-        }  group font-Abel  rounded-md p-4 h-32 bg-black/80 flex flex-col justify-between shadow-backShadow transition ease duration-500 hover:scale-105 hover:text-black hover:bg-white hover:shadow-link`}
+        }  group font-Abel  rounded-md p-4 h-32 bg-black/80 flex flex-col justify-between shadow-backShadow transition ease duration-500 hover:scale-105 hover:text-black hover:bg-white hover:shadow-link active:bg-slate-300`}
       >
         <h3 className="first-letter:capitalize text-[1.25rem] leading-6 overflow-hidden font-bold font-Abel">
           {props.heading}

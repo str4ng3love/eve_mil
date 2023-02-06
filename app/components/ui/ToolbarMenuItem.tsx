@@ -7,7 +7,7 @@ export default function ToolbarMenuItem(props: Props) {
   return (
     <>
       <div onClick={props.fn} className="h-[5rem] p-1 w-[5rem]">
-        <div className="flex cursor-pointer text-center justify-center items-center w-full h-full hover:shadow-linkB  hover:bg-white hover:text-black ">{props.text}</div>
+        <div className="active:bg-slate-300  flex cursor-pointer text-center justify-center items-center w-full h-full hover:shadow-linkB  hover:bg-white hover:text-black ">{props.text}</div>
       </div>
     </>
   );

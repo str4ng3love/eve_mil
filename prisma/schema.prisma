@@ -98,7 +98,7 @@ model Guide {
   user           User      @relation(fields: [userId], references: [id])
   userPortrait   User      @relation("UserPortrait", fields: [authorPortrait], references: [image])
   userName       User      @relation("UserName", fields: [authorName], references: [name])
-  dislikes       Dislike[]
+  dislikes       Dislike[] 
   likes          Like[]
 
   @@index([authorName])

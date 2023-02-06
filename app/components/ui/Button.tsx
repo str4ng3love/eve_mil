@@ -4,6 +4,7 @@ export enum BType {
   submit,
   button,
   erase,
+  disabled
 }
 
 type Props = {
@@ -44,6 +45,17 @@ export default function Button({ type, text, url, handleClick }: Props) {
         <button
           onClick={handleClick}
           className="active:bg-slate-300 p-2 m-2 uppercase font-bold font-Abel transition-all ease duration-300 hover:scale-110 hover:bg-white hover:text-black hover:shadow-link min-w-[2.5rem] h-10 rounded-md bg-red-600 text-white "
+          type={"button"}
+        >
+          {text}
+        </button>
+      ) : (
+        <></>
+      )}
+      {type === 3 ? (
+        <button
+          disabled
+          className="h-fit p-4 m-4 uppercase font-bold font-Abel transition-all ease duration-300  w-fit rounded-md bg-slate-600/60 text-white/60 "
           type={"button"}
         >
           {text}

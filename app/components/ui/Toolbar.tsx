@@ -84,7 +84,7 @@ export default function Toolbar(props: Props) {
     <>
       {showForm ? <GuideForm handleClick={(e) => setForm(!showForm)} /> : <></>}
       <div className="z-10 group transform-3d absolute md:-translate-x-[160%] translate-y-[200%] ease-out transition-all delay-100 translate-z-3 duration-500 flex w-[5rem] h-[5rem] rounded-md bg-black items-center justify-center hover:rounded-none hover:bg-white hover:shadow-linkB">
-        <span className="transition-all  duration-300 ease group-hover:rotate-180  group-hover:text-black">
+        <span className="transition-all  duration-300 ease group-hover:rotate-180  group-hover:text-black active:bg-slate-300">
           <FaCog size="2em" />
         </span>
         {!props.official ? <>
