@@ -3,22 +3,22 @@ import useSWR from 'swr'
 import { fetcher } from '../lib/fetcher'
 
 
-interface GuideData  {
+interface CommentData  {
     id:string,
-    title:string,
-    createdAt: number;
+    message:string,
+    createdAt: number,
     _count:{
         likes:number,
         dislikes: number;
-        comments: number
+        children: number
     }
 }
 
 export default function useUserGuides() {
-    const {data, error, isLoading} = useSWR<GuideData[]>(`/api/guides/get_user_guides`, fetcher)
+    const {data, error, isLoading} = useSWR<CommentData[]>(`/api/comments/get_user_comments`, fetcher)
 
     return {
-        guides: data,
+        comments: data,
         isLoading,
         isError: error
     }

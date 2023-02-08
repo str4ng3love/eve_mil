@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <div className="min-h-[calc(100dvh_-_6rem)] w-full md:w-[80%] shadow-wrapperShadow bg-black/80">
+      <div className="min-h-[calc(100dvh_-_6rem)] w-full md:w-[75%] shadow-wrapperShadow bg-black/80">
         <div className="text-white">
           <CoolestHeading text={data.title} align={TAlign.center} />
           <div className="flex justify-between items-center px-6">

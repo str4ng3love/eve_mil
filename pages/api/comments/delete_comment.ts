@@ -7,33 +7,29 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "GET") {
+  if (req.method !== "DELETE") {
     return res.status(400).json({ msg: "Bad request." });
   }
   const session = await unstable_getServerSession(req, res, authOptions);
-  if (!session?.user?.name) {
+  if (!session?.user) {
     return res.status(401).json({ msg: "Not authorized." });
   }
-  const guides = await prisma.guide.findMany({
+  const user = await prisma.user.findFirst({
     where: {
-      user: {
-        name: session.user.name,
-      },
+      name: session?.user?.name as string,
     },
-    select: {
-      id: true,
-      title: true,
-      createdAt: true,
-      _count: {
-        select: {
-          comments: true,
-          dislikes: true,
-          likes: true,
-        },
-      }, 
-    },orderBy:{
-      createdAt: "desc"
-    }
   });
-  return res.json(guides);
+  if (!user?.name && req.body) {
+    return res.status(401).json({ msg: "Not authorized." });
+  }
+  //rewrite it into separate calls ?
+  
+  const axedGuide = await prisma.$executeRaw`DELETE FROM Comment where id=${req.body}`
+
+ 
+  if (!axedGuide || !req.body) {
+    return res.status(404).json({ msg: "Not Found." });
+  }
+
+  return res.json({ msg: "Guide deleted." });
 }

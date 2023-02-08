@@ -22,15 +22,12 @@ export default async function handler(
   if (!user?.name && req.body) {
     return res.status(401).json({ msg: "Not authorized." });
   }
-  //rewrite it into separate calls
-  const deledGuide = await prisma.guide.delete({
-    where: {
-      id: req.body,
-    }, include:{
-        comments: true
-    }
-  });
-  if (!deledGuide || !req.body) {
+  //rewrite it into separate calls ?
+  
+  const axedGuide = await prisma.$executeRaw`DELETE FROM Guide where id=${req.body}`
+
+ 
+  if (!axedGuide || !req.body) {
     return res.status(404).json({ msg: "Not Found." });
   }
 

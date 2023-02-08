@@ -11,13 +11,13 @@ if(isError){
   return <span>Error Loading Data.</span>
 }
 if(isLoading){
-  return <div className=" p-4 bg-black flex justify-center w-full border-solid border-2 border-white/80"><SpinnerMini /></div>
+  return <div className="p-4 flex justify-center w-full border-dashed border-2 rounded-md border-white/80"><SpinnerMini /></div>
 }
   return (
-    <div className="w-full capitalize border-solid border-2 border-white/80 flex flex-col items-center justify-between">
+    <div className="w-full capitalize border-dashed border-2 border-white/80 flex flex-col items-center justify-between rounded-md">
       {guides ? (
         guides.map((guide) => (
-         <PanelItem id={guide.id} key={guide.id} title={guide.title} likesAmount={guide._count.likes} dislikesAmount={guide._count.dislikes} commentsAmount={guide._count.comments}/>
+         <PanelItem id={guide.id} key={guide.id} createdAt={guide.createdAt} title={guide.title} likesAmount={guide._count.likes} dislikesAmount={guide._count.dislikes} commentsAmount={guide._count.comments}/>
         ))
       ) : (
         <></>

@@ -1,7 +1,11 @@
 import { unstable_getServerSession } from "next-auth";
 import CoolerHeading, { TAlign } from "../components/headings/CoolerHeading";
 import LoginButton from "../components/LoginButton";
+import CommentsPanel from "../components/profile/CommentsPanel";
+import GuidePanel from "../components/profile/GuidePanel";
+import MyComments from "../components/profile/MyComments";
 import MyGuides from "../components/profile/MyGuides";
+
 
 export default async function Page() {
   const session = await unstable_getServerSession();
@@ -22,9 +26,9 @@ export default async function Page() {
         </div>
       ) : (
         <div className="flex justify-center">
-          <div className="md:w-[80%] shadow-wrapperShadow bg-black/80 min-h-[calc(100dvh-6rem)] w-full flex flex-col">
+          <div className="md:w-[75%] shadow-wrapperShadow bg-black/80 min-h-[calc(100dvh-6rem)] w-full flex flex-col">
             <MyGuides />
-            
+            <MyComments />
           </div>
         </div>
       )}

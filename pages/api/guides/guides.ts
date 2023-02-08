@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await unstable_getServerSession(req,res, authOptions);
- 
+ console.log(`hit`)
 
   if (req.method === "POST") {
     if (!session?.user) {

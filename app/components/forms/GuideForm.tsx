@@ -5,7 +5,7 @@ import CoolHeading, { TAlign } from "../headings/CoolestHeading";
 import Button from "../ui/Button";
 import { BType } from "../ui/Button";
 import { useSession } from "next-auth/react";
-import { randomUUID } from "crypto";
+
 enum Category {
   FW = `FW`,
   BUSINESS = `BUSINESS`,
@@ -57,12 +57,12 @@ export default function GuideForm({ handleClick }: Props) {
       content: compData,
     };
     try {
-      const res = await fetch("/api/guides", {
+      const res = await fetch("/api/guides/guides", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data), 
       });
       const msg = await res.json();
       setResponse(msg.msg);
@@ -74,7 +74,7 @@ export default function GuideForm({ handleClick }: Props) {
   const addComponent = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    let randomId = randomUUID();
+    let randomId =crypto.randomUUID()
     setComponents((prevState) => [
       ...prevState,
       <FormComponent
