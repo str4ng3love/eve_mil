@@ -9,6 +9,7 @@ import { DeleteGuide, DeleteComment } from "../../../hooks/ProfileHooks";
 import { useState } from "react";
 import Prompt from "./Prompt";
 import FormatDate from "../../../hooks/FormatDate";
+import EditComment from "./EditComent";
 interface Props {
   id: string;
   title?: string;
@@ -31,7 +32,7 @@ export default function PanelItem({
   createdAt,
 }: Props) {
   const [prompt, setPrompt] = useState(false);
-
+  const [showCommentEdit, setShowCommentEdit]= useState(false)
   let date = FormatDate(createdAt.toString());
   return (
     <div key={id} className="flex w-full justify-between bg-black/80 p-4">
@@ -62,7 +63,8 @@ export default function PanelItem({
             className="flex justify-evenly items-center gap-1
         "
           >
-            <span className="cursor-pointer active:bg-slate-300  p-4 rounded-md text-center hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link">
+            <span onPointerDown={(e)=>{setShowCommentEdit(true)}}
+            className="cursor-pointer active:bg-slate-300  p-4 rounded-md text-center hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link">
               edit
             </span>
             <span
@@ -97,7 +99,7 @@ export default function PanelItem({
           </div>
         </div>
       </div>
-      <div></div>
+      
       {prompt ? (
         <Prompt
           cancelFn={(e) => setPrompt(false)}
@@ -112,6 +114,7 @@ export default function PanelItem({
       ) : (
         <></>
       )}
+      {showCommentEdit ? <EditComment message={message as string} cancelFn={(e)=>setShowCommentEdit(false)}/> :<></>}
     </div>
   );
 }

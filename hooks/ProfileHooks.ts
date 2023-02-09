@@ -22,3 +22,9 @@ export async function DeleteComment(id:string){
     const msg = await resp.json()
     return msg 
 }
+export async function EditComment(){
+
+}
+export async function EditGuide(){
+    
+}

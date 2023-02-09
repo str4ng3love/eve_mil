@@ -61,7 +61,7 @@ export default function AddComment({guideId, commentId, butText, submitText}: Pr
               
                 <div
                   onInput={(e) => setCommentContent(e.currentTarget.innerHTML)}
-                  //TODO edit text before saving ↑
+              
 
                   contentEditable="true"
                   placeholder="Add a comment..."
