@@ -9,8 +9,9 @@ import { DeleteGuide, DeleteComment } from "../../../hooks/ProfileHooks";
 import { useState } from "react";
 import Prompt from "./Prompt";
 import FormatDate from "../../../hooks/FormatDate";
-import EditComment from "./EditComent";
+import EditComment from "./EditComment";
 interface Props {
+  revFn?: (e: React.PointerEvent<HTMLButtonElement>) =>void;
   id: string;
   title?: string;
   message?: string;
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export default function PanelItem({
+  revFn,
   id,
   title,
   likesAmount,
@@ -62,16 +64,22 @@ export default function PanelItem({
           <div
             className="flex justify-evenly items-center gap-1
         "
-          >
-            <span onPointerDown={(e)=>{setShowCommentEdit(true)}}
-            className="cursor-pointer active:bg-slate-300  p-4 rounded-md text-center hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link">
-              edit
-            </span>
+        >{ message ?    <span onPointerDown={(e)=>{setShowCommentEdit(true)}}
+        className="cursor-pointer active:bg-slate-300  p-4 rounded-md text-center hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link">
+          edit
+        </span> : <></>
+          }
+          { title ? <span onPointerDown={(e)=>{}}
+        className="cursor-pointer active:bg-slate-300  p-4 rounded-md text-center hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link">
+          edit
+        </span>: <></> }
+
+         
             <span
-              onPointerDown={(e) => {
-                setPrompt(true);
-              }}
-              className="cursor-pointer active:bg-slate-300 p-4 rounded-md text-center hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link"
+            onPointerDown={(e) => {
+              setPrompt(true);
+            }}
+            className="cursor-pointer active:bg-slate-300 p-4 rounded-md text-center hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link"
             >
               Delete
             </span>
@@ -102,19 +110,27 @@ export default function PanelItem({
       
       {prompt ? (
         <Prompt
-          cancelFn={(e) => setPrompt(false)}
+          cancelFn={(e) => {   document.body.classList.remove('overflow-hidden');setPrompt(false)}}
           confirmFn={(e) => {
+            document.body.classList.remove('overflow-hidden');
+            
             if (title) {
               DeleteGuide(id);
+              setPrompt(false);
+              if(revFn)
+              revFn(e)
             } else if (message) {
+              setPrompt(false);
               DeleteComment(id);
+              if(revFn)
+              revFn(e)
             }
           }}
         />
       ) : (
         <></>
       )}
-      {showCommentEdit ? <EditComment message={message as string} cancelFn={(e)=>setShowCommentEdit(false)}/> :<></>}
+      {showCommentEdit ? <EditComment message={message as string} cancelFn={(e)=>{setShowCommentEdit(false);document.body.classList.remove('overflow-hidden');}}/> :<></>}
     </div>
   );
 }

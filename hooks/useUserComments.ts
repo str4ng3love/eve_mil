@@ -15,11 +15,13 @@ interface CommentData  {
 }
 
 export default function useUserGuides() {
-    const {data, error, isLoading} = useSWR<CommentData[]>(`/api/comments/get_user_comments`, fetcher)
+    const {data, error, isLoading, mutate, isValidating} = useSWR<CommentData[]>(`/api/comments/get_user_comments`, fetcher, {revalidateOnFocus:true, revalidateOnReconnect:true})
 
     return {
         comments: data,
         isLoading,
-        isError: error
+        isError: error,
+        mutate,
+        isValidating,
     }
 }

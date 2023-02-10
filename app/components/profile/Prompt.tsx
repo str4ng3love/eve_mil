@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button, { BType } from "../ui/Button";
 interface Props {
   cancelFn?: (e: React.PointerEvent<HTMLButtonElement>) => void;
@@ -6,7 +6,12 @@ interface Props {
 }
 export default function Prompt({ cancelFn, confirmFn }: Props) {
   const [input, setInput] = useState("");
-
+  useEffect(() => {
+ 
+    window.scrollTo(0,0)
+    document.body.classList.add('overflow-hidden')
+ 
+  }, []);
   return (
     <div
       className="font-Abel absolute top-0 left-[-50%] translate-x-[50%] w-full h-full backdrop-blur-sm"

@@ -17,7 +17,7 @@ if(isLoading){
     <div className="w-full capitalize border-dashed border-2 border-white/80 flex flex-col items-center justify-between rounded-md">
       {guides ? (
         guides.map((guide) => (
-         <PanelItem id={guide.id} key={guide.id} createdAt={guide.createdAt} title={guide.title} likesAmount={guide._count.likes} dislikesAmount={guide._count.dislikes} commentsAmount={guide._count.comments}/>
+         <PanelItem  id={guide.id} key={guide.id} createdAt={guide.createdAt} title={guide.title} likesAmount={guide._count.likes} dislikesAmount={guide._count.dislikes} commentsAmount={guide._count.comments}/>
         ))
       ) : (
         <></>
