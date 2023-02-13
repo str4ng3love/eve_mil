@@ -47,7 +47,7 @@ export default function CommentComp({
               {TimeDifference(Date.now(), parseInt(createdAt))}
             </span>
           ) : (
-            <span className="p-1">(edited) {createdAt}</span>
+            <span className="p-1">(edited) {TimeDifference(Date.now(), parseInt(createdAt))}</span>
             )}
             <CommentBurger />
         </div>

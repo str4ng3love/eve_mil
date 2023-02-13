@@ -3,7 +3,7 @@
 import useUserComments, { CommentData } from "../../../hooks/useUserComments";
 import SpinnerMini from "../ui/SpinnerMini";
 import PanelItem from "./PanelItem";
-import { DeleteComment } from "../../../hooks/ProfileHooks";
+import { DeleteComment, EditComment } from "../../../hooks/ProfileHooks";
 
 export default function CommentsPanel() {
 
@@ -26,10 +26,14 @@ const deleteComment = async (id:string) =>{
 }
 //TODO edit comment
 const editComment = async (id:string, message:string) => {
+if(!message){
+  return
+}
 
+  EditComment(id, message)
 }
   if (isError) {
-    return <div className="w-full p-4 flex justify-center"><span className="font-bold ">Error loading data.</span></div>;
+    return <div className="w-full p-4 flex justify-center border-2 border-red-500 border-solid" ><span className="font-bold ">Error loading data.</span></div>;
   }
   if (isLoading) {
     return (
@@ -41,7 +45,7 @@ const editComment = async (id:string, message:string) => {
   if(isValidating){
     return(
      <>
-       <div className="w-full capitalize border-dashed border-2 border-white/80 flex flex-col items-center justify-between rounded-md">
+       <div className="w-full  border-dashed border-2 border-white/80 flex flex-col items-center justify-between rounded-md">
     {comments ? (
       
       comments.map((comment) => (
@@ -56,11 +60,11 @@ const editComment = async (id:string, message:string) => {
     )
   }
   return (
-    <div className="w-full capitalize border-dashed border-2 border-white/80 flex flex-col items-center justify-between rounded-md">
+    <div className="w-full  border-dashed border-2 border-white/80 flex flex-col items-center justify-between rounded-md">
     {comments ? (
       
       comments.map((comment) => (
-       <PanelItem handleDelete={deleteComment} createdAt={comment.createdAt} id={comment.id} key={comment.id} message={comment.message} likesAmount={comment._count.like} dislikesAmount={comment._count.dislikes} repliesAmount={comment._count.children}/>
+       <PanelItem handleEdit={editComment} handleDelete={deleteComment} createdAt={comment.createdAt} id={comment.id} key={comment.id} message={comment.message} likesAmount={comment._count.like} dislikesAmount={comment._count.dislikes} repliesAmount={comment._count.children}/>
       ))
     ) : (
       <></>

@@ -12,6 +12,7 @@ import EditComment from "./EditComment";
 interface Props {
 
   handleDelete?: (id:string) => void;
+  handleEdit?: (id:string, message:string) => void;
   id: string;
   title?: string;
   message?: string;
@@ -24,6 +25,7 @@ interface Props {
 
 export default function PanelItem({
   handleDelete,
+  handleEdit,
   id,
   title,
   likesAmount,
@@ -50,10 +52,10 @@ export default function PanelItem({
         ) : (
           <Link
             title={date.toString()}
-            className="active:bg-slate-300 rounded-md p-4 w-full mx-4 hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link overflow-hidden whitespace-nowrap"
+            className=" active:bg-slate-300 text-ellipsis rounded-md p-4 w-full  mx-4 hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link "
             href={`#`}
           >
-            {message
+            {message?.slice(0,30)
               ?.replaceAll("</div>", `\n`)
               .replaceAll("<div>", "")
               .replaceAll("<br>", " ")
@@ -65,7 +67,7 @@ export default function PanelItem({
             className="flex justify-evenly items-center gap-1
         "
         >{ message ?    <span onPointerDown={(e)=>{setShowCommentEdit(true)}}
-        className="cursor-pointer active:bg-slate-300  p-4 rounded-md text-center hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link">
+        className="capitalize cursor-pointer active:bg-slate-300  p-4 rounded-md text-center hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link">
           edit
         </span> : <></>
           }
@@ -131,7 +133,8 @@ export default function PanelItem({
       ) : (
         <></>
       )}
-      {showCommentEdit ? <EditComment message={message as string} cancelFn={(e)=>{setShowCommentEdit(false);document.body.classList.remove('overflow-hidden');}}/> :<></>}
+     {/* @ts-expect-error */}
+      {showCommentEdit  ? <EditComment id={id} message={message as string} editFn={handleEdit} cancelFn={(e)=>{setShowCommentEdit(false);document.body.classList.remove('overflow-hidden');}}/> :<></>}
     </div>
   );
 }
