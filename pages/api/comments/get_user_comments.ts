@@ -26,7 +26,7 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse){
             select: {
           children:true,
           dislikes:true,
-          like:true
+          like: true
             },
           },
         }, orderBy: {

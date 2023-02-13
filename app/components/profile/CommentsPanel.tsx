@@ -1,40 +1,73 @@
 "use client";
 
-import useUserComments from "../../../hooks/useUserComments";
+import useUserComments, { CommentData } from "../../../hooks/useUserComments";
 import SpinnerMini from "../ui/SpinnerMini";
 import PanelItem from "./PanelItem";
-
-import {useState, useEffect} from 'react'
+import { DeleteComment } from "../../../hooks/ProfileHooks";
 
 export default function CommentsPanel() {
 
-  const [revalidate, setRevalidate] = useState(false)
   const { comments, isLoading, isError, mutate, isValidating } = useUserComments();
 
-  // useEffect(()=>{
-  //   console.log(comments);
-  // //  mutate()
-  // }, [revalidate])
+  // 
+const deleteComment = async (id:string) =>{
+  const filteredComments = comments?.filter(comment => comment.id !==id)
+  const newData:CommentData[] = filteredComments as CommentData[]
 
-  if (isError) {
-    return <span>Error Loading Data.</span>;
+  const options = {
+    optimisticData: newData,
+    rollbackOnError: true,
+    populateCache: true,
+    revalidate:false
   }
-  if (isLoading|| isValidating) {
+  DeleteComment(id)
+  mutate(newData, options)
+
+}
+//TODO edit comment
+const editComment = async (id:string, message:string) => {
+
+}
+  if (isError) {
+    return <div className="w-full p-4 flex justify-center"><span className="font-bold ">Error loading data.</span></div>;
+  }
+  if (isLoading) {
     return (
       <div className="p-4 flex justify-center w-full border-dashed border-2 rounded-md border-white/80">
         <SpinnerMini />
       </div>
     );
   }
-  return (
-    <div className="w-full capitalize border-dashed border-2 border-white/80 flex flex-col items-center justify-between rounded-md">
+  if(isValidating){
+    return(
+     <>
+       <div className="w-full capitalize border-dashed border-2 border-white/80 flex flex-col items-center justify-between rounded-md">
     {comments ? (
+      
       comments.map((comment) => (
-       <PanelItem revFn={(e)=>{mutate();setRevalidate(!revalidate);console.log('mutating...')}} createdAt={comment.createdAt} id={comment.id} key={comment.id} message={comment.message} likesAmount={comment._count.likes} dislikesAmount={comment._count.dislikes} repliesAmount={comment._count.children}/>
+       <PanelItem createdAt={comment.createdAt} id={comment.id} key={comment.id} message={comment.message} likesAmount={comment._count.like} dislikesAmount={comment._count.dislikes} repliesAmount={comment._count.children}/>
       ))
     ) : (
       <></>
     )}
+    
   </div>
+     </>
+    )
+  }
+  return (
+    <div className="w-full capitalize border-dashed border-2 border-white/80 flex flex-col items-center justify-between rounded-md">
+    {comments ? (
+      
+      comments.map((comment) => (
+       <PanelItem handleDelete={deleteComment} createdAt={comment.createdAt} id={comment.id} key={comment.id} message={comment.message} likesAmount={comment._count.like} dislikesAmount={comment._count.dislikes} repliesAmount={comment._count.children}/>
+      ))
+    ) : (
+      <></>
+    )}
+    <button className="h-fit w-fit p-4 hover:bg-red-300" onClick={(e)=>mutate()}>mutate!</button>
+    
+  </div>
+  
   );
 }

@@ -3,12 +3,12 @@ import useSWR from 'swr'
 import { fetcher } from '../lib/fetcher'
 
 
-interface CommentData  {
+export interface CommentData  {
     id:string,
     message:string,
     createdAt: number,
     _count:{
-        likes:number,
+        like: number,
         dislikes: number;
         children: number
     }

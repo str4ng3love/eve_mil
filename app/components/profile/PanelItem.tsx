@@ -5,13 +5,13 @@ import {
   AiOutlineComment,
 } from "react-icons/ai";
 import Link from "next/link";
-import { DeleteGuide, DeleteComment } from "../../../hooks/ProfileHooks";
 import { useState } from "react";
 import Prompt from "./Prompt";
 import FormatDate from "../../../hooks/FormatDate";
 import EditComment from "./EditComment";
 interface Props {
-  revFn?: (e: React.PointerEvent<HTMLButtonElement>) =>void;
+
+  handleDelete?: (id:string) => void;
   id: string;
   title?: string;
   message?: string;
@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function PanelItem({
-  revFn,
+  handleDelete,
   id,
   title,
   likesAmount,
@@ -115,15 +115,16 @@ export default function PanelItem({
             document.body.classList.remove('overflow-hidden');
             
             if (title) {
-              DeleteGuide(id);
               setPrompt(false);
-              if(revFn)
-              revFn(e)
+              if(handleDelete)
+              handleDelete(id) 
+          
+            
             } else if (message) {
               setPrompt(false);
-              DeleteComment(id);
-              if(revFn)
-              revFn(e)
+              if(handleDelete)
+              handleDelete(id) 
+          
             }
           }}
         />

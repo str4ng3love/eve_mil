@@ -34,6 +34,7 @@ export default function EditComment({ cancelFn, message }: Props) {
             {messageCopy}
           </div>
           <div>
+         {/* TODO edit comment fn */}
             <Button text="submit" type={BType.button} handleClick={(e)=>{}}/>
             <Button text="cancel" type={BType.erase} handleClick={cancelFn} />
           </div>
