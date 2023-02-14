@@ -12,7 +12,7 @@ import EditComment from "./EditComment";
 interface Props {
 
   handleDelete?: (id:string) => void;
-  handleEdit?: (id:string, message:string) => void;
+  handleEdit?: (id:string, message:string, index: number) => void;
   id: string;
   title?: string;
   message?: string;
@@ -21,6 +21,7 @@ interface Props {
   commentsAmount?: number;
   repliesAmount?: number;
   createdAt: number;
+  index: number;
 }
 
 export default function PanelItem({
@@ -34,10 +35,16 @@ export default function PanelItem({
   repliesAmount,
   message,
   createdAt,
+  index,
 }: Props) {
   const [prompt, setPrompt] = useState(false);
   const [showCommentEdit, setShowCommentEdit]= useState(false)
   let date = FormatDate(createdAt.toString());
+
+  const editObj = {
+    edit: handleEdit,
+    setShow: setShowCommentEdit
+  }
   return (
     <div key={id} className="flex w-full justify-between bg-black/80 p-4">
       <div className="flex  justify-between items-center h-min w-full ">
@@ -133,8 +140,8 @@ export default function PanelItem({
       ) : (
         <></>
       )}
-     {/* @ts-expect-error */}
-      {showCommentEdit  ? <EditComment id={id} message={message as string} editFn={handleEdit} cancelFn={(e)=>{setShowCommentEdit(false);document.body.classList.remove('overflow-hidden');}}/> :<></>}
+   {/* @ts-expect-error */}
+      {showCommentEdit  ? <EditComment index={index} id={id} message={message as string} editFn={editObj} cancelFn={(e)=>{setShowCommentEdit(false);document.body.classList.remove('overflow-hidden');}}/> :<></>}
     </div>
   );
 }

@@ -6,17 +6,21 @@ import Button, { BType } from "../ui/Button";
 interface Props {
   message: string;
   id: string;
+  index: number;
   cancelFn: (e: React.PointerEvent<HTMLElement>) => void;
-  editFn: (id:string, message:string) => void;
+  editFn: {edit:(id:string, message:string, index: number) => void;
+           setShow: (bool:boolean) => void;     
+    }
 }
 
-export default function EditComment({editFn, cancelFn, message, id }: Props) {
+export default function EditComment({editFn, cancelFn, message, id, index }: Props) {
   let messageCopy = message;
   const [editedComment, setEditedComment] = useState("");
-  
-  const handleChange=()=>{
+ 
+  const handleEdit=()=>{
 
-    editFn(id, editedComment)
+    editFn.edit(id, editedComment, index)
+    editFn.setShow(false)
   }
 
 // really confused about matching top position of absolute element with window's position|used window.scrollTo() instead
@@ -26,7 +30,7 @@ export default function EditComment({editFn, cancelFn, message, id }: Props) {
     document.body.classList.add('overflow-hidden')
  
   }, []);
-  console.log(messageCopy)
+
   return (
     <>
       <div className={`absolute top-[0] left-[-50%] translate-x-[50%] w-full h-[100%] backdrop-blur-sm `}>
@@ -47,7 +51,7 @@ export default function EditComment({editFn, cancelFn, message, id }: Props) {
           </div>
           <div>
          {/* TODO edit comment fn */}
-            <Button text="submit" type={BType.button} handleClick={handleChange}/>
+            <Button text="submit" type={BType.button} handleClick={handleEdit}/>
             <Button text="cancel" type={BType.erase} handleClick={cancelFn} />
           </div>
         </div>

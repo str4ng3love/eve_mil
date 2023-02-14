@@ -24,7 +24,7 @@ export default function AddComment({guideId, commentId, butText, submitText}: Pr
     };
       
       try {
-      const resp = await fetch("/api/add_comment", {
+      const resp = await fetch("/api/comments/add_comment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
