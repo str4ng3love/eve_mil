@@ -9,6 +9,7 @@ import { useState } from "react";
 import Prompt from "./Prompt";
 import FormatDate from "../../../hooks/FormatDate";
 import EditComment from "./EditComment";
+import EditGuide from "./EditGuide";
 interface Props {
 
   handleDelete?: (id:string) => void;
@@ -39,6 +40,7 @@ export default function PanelItem({
 }: Props) {
   const [prompt, setPrompt] = useState(false);
   const [showCommentEdit, setShowCommentEdit]= useState(false)
+  const [showGuideEdit, setShowGuideEdit]= useState(false)
   let date = FormatDate(createdAt.toString());
 
   const editObj = {
@@ -78,7 +80,7 @@ export default function PanelItem({
           edit
         </span> : <></>
           }
-          { title ? <span onPointerDown={(e)=>{}}
+          { title ? <span onPointerDown={(e)=>{setShowGuideEdit(true)}}
         className="cursor-pointer active:bg-slate-300  p-4 rounded-md text-center hover:bg-white hover:text-black transition-all duration-200 ease-linear hover:scale-105 hover:shadow-link">
           edit
         </span>: <></> }
@@ -142,6 +144,7 @@ export default function PanelItem({
       )}
    {/* @ts-expect-error */}
       {showCommentEdit  ? <EditComment index={index} id={id} message={message as string} editFn={editObj} cancelFn={(e)=>{setShowCommentEdit(false);document.body.classList.remove('overflow-hidden');}}/> :<></>}
+      {showGuideEdit ? <EditGuide />:<></>}
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function NavLink(props: {
     <>
       <li>
         <Link href={props.destination}>
-          <div className="p-[0.75rem]  font-Abel capitalize bg-black text-white rounded-md hover:text-black hover:bg-white font-bold text-[1.5rem] hover:animate-pulseShadow">
+          <div className="border-b-2 border-black border-solid  p-[0.75rem]  font-Abel capitalize bg-black text-white rounded-md hover:text-black hover:bg-white font-bold text-[1.5rem] hover:animate-pulseShadow">
             {props.description}
           </div>
         </Link>

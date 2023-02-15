@@ -27,7 +27,7 @@ type CDType = {
   };
 };
 type Props = {
-  handleClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  handleClick?: (e: React.PointerEvent<HTMLButtonElement>) => void;
 };
 
 export default function GuideForm({ handleClick }: Props) {
@@ -72,7 +72,7 @@ export default function GuideForm({ handleClick }: Props) {
   };
 
   const addComponent = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.PointerEvent<HTMLButtonElement>
   ) => {
     let randomId =crypto.randomUUID()
     setComponents((prevState) => [
@@ -87,13 +87,13 @@ export default function GuideForm({ handleClick }: Props) {
     ]);
   };
   const eraseComponent = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.PointerEvent<HTMLButtonElement>
   ) => {
     //!SORCERY: Calling state from formComponents renders pevious state
     let el = event.currentTarget.parentElement?.id;
 
-    //@ts-ignore
-    setCompToDel(el);
+    
+    setCompToDel(el as string);
   };
   const delComponent = (id: string) => {
     let filteredArray = formComponents.filter((comp) => {

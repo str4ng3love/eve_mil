@@ -10,9 +10,9 @@ export enum EType {
 interface Props {
   type: EType;
   id: string;
-  handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  handleClick?: (event: React.PointerEvent<HTMLDivElement>) => void;
   handleErase?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.PointerEvent<HTMLButtonElement>
   ) => void;
   handleChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 
