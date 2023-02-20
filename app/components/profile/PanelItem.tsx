@@ -14,7 +14,8 @@ interface Props {
 
   handleDelete?: (id:string) => void;
   handleEdit?: (id:string, message:string, index: number) => void;
-  id: string;
+  guideId?: string;
+  commentId?:string;
   title?: string;
   message?: string;
   likesAmount: number;
@@ -28,7 +29,8 @@ interface Props {
 export default function PanelItem({
   handleDelete,
   handleEdit,
-  id,
+  guideId,
+  commentId,
   title,
   likesAmount,
   dislikesAmount,
@@ -48,7 +50,7 @@ export default function PanelItem({
     setShow: setShowCommentEdit
   }
   return (
-    <div key={id} className="flex w-full justify-between bg-black/80 p-4">
+    <div key={guideId||commentId} className="flex w-full justify-between bg-black/80 p-4">
       <div className="flex  justify-between items-center h-min w-full ">
         {title ? (
           <Link
@@ -128,13 +130,13 @@ export default function PanelItem({
             if (title) {
               setPrompt(false);
               if(handleDelete)
-              handleDelete(id) 
+              handleDelete(guideId as string) 
           
             
             } else if (message) {
               setPrompt(false);
               if(handleDelete)
-              handleDelete(id) 
+              handleDelete(commentId as string) 
           
             }
           }}
@@ -143,8 +145,8 @@ export default function PanelItem({
         <></>
       )}
    {/* @ts-expect-error */}
-      {showCommentEdit  ? <EditComment index={index} id={id} message={message as string} editFn={editObj} cancelFn={(e)=>{setShowCommentEdit(false);document.body.classList.remove('overflow-hidden');}}/> :<></>}
-      {showGuideEdit ? <EditGuide />:<></>}
+      {showCommentEdit  ? <EditComment index={index} id={commentId} message={message as string} editFn={editObj} cancelFn={(e)=>{setShowCommentEdit(false);document.body.classList.remove('overflow-hidden');}}/> :<></>}
+      {showGuideEdit ? <EditGuide id={guideId as string} handleClick={(e)=>setShowGuideEdit(false)}/>:<></>}
     </div>
   );
 }
