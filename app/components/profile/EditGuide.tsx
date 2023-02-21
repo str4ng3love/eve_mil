@@ -3,7 +3,7 @@ import CoolerHeading, { TAlign } from "../headings/CoolerHeading";
 import CoolHeading from "../headings/CoolestHeading";
 import { useState, useEffect } from "react";
 import Button, { BType } from "../ui/Button";
-import FormComponent from "../forms/FormComponent";
+import FormComponent, { EType } from "../forms/FormComponent";
 import useGuide from "../../../hooks/useGuide";
 
 type CDType = {
@@ -33,13 +33,14 @@ export default function EditGuide({ id, handleClick }: Props) {
   const { guide, isLoading, isError } = useGuide(id);
 // TODO: map fetched guide's content in editable fields || no progress
 
-console.log(guide?.content)
+
   const [category, setCategory] = useState(guide?.category);
   const [title, setTitle] = useState(guide?.title);
   const [description, setDescription] = useState(guide?.description);
   const [language, setLanguage] = useState(guide?.language);
 
-  const [compType, setType] = useState(0);
+  const [importedData, setimportedData] =useState<JSX.Element[]>([])
+  const [compType, setType] = useState(EType.Subtitle);
   const [formComponents, setComponents] = useState<JSX.Element[]>([]);
   const [compData, setCompData] = useState<CDType>({ objects: {} });
   const [componentToDelete, setCompToDel] = useState("");
@@ -92,12 +93,27 @@ console.log(guide?.content)
       />,
     ]);
   };
+  const ContentToArray = (contentSource:object)=>{
+    if(contentSource !== undefined){
 
+      const content = Object.values(contentSource)
+  
+      const contentJSX = content.map((c)=> <FormComponent id={c.id} type={c.type} key={c.id} text={c.value} handleChange={handleChange} handleErase={eraseComponent}  />)
+      return contentJSX
+    }
+  }
 
 
   useEffect(() => {
     delComponent(componentToDelete);
   }, [componentToDelete]);
+  useEffect(()=>{
+    let contentJSX=ContentToArray(guide?.content.objects as object)
+    if(contentJSX){
+      setComponents(contentJSX)
+
+    }
+  }, [guide])
   if (isLoading) {
     return (
       <>
@@ -247,8 +263,7 @@ console.log(guide?.content)
                     className=" rounded-md w-[70%] p-2 text-black min-h-[5rem] max-h-[20rem]"
                   />
                 </div>
-                {/* @ts-ignore */}
-                {/* {guide?.content ?  guide.content.objects.map(g=><p>{g}</p>) :<></>} */}
+            
                 {formComponents.map((c) => c)}
                 <div className="flex w-[100%] items-center justify-center p-2 mx-2 ">
                   <label
@@ -260,32 +275,21 @@ console.log(guide?.content)
                   <select
                     value={compType}
                     onChange={(e: React.FormEvent<HTMLSelectElement>) => {
-                      let value = parseInt(e.currentTarget.value);
+                      let value = e.currentTarget.value;
                       //TODO: style select
-                      setType(value);
+                      setType(value as EType);
                     }}
                     className=" rounded-md w-fit h-fit p-2 text-black resize-none "
                   >
-                    <option
-                      title="Simple subtitle. Use to divide your ideas."
-                      value="0"
-                    >
-                      Subtitle
-                    </option>
-                    <option
-                      title="Where chunks of your text should be."
-                      value="1"
-                    >
-                      Paragraph
-                    </option>
-                    <option title="URL to a hosted image." value="2">
-                      Image
-                    </option>
-                    <option title="Disabled." value="3" disabled>
-                      Video
-                    </option>
+                    {(
+                        Object.keys(EType) as Array<keyof typeof EType>
+                      ).map((key, index) => (
+                        <option value={key} key={index}>
+                          {key}
+                        </option>
+                      ))}
                   </select>
-
+                    <Button text="testo" type={BType.button} handleClick={(e)=>console.log(formComponents)}/>
                   <Button
                     type={BType.button}
                     text="Add Component"

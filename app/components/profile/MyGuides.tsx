@@ -10,7 +10,7 @@ export default function MyGuides() {
   const [showGuides, setShowGuides] = useState(true);
 
   return (
-    <div className="p-4 w-full h-fit relative font-Abel font-semibold">
+    <div className="p-4 w-full h-fit font-Abel font-semibold">
       <div className=" text-white p-4 flex flex-col ">
         <div>
           <CoolerHeading text={"My guides"} align={TAlign.start} />
